@@ -57,7 +57,7 @@
   .field {
     border: 1px solid #222;
     border-radius: 5px;
-    width: 100%;
+    width: 98%;
     padding: 10px;
     outline: none;
     font-size: 1rem;
@@ -86,17 +86,21 @@
     }
   }
 
-  .password-field {
+  .field-container {
     position: relative;
-    width: 100%;
+    width: 98%;
+
+    .field {
+      width: 100%;
+    }
 
     .password-eye {
       position: absolute;
       margin: 0;
       bottom: 26px;
-      right: 1px;
+      right: 2px;
       height: 36px;
-      width: 36px;
+      width: 34px;
       border: none;
       border-radius: 0 3px 3px 0;
       cursor: pointer;
@@ -129,11 +133,12 @@
   }
 
   .termos-container {
-    width: 108%;
-    transform: translateX(-4%);
+    // width: 108%;
+    width: 100%;
+    // transform: translateX(-4%);
     display: inline-block;
     text-align: center;
-    padding-left: 18px;
+    padding-left: 22px;
     position: relative;
     user-select: none;
     font-size: 1rem;
@@ -219,59 +224,59 @@
       }
     }
   }
+}
 
-  .tippy-box[data-theme~="vvale"] {
-    padding: 7px;
-    background-color: white;
-    color: #4b4b4b;
-    border-radius: 10px;
-    border: 2px solid #b3d66d;
-    box-shadow: 0px 3px 6px rgba(179, 214, 109, 0.15);
+.tippy-box[data-theme~="vvale"] {
+  padding: 7px;
+  background-color: white;
+  color: #4b4b4b;
+  border-radius: 10px;
+  border: 2px solid #b3d66d;
+  box-shadow: 0px 3px 6px rgba(179, 214, 109, 0.15);
 
-    strong {
-      display: inline-block;
-      margin-bottom: 7px;
+  strong {
+    display: inline-block;
+    margin-bottom: 7px;
+  }
+
+  .tooltip-hint {
+    line-height: 1.2;
+    color: #747474;
+    position: relative;
+
+    &:before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: calc(50% - 1px);
+      width: 0%;
+      height: 2px;
+      background-color: #95b949;
     }
 
-    .tooltip-hint {
-      line-height: 1.2;
-      color: #747474;
-      position: relative;
+    &.done {
+      color: #95b949;
 
       &:before {
-        position: absolute;
-        content: "";
-        left: 0;
-        top: calc(50% - 1px);
-        width: 0%;
-        height: 2px;
-        background-color: #95b949;
-      }
-
-      &.done {
-        color: #95b949;
-
-        &:before {
-          width: 100%;
-        }
+        width: 100%;
       }
     }
+  }
 
+  .tippy-arrow {
+    color: #b3d66d;
+    transform: translate(20px, 0px) !important;
+  }
+
+  &[data-placement="bottom-start"] {
     .tippy-arrow {
-      color: #b3d66d;
-      transform: translate(20px, 0px) !important;
+      top: -2px;
     }
+  }
 
-    &[data-placement="bottom-start"] {
-      .tippy-arrow {
-        top: -2px;
-      }
-    }
-
-    &[data-placement="top-start"] {
-      .tippy-arrow {
-        bottom: -2px;
-      }
+  &[data-placement="top-start"] {
+    .tippy-arrow {
+      bottom: -2px;
     }
   }
 }

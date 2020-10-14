@@ -18,10 +18,14 @@
   transition: 0.3s;
   position: absolute;
   top: 0;
+  height: 0px;
+  overflow-y: hidden;
 }
 
 .relative-step {
   position: relative !important;
+  height: auto;
+  overflow-y: auto;
 }
 
 .content-container {

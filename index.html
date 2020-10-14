@@ -15,7 +15,7 @@
       <h2 class="form-title">Conta Vvale</h2>
       <div class="step-container"></div>
       <form action="" class="form">
-        <div class="first-board step-board" data-step="step-1">
+        <div class="first-board step-board relative-step show-step" data-step="step-1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
           <div class="icon-container">
             <div class="icon notebook"></div>
@@ -24,9 +24,11 @@
           </div>
           <p class="content">Já possui uma conta? <a href="#">Entrar</a></p>
           <p class="note">Campos com asterisco(*) são obrigatórios.</p>
-          <label for="email" class="field-name">E-mail<span class="required">*</span></label>
-          <input type="email" name="email" class="field" id="email">
-          <div class="password-field">
+          <div class="field-container">
+            <label for="email" class="field-name">E-mail<span class="required">*</span></label>
+            <input type="email" name="email" class="field" id="email">
+          </div>
+          <div class="field-container">
             <label for="first-pass" class="field-name">Senha<span class="required">*</span></label>
             <input type="password" name="first-pass" class="field" id="first-pass" data-field="tippy-first-pass">
             <input type="button" class="password-eye" data-related="first-pass" tabindex="-1">
@@ -37,7 +39,7 @@
               <span class="tooltip-hint" id="tooltip-lenght">- Ao menos 8 caracteres</span>
             </div>
           </div>
-          <div class="password-field">
+          <div class="field-container">
             <label for="second-pass" class="field-name">Confirmar senha<span class="required">*</span></label>
             <input type="password" name="second-pass" class="field" id="second-pass" data-field="tippy-second-pass">
             <input type="button" class="password-eye" data-related="second-pass" tabindex="-1">
@@ -62,7 +64,7 @@
             <input type="button" value="Cadastrar" class="avancar">
           </div>
         </div>
-        <div class="second-board step-board relative-step show-step" data-step="step-2">
+        <div class="second-board step-board" data-step="step-2">
           
         </div>
       </form>
