@@ -240,24 +240,49 @@ function validateFirstStep(needCaptcha = false) {
   }
 }
 
-const firstStepButton = document.querySelector('.first-board .avancar');
+const firstStepButton = document.querySelector('.first-board .avancar')
 
 firstStepButton.addEventListener('click', function() {
-  const validateResult = validateFirstStep(true)
-  console.log(`FinalResult: ${validateResult}`)
-
-  if(validateResult) {
-    console.log('Step 1: validated')
-
+  // const validateResult = validateFirstStep(true)
+  // console.log(`FinalResult: ${validateResult}`)
+  
+  // if(validateResult) {
+  //   console.log('Step 1: validated')
+    
     const firstStep = document.querySelector('.first-board')
     const secondStep = document.querySelector('.second-board')
+    const stepMap = document.querySelector('.step-container')
+    const sepMap = document.querySelectorAll('.sep')
+    const mapStep1 = document.querySelector('.map-step[data-step="step-1"]')
+    const mapStep2 = document.querySelector('.map-step[data-step="step-2"]')
     
+    const body = $("html, body");
+    body.stop().animate({scrollTop:0}, 500, 'swing');
     firstStep.classList.remove('show-step')
-    firstStep.classList.remove('relative-step')
-    secondStep.classList.add('relative-step')
     
     setTimeout(function() {
-      secondStep.classList.add('show-step')
-    }, 400)
-  }
+      stepMap.classList.add('show-map')
+
+      setTimeout(function() {
+        mapStep1.classList.add('done')
+        sepMap[0].classList.add('done')
+        firstStep.classList.remove('relative-step')
+        secondStep.classList.add('relative-step')
+        
+        setTimeout(function() {
+          mapStep2.classList.add('active')
+          secondStep.classList.add('show-step')
+        }, 200)
+      }, 250)
+    },400)
+  // }
 })
+
+
+function nextStep(validation) {
+  // retorno de verificação
+  // salva etapa atual
+  // seleciona elemento futuro com data
+  // executa as trocas de classe
+
+}

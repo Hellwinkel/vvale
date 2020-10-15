@@ -13,6 +13,10 @@ html {
   font-family: 'Metropolis', sans-serif;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 @import 'sign-in';
 @import 'step1';
 @import 'step2';

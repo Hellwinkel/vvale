@@ -35,6 +35,7 @@
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  transition: 300ms;
 
   .form-container {
     width: 100%;
@@ -47,6 +48,7 @@
     align-items: center;
     justify-content: flex-start;
     transition: 300ms;
+    background-color: #FFF;
 
     h2.form-title {
       font-size: 1.6rem;
@@ -94,7 +96,109 @@
 
 .step-container {
   width: 60%;
-  height: 85px;
-  background-color: red;
-  margin-bottom: 30px;
+  min-width: 280px;
+  height: 0px;
+  margin-bottom: 0px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-30px);
+  transition: 500ms;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  
+  &.show-map {
+    height: 85px;
+    margin-bottom: 30px;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+  }
+
+  .map-step {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding-bottom: 20px;
+    z-index: 10;
+    position: relative;
+
+    .circle {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 3px;
+      background-color: white;
+      border: 2px solid #b1b1b1;
+      color: #b1b1b1;
+      transition: 250ms;
+    }
+
+    .step-name {
+      position: absolute;
+      bottom: 0;
+      font-size: 0.8rem;
+      color: #b1b1b1;
+      transition: 250ms;
+    }
+
+    &.done {
+      .circle {
+        background-color: #95b949;
+        color: #FFF;
+        border-color: #95b949;
+      }
+
+      .step-name {
+        color: #95b949;
+      }
+    }
+
+    &.active {
+      .circle {
+        color: #95b949;
+        border-color: #95b949;
+      }
+
+      .step-name {
+        color: #95b949;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .sep {
+    width: 45px;
+    height: 3px;
+    background-color: #cccccc;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 5;
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 0px;
+      height: 100%;
+      background-color: #95b949;
+      top: 0;
+      left: 0;
+      transition: ease-out 350ms;
+    }
+
+    &.done:before {
+      width: 100%;
+    }
+  }
 }
