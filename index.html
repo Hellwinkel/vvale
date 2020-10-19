@@ -13,15 +13,15 @@
   <div class="content-container">
     <div class="form-container">
       <h2 class="form-title">Conta Vvale</h2>
-      <div class="step-container">
-        <div class="map-step" data-step="1">
+      <div class="step-container show-map">
+        <div class="map-step done" data-step="1">
           <div class="circle">
             1
           </div>
           <div class="step-name">Verificação</div>
         </div>
-        <div class="sep" data-step="1"></div>
-        <div class="map-step" data-step="2">
+        <div class="sep done" data-step="1"></div>
+        <div class="map-step active" data-step="2">
           <div class="circle">
             2
           </div>
@@ -43,7 +43,8 @@
         </div>
       </div>
       <form action="" class="form">
-        <div class="first-board step-board relative-step show-step" data-step="1">
+
+        <div class="first-board step-board" data-step="1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
           <div class="icon-container">
             <div class="icon notebook"></div>
@@ -92,13 +93,77 @@
             <input type="button" value="Cadastrar" class="avancar" data-step="1">
           </div>
         </div>
-        <div class="second-board step-board" data-step="2">
-          miau miau
+
+        <div class="second-board step-board relative-step show-step" data-step="2">
+          <p class="note">Campos com asterisco(*) são obrigatórios.</p>
+          <div class="radio-container">
+            <label>
+              <span class="field-name">Pessoa física</span>
+              <input type="radio" name="conta" id="fisica" checked tabindex="0">
+              <div class="checkmark"></div>
+            </label>
+            <label>
+              <span class="field-name">Pessoa jurídica</span>
+              <input type="radio" name="conta" id="juridica" tabindex="1">
+              <div class="checkmark"></div>
+            </label>
+          </div>
+          <div class="field-container">
+            <label for="first-name" class="field-name">
+              Nome<span class="required">*</span>
+            </label>
+            <input type="text" name="first-name" id="first-name" class="field">
+            <label for="last-name" class="field-name">
+              Sobrenome<span class="required">*</span>
+            </label>
+            <input type="text" name="last-name" id="last-name" class="field">
+            <label for="document" class="field-name">
+              CPF<span class="required">*</span>
+            </label>
+            <input type="text" name="document" id="document" class="field" placeholder="000.000.000-00" data-mask="000.000.000-00">
+            <label for="birth" class="field-name">
+              Data de nascimento<span class="required">*</span>
+            </label>
+            <input type="date" name="birth" id="birth" class="field">
+            <p class="field-name">
+              Gênero<span class="required">*</span>
+            </p>
+            <div class="radio-container">
+              <label>
+                <span class="field-name">Masculino</span>
+                <input type="radio" name="genero" id="masculino" checked tabindex="0">
+                <div class="checkmark"></div>
+              </label>
+              <label>
+                <span class="field-name">Feminino</span>
+                <input type="radio" name="genero" id="feminino" tabindex="1">
+                <div class="checkmark"></div>
+              </label>
+              <label>
+                <span class="field-name">Outro</span>
+                <input type="radio" name="genero" id="outro" tabindex="1">
+                <div class="checkmark"></div>
+              </label>
+            </div>
+            <label for="phone" class="field-name">
+              Telefone<span class="required">*</span>
+            </label>
+            <input type="text" name="phone" id="phone" class="field">
+            <label for="celular" class="field-name">
+              Celular
+            </label>
+            <input type="tel" name="celular" id="celular" class="field">
+          </div>
+          <div class="button-container">
+            <input type="button" value="Avançar" class="avancar" data-step="2">
+          </div>
         </div>
+
       </form>
     </div>
   </div>
   <script src="assets/scripts/jquery.min.js"></script>
+  <script src="assets/scripts/jquery.mask.min.js"></script>
   <script src="assets/scripts/popper.min.js"></script>
   <script src="assets/scripts/tippy.min.js"></script>
   <script src="assets/scripts/script.js"></script>

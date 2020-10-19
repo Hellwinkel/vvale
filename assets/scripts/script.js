@@ -1,17 +1,30 @@
 const reCaptchaSecret = '6Lc3bdQZAAAAAG_SZVR9pqkZVnfS6HjNKXVveBU-'
 
+jQuery(document).ready(function() {
+  const maskBehavior = function (val) {
+    return val.replace(/\D/g, '').length === 11 ? '(00) 0 0000-0000' : '(00) 0000-00009';
+  },
+  Options = {
+    onKeyPress: function(val, e, field, options) {
+        field.mask(maskBehavior.apply({}, arguments), options);
+      }
+  };
+
+  jQuery('#phone').mask(maskBehavior, Options);
+})
+
 // Toggle password visibility
 {function togglePassword(element) {
-  const label = element.attr("data-related");
+  const label = element.attr('data-related');
   const field = jQuery(`.field#${label}`);
-  if (field.attr("type") === "password") {
-    field.attr("type", "text");
+  if (field.attr('type') === 'password') {
+    field.attr('type', 'text');
   } else {
-    field.attr("type", "password");
+    field.attr('type', 'password');
   }
 }
 
-jQuery(".password-eye").on("click", function () {
+jQuery('.password-eye').on('click', function () {
   togglePassword(jQuery(this));
 });}
 
@@ -83,6 +96,54 @@ jQuery(".password-eye").on("click", function () {
   
     return isValid;
   }
+
+  // Validate first and last name
+  function validateName(field) {
+    let isValid = false
+    const pattern = /^[a-zA-Z\s]*$/
+
+    if (field.value.length > 1 && pattern.test(field.value)) {
+      isValid = true
+    }
+
+    return isValid
+  }
+
+  // Validate CPF of CNPJ
+  function validateDocument(field) {
+    let isValid = false
+    const pattern = /(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/
+    const content = field.value
+
+    if(pattern.test(content)) {
+      isValid = true
+    }
+
+    return isValid
+  }
+
+  // Validate birth date
+  function validateBirth(field) {
+    let isValid = false
+    let birthDate = new Date(field.value)
+    let currentDate = new Date()
+
+    if(birthDate < currentDate) {
+      isValid = true
+    }
+
+    return isValid
+  }
+
+  // Validate phone number
+  function validatePhone(field) {
+    isValid = false
+
+    if(field.value.length >= 14) {
+      isValid = true
+    } 
+    return isValid
+  }
   
   // Return something
   function feedback(target, status) {
@@ -111,22 +172,62 @@ jQuery(".password-eye").on("click", function () {
     let valid = validatePassword(field, comparisonField);
     feedback(field, valid);
   }
+
+  function checkName(field) {
+    let valid = validateName(field)
+    feedback(field, valid)
+  }
+
+  function checkDocument(field) {
+    let valid = validateDocument(field)
+    feedback(field, valid)
+  }
+
+  function checkBirth(field) {
+    let valid = validateBirth(field)
+    feedback(field, valid)
+  }
+
+  function checkPhone(field) {
+    let valid = validatePhone(field)
+    feedback(field, valid)
+  }
   
   // Call
-  jQuery("#email").on('keyup', function() {
+  jQuery('#email').on('keyup', function() {
     checkEmail(this);
   });
   
-  jQuery("#first-pass").on('keyup', function() {
+  jQuery('#first-pass').on('keyup', function() {
     const comparisonField = document.querySelector('#second-pass');
     checkPassword(this);
     checkPassword(comparisonField, this);
   });
   
-  jQuery("#second-pass").on('keyup', function() {
+  jQuery('#second-pass').on('keyup', function() {
     const comparisonField = document.querySelector('#first-pass');
     checkPassword(this, comparisonField);
   });
+
+  jQuery('#first-name').on('keyup', function() {
+    checkName(this)
+  })
+
+  jQuery('#last-name').on('keyup', function() {
+    checkName(this)
+  })
+
+  jQuery('#document').on('keyup', function() {
+    checkDocument(this)
+  })
+
+  jQuery('#birth').on('keyup', function() {
+    checkBirth(this)
+  })
+
+  jQuery('#phone').on('keyup', function() {
+    checkPhone(this)
+  })
 }
 
 // Tooltip
@@ -236,6 +337,7 @@ jQuery(".password-eye").on("click", function () {
     if(emailStatus && passwordStatus && confirmPasswordStatus && reCaptchaStatus && termsStatus) {
       return true
     } else {
+      grecaptcha.reset()
       return false
     }
   }
@@ -321,7 +423,7 @@ jQuery(".password-eye").on("click", function () {
     const currentBoard = jQuery(`.step-board[data-step=${step}]`)[0]
     const nextBoard = jQuery(`.step-board[data-step=${nextStep}]`)[0]
 
-    const body = $("html, body");
+    const body = $('html, body');
     body.stop().animate({scrollTop:0}, 500, 'swing');
 
     currentBoard.classList.remove('show-step')

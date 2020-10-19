@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+$green: #95b949;
 
 html {
   font-size: 16px;
@@ -10,7 +13,7 @@ html {
   padding: 0;
   box-sizing: border-box;
   line-height: 1;
-  font-family: 'Metropolis', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 body {

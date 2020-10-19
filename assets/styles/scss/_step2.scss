@@ -1,0 +1,71 @@
+.second-board {
+  p.note {
+    margin-bottom: 45px !important;
+  }
+
+  p.field-name {
+    margin-bottom: 15px !important;
+    margin-top: 10px;
+  }
+
+  .field-container {
+    margin-bottom: 15px !important;
+  }
+}
+
+.radio-container {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  
+  label {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 3px 18px 3px 0;
+    cursor: pointer;
+
+    span {
+      display: inline-block;
+      margin-right: 3px;
+      font-size: 1rem;
+      text-transform: capitalize;
+    }
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: calc(50% - 0.8rem);
+      right: 0;
+      height: 1.1rem;
+      width: 1.1rem;
+      background-color: white;
+      border: 1px solid $green;
+      transition: 50ms;
+    }
+
+    input:focus ~ .checkmark,
+    input:hover ~ .checkmark {
+      box-shadow: 0 0 3px rgba(149,185,73, .65) inset;
+    }
+
+    input:checked ~ .checkmark {
+      background-image: url('../images/green-check.svg');
+      background-position: center;
+      background-size: 90%;
+      background-repeat: no-repeat;
+    }
+  }
+}
