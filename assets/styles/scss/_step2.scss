@@ -11,6 +11,17 @@
   .field-container {
     margin-bottom: 15px !important;
   }
+
+  .gender-container {
+
+    .radio-container {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.birth-container, .gender-container {
+  overflow: hidden;
 }
 
 .radio-container {

@@ -1,4 +1,6 @@
 const reCaptchaSecret = '6Lc3bdQZAAAAAG_SZVR9pqkZVnfS6HjNKXVveBU-'
+let birthInitialHeight
+let genderInitialHeight
 
 jQuery(document).ready(function() {
   const maskBehavior = function (val) {
@@ -11,6 +13,11 @@ jQuery(document).ready(function() {
   };
 
   jQuery('#phone').mask(maskBehavior, Options);
+  jQuery('#cel').mask(maskBehavior, Options);
+  
+  birthInitialHeight = jQuery('.birth-container').outerHeight(true)
+  genderInitialHeight = jQuery('.gender-container').outerHeight(true) + 25
+  changeFields();
 })
 
 // Toggle password visibility
@@ -97,10 +104,23 @@ jQuery('.password-eye').on('click', function () {
     return isValid;
   }
 
+  // Validate user
+
+  function validateUser(field) {
+    let isValid = false
+    const pattern = /^[a-zA-z0-9]*$/
+
+    if (pattern.test(field.value)) {
+      isValid = true
+    }
+
+    return isValid
+  }
+
   // Validate first and last name
   function validateName(field) {
     let isValid = false
-    const pattern = /^[a-zA-Z\s]*$/
+    const pattern = /^[a-zA-Z\u00C0-\u00FF\s]*$/
 
     if (field.value.length > 1 && pattern.test(field.value)) {
       isValid = true
@@ -173,6 +193,11 @@ jQuery('.password-eye').on('click', function () {
     feedback(field, valid);
   }
 
+  function checkUser(field) {
+    let valid = validateUser(field)
+    feedback(field, valid)
+  }
+
   function checkName(field) {
     let valid = validateName(field)
     feedback(field, valid)
@@ -209,6 +234,10 @@ jQuery('.password-eye').on('click', function () {
     checkPassword(this, comparisonField);
   });
 
+  jQuery('#user').on('keyup', function() {
+    checkUser(this)
+  })
+
   jQuery('#first-name').on('keyup', function() {
     checkName(this)
   })
@@ -226,6 +255,10 @@ jQuery('.password-eye').on('click', function () {
   })
 
   jQuery('#phone').on('keyup', function() {
+    checkPhone(this)
+  })
+
+  jQuery('#cel').on('keyup', function() {
     checkPhone(this)
   })
 }
@@ -271,6 +304,69 @@ jQuery('.password-eye').on('click', function () {
       })
     }
   });
+
+  tippy('#user', {
+    theme: 'vvale',
+    content: 'O nome de usuário <strong>não pode</strong> conter <br>espaços ou caracteres especiais',
+    allowHTML: true,
+    duration: [150, 150],
+    trigger: 'focus',
+    placement: 'bottom-start',
+    animation: 'shift-toward'
+  });
+}
+
+// Change fields for different account types (CPF/CNPJ)
+{
+  function changeFields() {
+    const accountType = jQuery('.radio-container input[name="conta"]:checked')[0].id
+    const document = jQuery('label[for="document"]')
+    const documentField = jQuery('#document')
+    const firstName = jQuery('label[for="first-name"]')
+    const lastName = jQuery('label[for="last-name"')
+    const birthContainer = jQuery('.birth-container')
+    const genderContainer = jQuery('.gender-container')
+
+    if (accountType === 'fisica') {
+      document.html('CPF<span class="required">*</span>')
+      documentField.attr('placeholder', '000.000.000-00')
+      documentField.unmask()
+      documentField.mask('000.000.000-00')
+      documentField.attr('maxlength', '14')
+      firstName.html('Nome<span class="required">*</span>')
+      lastName.html('Sobrenome<span class="required">*</span>')
+      birthContainer.animate({
+        opacity: 1,
+        height: birthInitialHeight
+      }, 200)
+      genderContainer.animate({
+        opacity: 1,
+        height: genderInitialHeight
+      }, 200)
+      
+    } else {
+      document.html('CNPJ<span class="required">*</span>')
+      documentField.attr('placeholder', '00.000.000/0000-00')
+      documentField.unmask()
+      documentField.mask('00.000.000/0000-00')
+      documentField.attr('maxlength', '18')
+      firstName.html('Razão social<span class="required">*</span>')
+      lastName.html('Nome fantasia<span class"required">*</span>')
+      birthContainer.animate({
+        opacity: 0,
+        height: 0
+      }, 200)
+      genderContainer.animate({
+        opacity: 0,
+        height: 0,
+        marginBottom: 0
+      }, 200)
+    }
+
+    return accountType
+  }
+
+  jQuery('.radio-container input[name="conta"]').on('change', changeFields)
 }
 
 // Validate first step fields
@@ -423,8 +519,9 @@ jQuery('.password-eye').on('click', function () {
     const currentBoard = jQuery(`.step-board[data-step=${step}]`)[0]
     const nextBoard = jQuery(`.step-board[data-step=${nextStep}]`)[0]
 
-    const body = $('html, body');
-    body.stop().animate({scrollTop:0}, 500, 'swing');
+    const body = $('html, body')
+    const form = $('.content-container').offset().top
+    body.stop().animate({scrollTop:form}, 500, 'swing')
 
     currentBoard.classList.remove('show-step')
 

@@ -109,6 +109,10 @@
             </label>
           </div>
           <div class="field-container">
+            <label for="user" class="field-name">
+              Usuário<span class="required">*</span><span class="help"></span>
+            </label>
+            <input type="text" name="user" id="user" class="field">
             <label for="first-name" class="field-name">
               Nome<span class="required">*</span>
             </label>
@@ -118,41 +122,44 @@
             </label>
             <input type="text" name="last-name" id="last-name" class="field">
             <label for="document" class="field-name">
-              CPF<span class="required">*</span>
             </label>
-            <input type="text" name="document" id="document" class="field" placeholder="000.000.000-00" data-mask="000.000.000-00">
-            <label for="birth" class="field-name">
-              Data de nascimento<span class="required">*</span>
-            </label>
-            <input type="date" name="birth" id="birth" class="field">
-            <p class="field-name">
-              Gênero<span class="required">*</span>
-            </p>
-            <div class="radio-container">
-              <label>
-                <span class="field-name">Masculino</span>
-                <input type="radio" name="genero" id="masculino" checked tabindex="0">
-                <div class="checkmark"></div>
+            <input type="text" name="document" id="document" class="field">
+            <div class="birth-container">
+              <label for="birth" class="field-name">
+                Data de nascimento<span class="required">*</span>
               </label>
-              <label>
-                <span class="field-name">Feminino</span>
-                <input type="radio" name="genero" id="feminino" tabindex="1">
-                <div class="checkmark"></div>
-              </label>
-              <label>
-                <span class="field-name">Outro</span>
-                <input type="radio" name="genero" id="outro" tabindex="1">
-                <div class="checkmark"></div>
-              </label>
+              <input type="date" name="birth" id="birth" class="field">
+            </div>
+            <div class="gender-container">
+              <p class="field-name">
+                Gênero<span class="required">*</span>
+              </p>
+              <div class="radio-container">
+                <label>
+                  <span class="field-name">Masculino</span>
+                  <input type="radio" name="genero" id="masculino" checked tabindex="0">
+                  <div class="checkmark"></div>
+                </label>
+                <label>
+                  <span class="field-name">Feminino</span>
+                  <input type="radio" name="genero" id="feminino" tabindex="1">
+                  <div class="checkmark"></div>
+                </label>
+                <label>
+                  <span class="field-name">Outro</span>
+                  <input type="radio" name="genero" id="outro" tabindex="1">
+                  <div class="checkmark"></div>
+                </label>
+              </div>
             </div>
             <label for="phone" class="field-name">
               Telefone<span class="required">*</span>
             </label>
             <input type="text" name="phone" id="phone" class="field">
-            <label for="celular" class="field-name">
+            <label for="cel" class="field-name">
               Celular
             </label>
-            <input type="tel" name="celular" id="celular" class="field">
+            <input type="text" name="cel" id="cel" class="field">
           </div>
           <div class="button-container">
             <input type="button" value="Avançar" class="avancar" data-step="2">
