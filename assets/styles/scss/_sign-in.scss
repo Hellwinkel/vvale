@@ -20,6 +20,7 @@
   top: 0;
   height: 0px;
   overflow-y: hidden;
+  min-width: 295px;
 }
 
 .relative-step {
@@ -143,7 +144,7 @@
       background-color: white;
       border: 2px solid #b1b1b1;
       color: #b1b1b1;
-      transition: 250ms;
+      transition: 400ms;
     }
 
     .step-name {

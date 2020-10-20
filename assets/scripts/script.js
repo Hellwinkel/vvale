@@ -5,6 +5,8 @@ let genderInitialHeight
 jQuery(document).ready(function () {
   console.clear()
 
+  getCountry()
+
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
         ? "(00) 0 0000-0000"
@@ -158,19 +160,25 @@ jQuery(document).ready(function () {
   // Validate birth date
   function validateBirth(field) {
     let isValid = false;
-    let birthDate = new Date(field.value);
+    let dd  = field.value.split("/")[0];
+    let mm  = field.value.split("/")[1];
+    let yyyy  = field.value.split("/")[2];
+
+    let formatedBirth = yyyy + '-' + ("0" + mm).slice(-2) + '-' + ("0" + dd).slice(-2);
+    let birthDate = new Date(formatedBirth);
     let currentDate = new Date();
 
-    if (birthDate < currentDate) {
-      isValid = true;
+    if (field.value.length === 10) {
+      if (birthDate < currentDate) {
+        isValid = true;
+      }
     }
-
     return isValid;
   }
 
   // Validate phone number
   function validatePhone(field) {
-    isValid = false;
+    let isValid = false;
 
     if (field.value.length >= 14) {
       isValid = true;
@@ -178,18 +186,35 @@ jQuery(document).ready(function () {
     return isValid;
   }
 
-  // Return something
-  function feedback(target, status) {
-    if (target.value === "") {
-      target.classList.remove("invalid");
-      target.classList.remove("valid");
-      return false;
+  // Validate country
+  function validateCountry(field) {
+    let isValid = false
+    const country = field.options[field.selectedIndex]
+
+    if(country.value !== ''){
+      isValid = true
     }
 
-    if (status) {
+    return isValid
+  }
+
+  // Return something
+  function feedback(target, status) {
+    const elementType = $(target).prop('nodeName')
+    if (elementType !== 'SELECT') {
+      if (target.value === "") {
+        target.classList.remove("invalid");
+        target.classList.remove("valid");
+        return false;
+      }
+    }
+
+    if (status === true) {
       target.classList.remove("invalid");
       target.classList.add("valid");
-    } else {
+    } 
+
+    if (status === false) {
       target.classList.remove("valid");
       target.classList.add("invalid");
     }
@@ -231,6 +256,11 @@ jQuery(document).ready(function () {
       let valid = validatePhone(field);
       feedback(field, valid);
     }
+
+    function checkCountry(field) {
+      let valid = validateCountry(field)
+      feedback(field, valid)
+    }
   }
 
   // Call
@@ -269,6 +299,10 @@ jQuery(document).ready(function () {
     jQuery("#birth").on("keyup", function () {
       checkBirth(this);
     });
+
+    jQuery("#birth").on("change", function () {
+      checkBirth(this);
+    });
   
     jQuery("#phone").on("keyup", function () {
       checkPhone(this);
@@ -276,6 +310,14 @@ jQuery(document).ready(function () {
   
     jQuery("#cel").on("keyup", function () {
       checkPhone(this);
+    });
+    
+    jQuery("select#country").on("change", function () {
+      checkCountry(this);
+    });
+    
+    jQuery("select#country").on("blur", function () {
+      checkCountry(this);
     });
   }
 }
@@ -332,6 +374,34 @@ jQuery(document).ready(function () {
     placement: "bottom-start",
     animation: "shift-toward",
   });
+}
+
+// Get country list
+{
+  function getCountry() {
+    const select = document.querySelector('select[name=country]');
+
+    jQuery.ajax({
+      url: 'http://api.londrinaweb.com.br/PUC/Paisesv2/0/1000',
+      type: 'GET',
+      success: function(data) {
+        data.forEach((e) => {
+          let content = `
+            <option value="${e.Pais}">${e.Pais}</option>
+          `
+          select.innerHTML += content
+        })
+      }
+    }).fail(function() {
+      const fallbackCountry = ['Brasil', 'Argentina', 'Paraguai', 'Uruguai', 'Outro']
+      fallbackCountry.forEach(function(e) {
+        let content = `
+          <option value="${e}">${e}</option>
+        `
+        select.innerHTML += content
+      })
+    })
+  }
 }
 
 // Change fields for different account types (CPF/CNPJ)
@@ -616,19 +686,21 @@ jQuery(document).ready(function () {
             nextCircle.classList.remove("done");
             nextCircle.classList.add("active");
           }, 200);
-        }, 250);
+        }, 1500);
       } else if (currentStep < nextStep) {
         const stroke = jQuery(`.sep[data-step=${currentStep}]`)[0];
 
         setTimeout(function () {
           currentCircle.classList.remove("active");
           currentCircle.classList.add("done");
-          stroke.classList.add("done");
-
+          
           setTimeout(function () {
-            nextCircle.classList.add("active");
+            stroke.classList.add("done");
+            setTimeout(function() {
+              nextCircle.classList.add("active");
+            }, 200);
           }, 200);
-        }, 250);
+        }, 1500);
       } else {
         console.log("This function must receive different steps as parameter");
         return false;
@@ -667,7 +739,7 @@ jQuery(document).ready(function () {
 
         const body = $("html, body");
         const form = $(".content-container").offset().top;
-        body.stop().animate({ scrollTop: form }, 500, "swing");
+        body.stop().animate({ scrollTop: 0 }, 500, "swing");
 
         currentBoard.classList.remove("show-step");
 
@@ -680,7 +752,7 @@ jQuery(document).ready(function () {
           }, 200);
         }, 650);
       } else {
-        console.log("Verifique os campos digitados");
+        console.log("Verifique se todos os campos estão preenchidos corretamente");
       }
     } else {
       updateMap(currentStep, targetStep);
@@ -690,7 +762,7 @@ jQuery(document).ready(function () {
 
       const body = $("html, body");
       const form = $(".content-container").offset().top;
-      body.stop().animate({ scrollTop: form }, 500, "swing");
+      body.stop().animate({ scrollTop: 0 }, 500, "swing");
 
       setTimeout(function () {
         currentBoard.classList.remove("show-step");
