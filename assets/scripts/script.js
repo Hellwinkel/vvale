@@ -1,8 +1,10 @@
 const reCaptchaSecret = "6Lc3bdQZAAAAAG_SZVR9pqkZVnfS6HjNKXVveBU-";
-let birthInitialHeight;
-let genderInitialHeight;
+let birthInitialHeight
+let genderInitialHeight
 
 jQuery(document).ready(function () {
+  console.clear()
+
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
         ? "(00) 0 0000-0000"
@@ -117,7 +119,6 @@ jQuery(document).ready(function () {
   }
 
   // Validate user
-
   function validateUser(field) {
     let isValid = false;
     const pattern = /^[a-zA-z0-9]*$/;
@@ -195,84 +196,88 @@ jQuery(document).ready(function () {
   }
 
   // Main functions
-  function checkEmail(field) {
-    let valid = validateEmail(field);
-    feedback(field, valid);
-  }
-
-  function checkPassword(field, comparisonField) {
-    let valid = validatePassword(field, comparisonField);
-    feedback(field, valid);
-  }
-
-  function checkUser(field) {
-    let valid = validateUser(field);
-    feedback(field, valid);
-  }
-
-  function checkName(field) {
-    let valid = validateName(field);
-    feedback(field, valid);
-  }
-
-  function checkDocument(field) {
-    let valid = validateDocument(field);
-    feedback(field, valid);
-  }
-
-  function checkBirth(field) {
-    let valid = validateBirth(field);
-    feedback(field, valid);
-  }
-
-  function checkPhone(field) {
-    let valid = validatePhone(field);
-    feedback(field, valid);
+  {
+    function checkEmail(field) {
+      let valid = validateEmail(field);
+      feedback(field, valid);
+    }
+  
+    function checkPassword(field, comparisonField) {
+      let valid = validatePassword(field, comparisonField);
+      feedback(field, valid);
+    }
+  
+    function checkUser(field) {
+      let valid = validateUser(field);
+      feedback(field, valid);
+    }
+  
+    function checkName(field) {
+      let valid = validateName(field);
+      feedback(field, valid);
+    }
+  
+    function checkDocument(field) {
+      let valid = validateDocument(field);
+      feedback(field, valid);
+    }
+  
+    function checkBirth(field) {
+      let valid = validateBirth(field);
+      feedback(field, valid);
+    }
+  
+    function checkPhone(field) {
+      let valid = validatePhone(field);
+      feedback(field, valid);
+    }
   }
 
   // Call
-  jQuery("#email").on("keyup", function () {
-    checkEmail(this);
-  });
-
-  jQuery("#first-pass").on("keyup", function () {
-    const comparisonField = document.querySelector("#second-pass");
-    checkPassword(this);
-    checkPassword(comparisonField, this);
-  });
-
-  jQuery("#second-pass").on("keyup", function () {
-    const comparisonField = document.querySelector("#first-pass");
-    checkPassword(this, comparisonField);
-  });
-
-  jQuery("#user").on("keyup", function () {
-    checkUser(this);
-  });
-
-  jQuery("#first-name").on("keyup", function () {
-    checkName(this);
-  });
-
-  jQuery("#last-name").on("keyup", function () {
-    checkName(this);
-  });
-
-  jQuery("#document").on("keyup", function () {
-    checkDocument(this);
-  });
-
-  jQuery("#birth").on("keyup", function () {
-    checkBirth(this);
-  });
-
-  jQuery("#phone").on("keyup", function () {
-    checkPhone(this);
-  });
-
-  jQuery("#cel").on("keyup", function () {
-    checkPhone(this);
-  });
+  {
+    jQuery("#email").on("keyup", function () {
+      checkEmail(this);
+    });
+  
+    jQuery("#first-pass").on("keyup", function () {
+      const comparisonField = document.querySelector("#second-pass");
+      checkPassword(this);
+      checkPassword(comparisonField, this);
+    });
+  
+    jQuery("#second-pass").on("keyup", function () {
+      const comparisonField = document.querySelector("#first-pass");
+      checkPassword(this, comparisonField);
+    });
+  
+    jQuery("#user").on("keyup", function () {
+      checkUser(this);
+    });
+  
+    jQuery("#first-name").on("keyup", function () {
+      checkName(this);
+    });
+  
+    jQuery("#last-name").on("keyup", function () {
+      checkName(this);
+    });
+  
+    jQuery("#document").on("keyup", function () {
+      checkDocument(this);
+    });
+  
+    jQuery("#birth").on("keyup", function () {
+      checkBirth(this);
+    });
+  
+    jQuery("#phone").on("keyup", function () {
+      checkPhone(this);
+    });
+  
+    jQuery("#cel").on("keyup", function () {
+      checkPhone(this);
+    });
+  }
 }
 
 // Tooltip
@@ -332,15 +337,15 @@ jQuery(document).ready(function () {
 // Change fields for different account types (CPF/CNPJ)
 {
   function changeFields() {
-    const accountType = jQuery(
-      '.radio-container input[name="conta"]:checked'
-    )[0].id;
+    const accountType = jQuery('.radio-container input[name="conta"]:checked')[0].id;
     const document = jQuery('label[for="document"]');
     const documentField = jQuery("#document");
     const firstName = jQuery('label[for="first-name"]');
     const lastName = jQuery('label[for="last-name"');
     const birthContainer = jQuery(".birth-container");
+    const birthInput = jQuery('.birth-container input')
     const genderContainer = jQuery(".gender-container");
+    const genderInput = jQuery('.gender-container input')
 
     if (accountType === "fisica") {
       document.html('CPF<span class="required">*</span>');
@@ -350,20 +355,24 @@ jQuery(document).ready(function () {
       documentField.attr("maxlength", "14");
       firstName.html('Nome<span class="required">*</span>');
       lastName.html('Sobrenome<span class="required">*</span>');
+      birthContainer.css('display', 'block')
+      genderContainer.css('display', 'block')
       birthContainer.animate(
         {
           opacity: 1,
           height: birthInitialHeight,
+          overflow: 'initial'
         },
         200
-      );
+        );
       genderContainer.animate(
         {
           opacity: 1,
           height: genderInitialHeight,
+          overflow: 'initial'
         },
         200
-      );
+      )
     } else {
       document.html('CNPJ<span class="required">*</span>');
       documentField.attr("placeholder", "00.000.000/0000-00");
@@ -376,17 +385,24 @@ jQuery(document).ready(function () {
         {
           opacity: 0,
           height: 0,
+          overflow: 'hidden'
         },
         200
-      );
+      )
       genderContainer.animate(
         {
           opacity: 0,
           height: 0,
           marginBottom: 0,
+          overflow: 'hidden',
+          display: 'none'
         },
         200
-      );
+      )
+      setTimeout(function() {
+        birthContainer.css('display', 'none')
+        genderContainer.css('display', 'none')
+      }, 200)
     }
 
     return accountType;
@@ -421,13 +437,14 @@ jQuery(document).ready(function () {
     }
 
     if (needCaptcha === false) {
-      console.log("First step verification");
+      console.clear()
+      console.log("First step verify");
       console.log(`
-    Email: ${emailStatus}
-    FirstPass: ${passwordStatus}
-    SecondPass: ${confirmPasswordStatus}
-    TermsStatus: ${termsStatus}
-    `);
+      Email: ${emailStatus}
+      FirstPass: ${passwordStatus}
+      SecondPass: ${confirmPasswordStatus}
+      TermsStatus: ${termsStatus}
+      `);
 
       if (
         emailStatus &&
@@ -455,15 +472,15 @@ jQuery(document).ready(function () {
         },
         async: false,
       });
-
-      console.log("First step verification");
+      console.clear()
+      console.log("First step verify");
       console.log(`
-    Email: ${emailStatus}
-    FirstPass: ${passwordStatus}
-    SecondPass: ${confirmPasswordStatus}
-    reCaptcha: ${reCaptchaStatus}
-    TermsStatus: ${termsStatus}
-    `);
+      Email: ${emailStatus}
+      FirstPass: ${passwordStatus}
+      SecondPass: ${confirmPasswordStatus}
+      reCaptcha: ${reCaptchaStatus}
+      TermsStatus: ${termsStatus}
+      `);
 
       if (
         emailStatus &&
@@ -481,14 +498,81 @@ jQuery(document).ready(function () {
   }
 }
 
+//Validate second step fields
+{
+  function validateSecondStep() {
+    const accountType = jQuery('.radio-container input[name="conta"]:checked')[0].id
+    const user = document.querySelector('input#user')
+    const firstName = document.querySelector('input#first-name')
+    const lastName = document.querySelector('input#last-name')
+    const documentType = document.querySelector('input#document')
+    const phone = document.querySelector('input#phone')
+
+    const userStatus = validateUser(user)
+    const firstNameStatus = validateName(firstName)
+    const lastNameStatus = validateName(lastName)
+    const documentStatus = validateDocument(documentType)
+    const phoneStatus = validatePhone(phone)
+
+    console.clear()
+    console.log("Second step verify");
+
+    if(accountType === 'fisica') {
+      const birth = document.querySelector('input#birth')
+
+      const birthStatus = validateBirth(birth)
+
+      console.log(`
+      userStatus: ${userStatus}
+      firstNameStatus: ${firstNameStatus}
+      lastNameStatus: ${lastNameStatus}
+      documentStatus: ${documentStatus}
+      phoneStatus: ${phoneStatus}
+      birthStatus: ${birthStatus}
+      `)
+
+      if ((userStatus) && (firstNameStatus) && (lastNameStatus) && (documentStatus) && (phoneStatus) && (birthStatus)) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      console.log(`
+      userStatus: ${userStatus}
+      firstNameStatus: ${firstNameStatus}
+      lastNameStatus: ${lastNameStatus}
+      documentStatus: ${documentStatus}
+      phoneStatus: ${phoneStatus}
+      `)
+
+      if ((userStatus) && (firstNameStatus) && (lastNameStatus) && (documentStatus) && (phoneStatus)) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+}
+
 // List of each step validation
 {
   function stepValidation(step) {
     switch (step) {
       case 1:
-        let status = validateFirstStep(true);
-        console.log(`FinalResult: ${status}`);
-        return status;
+        let status = validateFirstStep(true)
+        console.log(`FinalResult: ${status}`)
+        return status
+      case 2:
+        if (!validateFirstStep(false)) {
+          console.error('First step error')
+          return false
+        } else {
+          console.log('First step OK')
+          let status = validateSecondStep()
+          console.log(`FinalResult: ${status}`)
+          return status
+        }
+
     }
   }
 }
@@ -624,6 +708,12 @@ jQuery(document).ready(function () {
   }
 
   jQuery(".avancar").click(function () {
+    let step = jQuery(this).data("step");
+    let target = jQuery(this).data("target");
+    nextStep(step, target);
+  });
+
+  jQuery(".voltar").click(function () {
     let step = jQuery(this).data("step");
     let target = jQuery(this).data("target");
     nextStep(step, target);

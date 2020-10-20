@@ -44,7 +44,7 @@
       </div>
       <form action="" class="form">
 
-        <div class="first-board step-board" data-step="1">
+        <div class="first-board step-board relative-step show-step" data-step="1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
           <div class="icon-container">
             <div class="icon notebook"></div>
@@ -94,7 +94,7 @@
           </div>
         </div>
 
-        <div class="second-board step-board relative-step show-step" data-step="2">
+        <div class="second-board step-board" data-step="2">
           <p class="note">Campos com asterisco(*) são obrigatórios.</p>
           <div class="radio-container">
             <label>
@@ -162,10 +162,14 @@
             <input type="text" name="cel" id="cel" class="field">
           </div>
           <div class="button-container">
-            <input type="button" value="Avançar" class="avancar" data-step="2" data-target="1">
+            <input type="button" value="Avançar" class="avancar" data-step="2" data-target="3">
+            <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
           </div>
         </div>
 
+        <div class="third-board step-board" data-step="3">
+          <p class="note">Under construction...</p>
+        </div>
       </form>
     </div>
   </div>
