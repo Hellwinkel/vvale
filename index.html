@@ -171,14 +171,57 @@
           <p class="note">Campos com asterisco(*) são obrigatórios.</p>
           <div class="field-container">
             <label for="country" class="field-name">
+              País<span class="required">*</span>
             </label>
             <select name="country" id="country" class="field">
               <option value disabled selected>Selecione um país</option>
             </select>
+            <label for="cep" class="field-name">
+              CEP<span class="required">*</span>
+            </label>
+            <input type="text" name="cep" id="cep" class="field" disabled>
+            <label for="state" class="field-name">
+              Estado<span class="required">*</span>
+            </label>
+            <input type="text" name="state" id="state" class="field" disabled>
+            <label for="city" class="field-name">
+              Cidade<span class="required">*</span>
+            </label>
+            <input type="text" name="city" id="city" class="field" disabled>
+            <label for="neighborhood" class="field-name">
+              Bairro<span class="required">*</span>
+            </label>
+            <input type="text" name="neighborhood" id="neighborhood" class="field" disabled>
+            <label for="street" class="field-name">
+              Endereço<span class="required">*</span>
+            </label>
+            <input type="text" name="street" id="street" class="field" disabled>
+            <div class="small-fields">
+              <div class="number-container">
+                <label for="number" class="field-name">
+                  Número<span class="required">*</span>
+                </label>
+                <input type="text" name="number" id="number" class="field" disabled>
+              </div>
+              <div class="obs-container">
+                <label for="obs" class="field-name">
+                  Complemento
+                </label>
+                <input type="text" name="obs" id="obs" class="field" disabled>
+              </div>
+            </div>
           </div>
           <div class="button-container">
-            <input type="button" value="Avançar" class="avancar" data-step="3" data-target="4" disabled>
+            <input type="button" value="Avançar" class="avancar" data-step="3" data-target="4">
             <input type="button" value="Etapa anterior" class="voltar" data-step="3" data-target="2">
+          </div>
+        </div>
+
+        <div class="fourth-board step-board" data-step="4">
+          <p class="note">Under construction...</p>
+          <div class="button-container">
+            <input type="button" value="Avançar" class="avancar" data-step="4" data-target="5" disabled>
+            <input type="button" value="Etapa anterior" class="voltar" data-step="4" data-target="3">
           </div>
         </div>
       </form>

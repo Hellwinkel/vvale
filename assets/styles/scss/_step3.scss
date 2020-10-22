@@ -1,0 +1,16 @@
+.third-board {
+  .small-fields {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    .number-container {
+      width: 28%;
+    }
+
+    .obs-container {
+      width: calc(72% - 10px);
+    }
+  }
+}

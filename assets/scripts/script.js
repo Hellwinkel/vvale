@@ -1,11 +1,14 @@
 const reCaptchaSecret = "6Lc3bdQZAAAAAG_SZVR9pqkZVnfS6HjNKXVveBU-";
 let birthInitialHeight
 let genderInitialHeight
+let validNationalCEP = false
+let states = []
 
 jQuery(document).ready(function () {
   console.clear()
 
   getCountry()
+  getState()
 
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
@@ -187,11 +190,158 @@ jQuery(document).ready(function () {
   }
 
   // Validate country
-  function validateCountry(field) {
+  function validateCountry(field, cep = null) {
     let isValid = false
     const country = field.options[field.selectedIndex]
 
     if(country.value !== ''){
+      if((cep !== null) && (cep !== typeof undefined)) {
+        if(cep.attr('disabled') !== typeof undefined) {
+          cep.removeAttr('disabled')
+          if(country.value === 'Brasil') {
+            cep.unmask()
+            cep.mask("00000000")
+          } else {
+            cep.unmask()
+            cep.mask('0000999999')
+          }
+        }
+      }
+      isValid = true
+    }
+
+    validateCep(cep, country.value)
+
+    return isValid
+  }
+
+  // Validate CEP
+  function validateCep(field, countryValue) {
+    let isValid = false
+    const state = document.querySelector('#state')
+    const city = document.querySelector('#city')
+    const neighborhood = document.querySelector('#neighborhood')
+    const street = document.querySelector('#street')
+    const number = document.querySelector('#number')
+    const obs = document.querySelector('#obs')
+    
+    if(field.value > 0) {
+      if(countryValue === 'Brasil') {
+        let cep = field.value
+        if(cep.length === 8) {
+          jQuery.ajax({
+            url: `https://viacep.com.br/ws/${cep}/json/`,
+            type: 'GET',
+            async: false,
+            success: function(data) {
+              if(data.erro === true) {
+                isValid = false
+                validNationalCEP = false
+              } else {
+                if(data.uf !== '') {
+                  states.forEach((e) => {
+                    if(e.initials === data.uf) {
+                      state.value = e.state
+                      checkLocationContent(state)
+                    }
+                  })
+                } else {
+                  state.removeAttribute('disabled')
+                }
+
+                if(data.localidade !== '') {
+                  city.value = data.localidade
+                  checkLocationContent(city)
+                } else {
+                  city.removeAttribute('disabled')
+                }
+
+                if(data.bairro !== '') {
+                  neighborhood.value = data.bairro
+                  checkLocationContent(neighborhood)
+                } else {
+                  neighborhood.removeAttribute('disabled')
+                }
+
+                if(data.logradouro !== '') {
+                  street.value = data.logradouro
+                  checkLocationContent(street)
+                } else {
+                  street.removeAttribute('disabled')
+                }
+
+                number.removeAttribute('disabled')
+                obs.removeAttribute('disabled')
+                
+                validNationalCEP = true
+                isValid = true
+              }
+            }
+          }).fail((err) => {
+            state.removeAttribute('disabled')
+            city.removeAttribute('disabled')
+            neighborhood.removeAttribute('disabled')
+            street.removeAttribute('disabled')
+            number.removeAttribute('disabled')
+            obs.removeAttribute('disabled')
+            
+            console.error(err)
+            
+            validNationalCEP = true
+            isValid = true
+          })
+        }
+      } else {
+        let content = field.value
+        if(content.length >= 4) {
+          state.removeAttribute('disabled')
+          city.removeAttribute('disabled')
+          neighborhood.removeAttribute('disabled')
+          street.removeAttribute('disabled')
+          number.removeAttribute('disabled')
+          obs.removeAttribute('disabled')
+          
+          validNationalCEP = true
+          isValid = true
+        }
+      }
+    }
+    
+    if(isValid === false) {
+      state.value = ''
+      state.setAttribute = 'disabled'
+      checkLocationContent(state)
+      
+      city.value = ''
+      city.setAttribute = 'disabled'
+      checkLocationContent(city)
+      
+      neighborhood.value = ''
+      neighborhood.setAttribute = 'disabled'
+      checkLocationContent(neighborhood)
+      
+      street.value = ''
+      street.setAttribute = 'disabled'
+      checkLocationContent(street)
+      
+      number.value = ''
+      number.setAttribute = 'disabled'
+      checkLocationContent(number)
+      
+      obs.value = ''
+      obs.setAttribute = 'disabled'
+      checkLocationContent(obs)
+    }
+    return isValid
+  }
+
+  // Validate location content
+  
+  function validateLocationContent(field) {
+    let isValid = false
+
+    let fieldValue = field.value
+    if (fieldValue.length > 1) {
       isValid = true
     }
 
@@ -257,8 +407,18 @@ jQuery(document).ready(function () {
       feedback(field, valid);
     }
 
-    function checkCountry(field) {
-      let valid = validateCountry(field)
+    function checkCountry(field, cep) {
+      let valid = validateCountry(field, cep)
+      feedback(field, valid)
+    }
+
+    function checkCep(field, country) {
+      let valid = validateCep(field, country)
+      feedback(field, valid)
+    }
+
+    function checkLocationContent(field) {
+      let valid = validateLocationContent(field)
       feedback(field, valid)
     }
   }
@@ -313,12 +473,45 @@ jQuery(document).ready(function () {
     });
     
     jQuery("select#country").on("change", function () {
-      checkCountry(this);
+      let cep = document.querySelector('#cep')
+      cep.value = ''
+      checkCep(cep, '')
+      checkCountry(this, jQuery('#cep'));
     });
     
     jQuery("select#country").on("blur", function () {
-      checkCountry(this);
+      checkCountry(this, jQuery('#cep'));
     });
+
+    jQuery("input#cep").on("keyup", function () {
+      let country = jQuery("select#country")[0]
+      country = country.options[country.selectedIndex].value
+      checkCep(this, country)
+    })
+
+    jQuery("#state").on("keyup", function () {
+      checkLocationContent(this)
+    })
+
+    jQuery("#city").on("keyup", function () {
+      checkLocationContent(this)
+    })
+    
+    jQuery('#neighborhood').on("keyup", function() {
+      checkLocationContent(this)
+    })
+    
+    jQuery('#street').on("keyup", function() {
+      checkLocationContent(this)
+    })
+    
+    jQuery('#number').on("keyup", function() {
+      checkLocationContent(this)
+    })
+    
+    jQuery('#obs').on("keyup", function() {
+      checkLocationContent(this)
+    })
   }
 }
 
@@ -386,23 +579,70 @@ jQuery(document).ready(function () {
       type: 'GET',
       success: function(data) {
         data.forEach((e) => {
-          let content = `
-            <option value="${e.Pais}">${e.Pais}</option>
-          `
+          let content
+
+          if(e.Pais === "Brasil") {
+            content = `
+              <option value="${e.Pais}" selected>${e.Pais}</option>
+            `
+          } else {
+            content = `
+              <option value="${e.Pais}">${e.Pais}</option>
+            `
+          }
+
           select.innerHTML += content
         })
+
+        checkCountry(select, jQuery('#cep'))
+        
       }
     }).fail(function() {
       const fallbackCountry = ['Brasil', 'Argentina', 'Paraguai', 'Uruguai', 'Outro']
       fallbackCountry.forEach(function(e) {
-        let content = `
-          <option value="${e}">${e}</option>
-        `
+        let content
+        if(e === 'Brasil') {
+          content = `
+            <option value="${e}" selected>${e}</option>
+          `
+        } else {
+          content = `
+            <option value="${e}">${e}</option>
+          `
+        }
         select.innerHTML += content
       })
+
+      checkCountry(select, jQuery('#cep'))
     })
   }
 }
+
+// Get state list
+{
+  function getState() {
+    jQuery.ajax({
+      url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
+      type: 'GET',
+      success: function(data) {
+        data.forEach((e) => {
+          let item = {
+            state: e.nome,
+            initials: e.sigla
+          }
+          states.push(item)
+        })
+      }
+    }).fail(function(err) {
+      console.error(`
+        Can't access states API.
+        Error: ${err}
+      `)
+    })
+  }
+}
+
+// CEP API 
 
 // Change fields for different account types (CPF/CNPJ)
 {
@@ -422,7 +662,6 @@ jQuery(document).ready(function () {
       documentField.attr("placeholder", "000.000.000-00");
       documentField.unmask();
       documentField.mask("000.000.000-00");
-      documentField.attr("maxlength", "14");
       firstName.html('Nome<span class="required">*</span>');
       lastName.html('Sobrenome<span class="required">*</span>');
       birthContainer.css('display', 'block')
@@ -448,7 +687,6 @@ jQuery(document).ready(function () {
       documentField.attr("placeholder", "00.000.000/0000-00");
       documentField.unmask();
       documentField.mask("00.000.000/0000-00");
-      documentField.attr("maxlength", "18");
       firstName.html('Razão social<span class="required">*</span>');
       lastName.html('Nome fantasia<span class"required">*</span>');
       birthContainer.animate(
@@ -533,15 +771,16 @@ jQuery(document).ready(function () {
       jQuery.ajax({
         url: "https://www.google.com/recaptcha/api/siteverify",
         type: "POST",
+        async: false,
         data: {
           secret: reCaptchaSecret,
           response: reCaptcha,
         },
         success: function (data) {
-          reCaptchaStatus = data.success;
+          console.log(data)
+          reCaptchaStatus = data.success
         },
-        async: false,
-      });
+      })
       console.clear()
       console.log("First step verify");
       console.log(`
@@ -624,25 +863,81 @@ jQuery(document).ready(function () {
   }
 }
 
+//Validate third step fields
+{
+  function validateThirdStep() {
+    const state = document.querySelector('#state')
+    const city = document.querySelector('#city')
+    const neighborhood = document.querySelector('#neighborhood')
+    const street = document.querySelector('#street')
+    const number = document.querySelector('#number')
+
+    const countryStatus = validNationalCEP
+    const cepStatus = validNationalCEP
+    const stateStatus = validateLocationContent(state)
+    const cityStatus = validateLocationContent(city)
+    const neighborhoodStatus = validateLocationContent(neighborhood)
+    const streetStatus = validateLocationContent(street)
+    const numberStatus = validateLocationContent(number)
+
+    console.clear()
+    console.log("Third step verify");
+    console.log(`
+      countryStatus: ${countryStatus}
+      cepStatus: ${cepStatus}
+      stateStatus: ${stateStatus}
+      cityStatus: ${cityStatus}
+      neighborhoodStatus: ${neighborhoodStatus}
+      streetStatus: ${streetStatus}
+      numberStatus: ${numberStatus}
+    `)
+
+    if((countryStatus) && (cepStatus) && (stateStatus) && (cityStatus) && (neighborhoodStatus) && (streetStatus) && (numberStatus)) {
+      return true
+    } else {
+      return false
+    }
+  }
+}
+
 // List of each step validation
 {
   function stepValidation(step) {
     switch (step) {
       case 1:
-        let status = validateFirstStep(true)
-        console.log(`FinalResult: ${status}`)
-        return status
+        let step11 = validateFirstStep(true)
+        if(!step11) {
+          console.error('First step error')
+          return false
+        } else {
+          console.log(`FinalResult: ${step11}`)
+          return step11
+        }
       case 2:
-        if (!validateFirstStep(false)) {
+        let step21 = validateFirstStep(false)
+        if (!step21) {
           console.error('First step error')
           return false
         } else {
           console.log('First step OK')
-          let status = validateSecondStep()
-          console.log(`FinalResult: ${status}`)
-          return status
+          let step22 = validateSecondStep()
+          console.log(`FinalResult: ${step22}`)
+          return step22
         }
-
+      case 3:
+        let step31 = validateFirstStep(false)
+        let step32 = validateSecondStep()
+        if(!step31) {
+          console.error('First step error')
+          return false
+        } else if(!step32) {
+          console.error('Second step error')
+        } else {
+          console.log('Third step OK')
+          let step33 = validateThirdStep()
+          console.log(`FinalResult: ${step33}`)
+          return step33  
+      }
     }
   }
 }
