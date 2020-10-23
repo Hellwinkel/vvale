@@ -576,8 +576,11 @@ jQuery(document).ready(function () {
     const select = document.querySelector('select[name=country]');
 
     jQuery.ajax({
+      headers: {'Access-Control-Allow-Origin': '*'},
       url: 'http://api.londrinaweb.com.br/PUC/Paisesv2/0/1000',
       type: 'GET',
+      crossDomain: true,
+      dataType: 'jsonp',
       success: function(data) {
         data.forEach((e) => {
           let content
@@ -771,6 +774,7 @@ jQuery(document).ready(function () {
         url: "https://www.google.com/recaptcha/api/siteverify",
         type: "POST",
         async: false,
+        dataType: 'jsonpapplication/json',
         data: {
           secret: reCaptchaSecret,
           response: reCaptcha,
