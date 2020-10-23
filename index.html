@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/styles/shift-toward.css">
   <link rel="stylesheet" href="assets/styles/style.css">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="assets/scripts/credentials.js"></script>
 </head>
 <body>
   <div class="header"></div>
@@ -44,7 +45,7 @@
       </div>
       <form action="" class="form">
 
-        <div class="first-board step-board" data-step="1">
+        <div class="first-board step-board relative-step show-step" data-step="1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
           <div class="icon-container">
             <div class="icon notebook"></div>
@@ -82,7 +83,12 @@
           </div>
           <div class="captcha-container">
             <span>Verificação de segurança</span>
-            <div class="g-recaptcha" data-sitekey="6Lc3bdQZAAAAALhh32ZYEe2Cqua8jHVDVXwOJcfs"></div>
+            <script>
+              const captcha = `<div class="g-recaptcha" data-sitekey="${window.websiteKey}"></div>`
+
+              document.write(captcha)
+            </script>
+            
           </div>
           <label class="termos-container">
             <input type="checkbox" name="termos" id="termos">
@@ -167,7 +173,7 @@
           </div>
         </div>
 
-        <div class="third-board step-board relative-step show-step" data-step="3">
+        <div class="third-board step-board" data-step="3">
           <p class="note">Campos com asterisco(*) são obrigatórios.</p>
           <div class="field-container">
             <label for="country" class="field-name">

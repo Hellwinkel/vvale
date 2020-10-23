@@ -1,12 +1,11 @@
-const reCaptchaSecret = "6Lc3bdQZAAAAAG_SZVR9pqkZVnfS6HjNKXVveBU-";
+const reCaptchaSecret = window.secretKey
+const websiteKey = window.websiteKey
 let birthInitialHeight
 let genderInitialHeight
 let validNationalCEP = false
 let states = []
 
 jQuery(document).ready(function () {
-  console.clear()
-
   getCountry()
   getState()
   updateMap(jQuery('.step-board.relative-step.show-step').data('step'), jQuery('.step-board.relative-step.show-step').data('step'))
