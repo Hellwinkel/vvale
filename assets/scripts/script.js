@@ -9,6 +9,7 @@ jQuery(document).ready(function () {
 
   getCountry()
   getState()
+  updateMap(jQuery('.step-board.relative-step.show-step').data('step'), jQuery('.step-board.relative-step.show-step').data('step'))
 
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
@@ -642,8 +643,6 @@ jQuery(document).ready(function () {
   }
 }
 
-// CEP API 
-
 // Change fields for different account types (CPF/CNPJ)
 {
   function changeFields() {
@@ -973,6 +972,18 @@ jQuery(document).ready(function () {
       if (currentStep > nextStep) {
         const stroke = jQuery(`.sep[data-step=${nextStep}]`)[0];
 
+        jQuery('.sep').each(function() {
+          if(jQuery(this).data('step') < currentStep) {
+            jQuery(this).addClass('done')
+          }
+        })
+
+        jQuery('.map-step').each(function() {
+          if(jQuery(this).data('step') < currentStep) {
+            jQuery(this).addClass('done')
+          }
+        })
+
         setTimeout(function () {
           currentCircle.classList.remove("active");
 
@@ -997,8 +1008,19 @@ jQuery(document).ready(function () {
           }, 200);
         }, 1500);
       } else {
-        console.log("This function must receive different steps as parameter");
-        return false;
+        jQuery('.sep').each(function() {
+          if(jQuery(this).data('step') < currentStep) {
+            jQuery(this).addClass('done')
+            jQuery(this).removeClass('active')
+          }
+        })
+        
+        jQuery('.map-step').each(function() {
+          if(jQuery(this).data('step') < currentStep) {
+            jQuery(this).addClass('done')
+            jQuery(this).removeClass('active')
+          }
+        })
       }
     }
     updateStep(currentStep, nextStep);
