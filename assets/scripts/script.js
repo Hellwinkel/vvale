@@ -1,14 +1,17 @@
-const reCaptchaSecret = window.secretKey
-const websiteKey = window.websiteKey
-let birthInitialHeight
-let genderInitialHeight
-let validNationalCEP = false
-let states = []
+const reCaptchaSecret = window.secretKey;
+const websiteKey = window.websiteKey;
+let birthInitialHeight;
+let genderInitialHeight;
+let validNationalCEP = false;
+let states = [];
 
 jQuery(document).ready(function () {
-  getCountry()
-  getState()
-  updateMap(jQuery('.step-board.relative-step.show-step').data('step'), jQuery('.step-board.relative-step.show-step').data('step'))
+  getCountry();
+  getState();
+  updateMap(
+    jQuery(".step-board.relative-step.show-step").data("step"),
+    jQuery(".step-board.relative-step.show-step").data("step")
+  );
 
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
@@ -163,11 +166,12 @@ jQuery(document).ready(function () {
   // Validate birth date
   function validateBirth(field) {
     let isValid = false;
-    let dd  = field.value.split("/")[0];
-    let mm  = field.value.split("/")[1];
-    let yyyy  = field.value.split("/")[2];
+    let dd = field.value.split("/")[0];
+    let mm = field.value.split("/")[1];
+    let yyyy = field.value.split("/")[2];
 
-    let formatedBirth = yyyy + '-' + ("0" + mm).slice(-2) + '-' + ("0" + dd).slice(-2);
+    let formatedBirth =
+      yyyy + "-" + ("0" + mm).slice(-2) + "-" + ("0" + dd).slice(-2);
     let birthDate = new Date(formatedBirth);
     let currentDate = new Date();
 
@@ -191,167 +195,169 @@ jQuery(document).ready(function () {
 
   // Validate country
   function validateCountry(field, cep = null) {
-    let isValid = false
-    const country = field.options[field.selectedIndex]
+    let isValid = false;
+    const country = field.options[field.selectedIndex];
 
-    if(country.value !== ''){
-      if((cep !== null) && (cep !== typeof undefined)) {
-        if(cep.attr('disabled') !== typeof undefined) {
-          cep.removeAttr('disabled')
-          if(country.value === 'Brasil') {
-            cep.unmask()
-            cep.mask("00000000")
+    if (country.value !== "") {
+      if (cep !== null && cep !== typeof undefined) {
+        if (cep.attr("disabled") !== typeof undefined) {
+          cep.removeAttr("disabled");
+          if (country.value === "Brasil") {
+            cep.unmask();
+            cep.mask("00000000");
           } else {
-            cep.unmask()
-            cep.mask('0000999999')
+            cep.unmask();
+            cep.mask("0000999999");
           }
         }
       }
-      isValid = true
+      isValid = true;
     }
 
-    validateCep(cep, country.value)
+    validateCep(cep, country.value);
 
-    return isValid
+    return isValid;
   }
 
   // Validate CEP
   function validateCep(field, countryValue) {
-    let isValid = false
-    const state = document.querySelector('#state')
-    const city = document.querySelector('#city')
-    const neighborhood = document.querySelector('#neighborhood')
-    const street = document.querySelector('#street')
-    const number = document.querySelector('#number')
-    const obs = document.querySelector('#obs')
-    
-    if(field.value > 0) {
-      if(countryValue === 'Brasil') {
-        let cep = field.value
-        if(cep.length === 8) {
-          jQuery.ajax({
-            url: `https://viacep.com.br/ws/${cep}/json/`,
-            type: 'GET',
-            async: false,
-            success: function(data) {
-              if(data.erro === true) {
-                isValid = false
-                validNationalCEP = false
-              } else {
-                if(data.uf !== '') {
-                  states.forEach((e) => {
-                    if(e.initials === data.uf) {
-                      state.value = e.state
-                      checkLocationContent(state)
-                    }
-                  })
-                } else {
-                  state.removeAttribute('disabled')
-                }
+    let isValid = false;
+    const state = document.querySelector("#state");
+    const city = document.querySelector("#city");
+    const neighborhood = document.querySelector("#neighborhood");
+    const street = document.querySelector("#street");
+    const number = document.querySelector("#number");
+    const obs = document.querySelector("#obs");
 
-                if(data.localidade !== '') {
-                  city.value = data.localidade
-                  checkLocationContent(city)
+    if (field.value > 0) {
+      if (countryValue === "Brasil") {
+        let cep = field.value;
+        if (cep.length === 8) {
+          jQuery
+            .ajax({
+              url: `https://viacep.com.br/ws/${cep}/json/`,
+              type: "GET",
+              async: false,
+              success: function (data) {
+                if (data.erro === true) {
+                  isValid = false;
+                  validNationalCEP = false;
                 } else {
-                  city.removeAttribute('disabled')
-                }
+                  if (data.uf !== "") {
+                    states.forEach((e) => {
+                      if (e.initials === data.uf) {
+                        state.value = e.state;
+                        checkLocationContent(state);
+                      }
+                    });
+                  } else {
+                    state.removeAttribute("disabled");
+                  }
 
-                if(data.bairro !== '') {
-                  neighborhood.value = data.bairro
-                  checkLocationContent(neighborhood)
-                } else {
-                  neighborhood.removeAttribute('disabled')
-                }
+                  if (data.localidade !== "") {
+                    city.value = data.localidade;
+                    checkLocationContent(city);
+                  } else {
+                    city.removeAttribute("disabled");
+                  }
 
-                if(data.logradouro !== '') {
-                  street.value = data.logradouro
-                  checkLocationContent(street)
-                } else {
-                  street.removeAttribute('disabled')
-                }
+                  if (data.bairro !== "") {
+                    neighborhood.value = data.bairro;
+                    checkLocationContent(neighborhood);
+                  } else {
+                    neighborhood.removeAttribute("disabled");
+                  }
 
-                number.removeAttribute('disabled')
-                obs.removeAttribute('disabled')
-                
-                validNationalCEP = true
-                isValid = true
-              }
-            }
-          }).fail((err) => {
-            state.removeAttribute('disabled')
-            city.removeAttribute('disabled')
-            neighborhood.removeAttribute('disabled')
-            street.removeAttribute('disabled')
-            number.removeAttribute('disabled')
-            obs.removeAttribute('disabled')
-            
-            console.error(err)
-            
-            validNationalCEP = true
-            isValid = true
-          })
+                  if (data.logradouro !== "") {
+                    street.value = data.logradouro;
+                    checkLocationContent(street);
+                  } else {
+                    street.removeAttribute("disabled");
+                  }
+
+                  number.removeAttribute("disabled");
+                  obs.removeAttribute("disabled");
+
+                  validNationalCEP = true;
+                  isValid = true;
+                }
+              },
+            })
+            .fail((err) => {
+              state.removeAttribute("disabled");
+              city.removeAttribute("disabled");
+              neighborhood.removeAttribute("disabled");
+              street.removeAttribute("disabled");
+              number.removeAttribute("disabled");
+              obs.removeAttribute("disabled");
+
+              console.error(err);
+
+              validNationalCEP = true;
+              isValid = true;
+            });
         }
       } else {
-        let content = field.value
-        if(content.length >= 4) {
-          state.removeAttribute('disabled')
-          city.removeAttribute('disabled')
-          neighborhood.removeAttribute('disabled')
-          street.removeAttribute('disabled')
-          number.removeAttribute('disabled')
-          obs.removeAttribute('disabled')
-          
-          validNationalCEP = true
-          isValid = true
+        let content = field.value;
+        if (content.length >= 4) {
+          state.removeAttribute("disabled");
+          city.removeAttribute("disabled");
+          neighborhood.removeAttribute("disabled");
+          street.removeAttribute("disabled");
+          number.removeAttribute("disabled");
+          obs.removeAttribute("disabled");
+
+          validNationalCEP = true;
+          isValid = true;
         }
       }
     }
-    
-    if(isValid === false) {
-      state.value = ''
-      state.setAttribute = 'disabled'
-      checkLocationContent(state)
-      
-      city.value = ''
-      city.setAttribute = 'disabled'
-      checkLocationContent(city)
-      
-      neighborhood.value = ''
-      neighborhood.setAttribute = 'disabled'
-      checkLocationContent(neighborhood)
-      
-      street.value = ''
-      street.setAttribute = 'disabled'
-      checkLocationContent(street)
-      
-      number.value = ''
-      number.setAttribute = 'disabled'
-      checkLocationContent(number)
-      
-      obs.value = ''
-      obs.setAttribute = 'disabled'
-      checkLocationContent(obs)
+
+    if (isValid === false) {
+      state.value = "";
+      state.setAttribute = "disabled";
+      checkLocationContent(state);
+
+      city.value = "";
+      city.setAttribute = "disabled";
+      checkLocationContent(city);
+
+      neighborhood.value = "";
+      neighborhood.setAttribute = "disabled";
+      checkLocationContent(neighborhood);
+
+      street.value = "";
+      street.setAttribute = "disabled";
+      checkLocationContent(street);
+
+      number.value = "";
+      number.setAttribute = "disabled";
+      checkLocationContent(number);
+
+      obs.value = "";
+      obs.setAttribute = "disabled";
+      checkLocationContent(obs);
     }
-    return isValid
+    return isValid;
   }
 
   // Validate location content
-  
-  function validateLocationContent(field) {
-    let isValid = false
 
-    let fieldValue = field.value
+  function validateLocationContent(field) {
+    let isValid = false;
+
+    let fieldValue = field.value;
     if (fieldValue.length > 1) {
-      isValid = true
+      isValid = true;
     }
 
-    return isValid
+    return isValid;
   }
 
   // Return something
   function feedback(target, status) {
-    const elementType = $(target).prop('nodeName')
-    if (elementType !== 'SELECT') {
+    const elementType = $(target).prop("nodeName");
+    if (elementType !== "SELECT") {
       if (target.value === "") {
         target.classList.remove("invalid");
         target.classList.remove("valid");
@@ -362,7 +368,7 @@ jQuery(document).ready(function () {
     if (status === true) {
       target.classList.remove("invalid");
       target.classList.add("valid");
-    } 
+    }
 
     if (status === false) {
       target.classList.remove("valid");
@@ -376,50 +382,50 @@ jQuery(document).ready(function () {
       let valid = validateEmail(field);
       feedback(field, valid);
     }
-  
+
     function checkPassword(field, comparisonField) {
       let valid = validatePassword(field, comparisonField);
       feedback(field, valid);
     }
-  
+
     function checkUser(field) {
       let valid = validateUser(field);
       feedback(field, valid);
     }
-  
+
     function checkName(field) {
       let valid = validateName(field);
       feedback(field, valid);
     }
-  
+
     function checkDocument(field) {
       let valid = validateDocument(field);
       feedback(field, valid);
     }
-  
+
     function checkBirth(field) {
       let valid = validateBirth(field);
       feedback(field, valid);
     }
-  
+
     function checkPhone(field) {
       let valid = validatePhone(field);
       feedback(field, valid);
     }
 
     function checkCountry(field, cep) {
-      let valid = validateCountry(field, cep)
-      feedback(field, valid)
+      let valid = validateCountry(field, cep);
+      feedback(field, valid);
     }
 
     function checkCep(field, country) {
-      let valid = validateCep(field, country)
-      feedback(field, valid)
+      let valid = validateCep(field, country);
+      feedback(field, valid);
     }
 
     function checkLocationContent(field) {
-      let valid = validateLocationContent(field)
-      feedback(field, valid)
+      let valid = validateLocationContent(field);
+      feedback(field, valid);
     }
   }
 
@@ -428,34 +434,34 @@ jQuery(document).ready(function () {
     jQuery("#email").on("keyup", function () {
       checkEmail(this);
     });
-  
+
     jQuery("#first-pass").on("keyup", function () {
       const comparisonField = document.querySelector("#second-pass");
       checkPassword(this);
       checkPassword(comparisonField, this);
     });
-  
+
     jQuery("#second-pass").on("keyup", function () {
       const comparisonField = document.querySelector("#first-pass");
       checkPassword(this, comparisonField);
     });
-  
+
     jQuery("#user").on("keyup", function () {
       checkUser(this);
     });
-  
+
     jQuery("#first-name").on("keyup", function () {
       checkName(this);
     });
-  
+
     jQuery("#last-name").on("keyup", function () {
       checkName(this);
     });
-  
+
     jQuery("#document").on("keyup", function () {
       checkDocument(this);
     });
-  
+
     jQuery("#birth").on("keyup", function () {
       checkBirth(this);
     });
@@ -463,55 +469,55 @@ jQuery(document).ready(function () {
     jQuery("#birth").on("change", function () {
       checkBirth(this);
     });
-  
+
     jQuery("#phone").on("keyup", function () {
       checkPhone(this);
     });
-  
+
     jQuery("#cel").on("keyup", function () {
       checkPhone(this);
     });
-    
+
     jQuery("select#country").on("change", function () {
-      let cep = document.querySelector('#cep')
-      cep.value = ''
-      checkCep(cep, '')
-      checkCountry(this, jQuery('#cep'));
+      let cep = document.querySelector("#cep");
+      cep.value = "";
+      checkCep(cep, "");
+      checkCountry(this, jQuery("#cep"));
     });
-    
+
     jQuery("select#country").on("blur", function () {
-      checkCountry(this, jQuery('#cep'));
+      checkCountry(this, jQuery("#cep"));
     });
 
     jQuery("input#cep").on("keyup", function () {
-      let country = jQuery("select#country")[0]
-      country = country.options[country.selectedIndex].value
-      checkCep(this, country)
-    })
+      let country = jQuery("select#country")[0];
+      country = country.options[country.selectedIndex].value;
+      checkCep(this, country);
+    });
 
     jQuery("#state").on("keyup", function () {
-      checkLocationContent(this)
-    })
+      checkLocationContent(this);
+    });
 
     jQuery("#city").on("keyup", function () {
-      checkLocationContent(this)
-    })
-    
-    jQuery('#neighborhood').on("keyup", function() {
-      checkLocationContent(this)
-    })
-    
-    jQuery('#street').on("keyup", function() {
-      checkLocationContent(this)
-    })
-    
-    jQuery('#number').on("keyup", function() {
-      checkLocationContent(this)
-    })
-    
-    jQuery('#obs').on("keyup", function() {
-      checkLocationContent(this)
-    })
+      checkLocationContent(this);
+    });
+
+    jQuery("#neighborhood").on("keyup", function () {
+      checkLocationContent(this);
+    });
+
+    jQuery("#street").on("keyup", function () {
+      checkLocationContent(this);
+    });
+
+    jQuery("#number").on("keyup", function () {
+      checkLocationContent(this);
+    });
+
+    jQuery("#obs").on("keyup", function () {
+      checkLocationContent(this);
+    });
   }
 }
 
@@ -572,91 +578,102 @@ jQuery(document).ready(function () {
 // Get country list
 {
   function getCountry() {
-    const select = document.querySelector('select[name=country]');
+    const select = document.querySelector("select[name=country]");
 
-    jQuery.ajax({
-      headers: {'Access-Control-Allow-Origin': '*'},
-      url: 'http://api.londrinaweb.com.br/PUC/Paisesv2/0/1000',
-      type: 'GET',
-      crossDomain: true,
-      dataType: 'jsonp',
-      success: function(data) {
-        data.forEach((e) => {
-          let content
+    jQuery
+      .ajax({
+        headers: { "Access-Control-Allow-Origin": "*" },
+        url: "http://api.londrinaweb.com.br/PUC/Paisesv2/0/1000",
+        type: "GET",
+        crossDomain: true,
+        dataType: "jsonp",
+        success: function (data) {
+          data.forEach((e) => {
+            let content;
 
-          if(e.Pais === "Brasil") {
-            content = `
+            if (e.Pais === "Brasil") {
+              content = `
               <option value="${e.Pais}" selected>${e.Pais}</option>
-            `
+            `;
+            } else {
+              content = `
+              <option value="${e.Pais}">${e.Pais}</option>
+            `;
+            }
+
+            select.innerHTML += content;
+          });
+
+          checkCountry(select, jQuery("#cep"));
+        },
+      })
+      .fail(function () {
+        const fallbackCountry = [
+          "Brasil",
+          "Argentina",
+          "Paraguai",
+          "Uruguai",
+          "Outro",
+        ];
+        fallbackCountry.forEach(function (e) {
+          let content;
+          if (e === "Brasil") {
+            content = `
+            <option value="${e}" selected>${e}</option>
+          `;
           } else {
             content = `
-              <option value="${e.Pais}">${e.Pais}</option>
-            `
-          }
-
-          select.innerHTML += content
-        })
-
-        checkCountry(select, jQuery('#cep'))
-        
-      }
-    }).fail(function() {
-      const fallbackCountry = ['Brasil', 'Argentina', 'Paraguai', 'Uruguai', 'Outro']
-      fallbackCountry.forEach(function(e) {
-        let content
-        if(e === 'Brasil') {
-          content = `
-            <option value="${e}" selected>${e}</option>
-          `
-        } else {
-          content = `
             <option value="${e}">${e}</option>
-          `
-        }
-        select.innerHTML += content
-      })
+          `;
+          }
+          select.innerHTML += content;
+        });
 
-      checkCountry(select, jQuery('#cep'))
-    })
+        checkCountry(select, jQuery("#cep"));
+      });
   }
 }
 
 // Get state list
 {
   function getState() {
-    jQuery.ajax({
-      url: 'https://servicodados.ibge.gov.br/api/v1/localidades/estados',
-      type: 'GET',
-      success: function(data) {
-        data.forEach((e) => {
-          let item = {
-            state: e.nome,
-            initials: e.sigla
-          }
-          states.push(item)
-        })
-      }
-    }).fail(function(err) {
-      console.error(`
+    jQuery
+      .ajax({
+        url: "https://servicodados.ibge.gov.br/api/v1/localidades/estados",
+        type: "GET",
+        success: function (data) {
+          data.forEach((e) => {
+            let item = {
+              state: e.nome,
+              initials: e.sigla,
+            };
+            states.push(item);
+          });
+        },
+      })
+      .fail(function (err) {
+        console.error(`
         Can't access states API.
         Error: ${err}
-      `)
-    })
+      `);
+      });
   }
 }
 
 // Change fields for different account types (CPF/CNPJ)
 {
   function changeFields() {
-    const accountType = jQuery('.radio-container input[name="conta"]:checked')[0].id;
+    const accountType = jQuery(
+      '.radio-container input[name="conta"]:checked'
+    )[0].id;
     const document = jQuery('label[for="document"]');
     const documentField = jQuery("#document");
     const firstName = jQuery('label[for="first-name"]');
     const lastName = jQuery('label[for="last-name"');
     const birthContainer = jQuery(".birth-container");
-    const birthInput = jQuery('.birth-container input')
+    const birthInput = jQuery(".birth-container input");
     const genderContainer = jQuery(".gender-container");
-    const genderInput = jQuery('.gender-container input')
+    const genderInput = jQuery(".gender-container input");
 
     if (accountType === "fisica") {
       document.html('CPF<span class="required">*</span>');
@@ -665,24 +682,24 @@ jQuery(document).ready(function () {
       documentField.mask("000.000.000-00");
       firstName.html('Nome<span class="required">*</span>');
       lastName.html('Sobrenome<span class="required">*</span>');
-      birthContainer.css('display', 'block')
-      genderContainer.css('display', 'block')
+      birthContainer.css("display", "block");
+      genderContainer.css("display", "block");
       birthContainer.animate(
         {
           opacity: 1,
           height: birthInitialHeight,
-          overflow: 'initial'
+          overflow: "initial",
         },
         200
-        );
+      );
       genderContainer.animate(
         {
           opacity: 1,
           height: genderInitialHeight,
-          overflow: 'initial'
+          overflow: "initial",
         },
         200
-      )
+      );
     } else {
       document.html('CNPJ<span class="required">*</span>');
       documentField.attr("placeholder", "00.000.000/0000-00");
@@ -694,24 +711,24 @@ jQuery(document).ready(function () {
         {
           opacity: 0,
           height: 0,
-          overflow: 'hidden'
+          overflow: "hidden",
         },
         200
-      )
+      );
       genderContainer.animate(
         {
           opacity: 0,
           height: 0,
           marginBottom: 0,
-          overflow: 'hidden',
-          display: 'none'
+          overflow: "hidden",
+          display: "none",
         },
         200
-      )
-      setTimeout(function() {
-        birthContainer.css('display', 'none')
-        genderContainer.css('display', 'none')
-      }, 200)
+      );
+      setTimeout(function () {
+        birthContainer.css("display", "none");
+        genderContainer.css("display", "none");
+      }, 200);
     }
 
     return accountType;
@@ -746,7 +763,6 @@ jQuery(document).ready(function () {
     }
 
     if (needCaptcha === false) {
-      console.clear()
       console.log("First step verify");
       console.log(`
       Email: ${emailStatus}
@@ -773,17 +789,16 @@ jQuery(document).ready(function () {
         url: "https://www.google.com/recaptcha/api/siteverify",
         type: "POST",
         async: false,
-        dataType: 'jsonpapplication/json',
+        dataType: "jsonpapplication/json",
         data: {
           secret: reCaptchaSecret,
           response: reCaptcha,
         },
         success: function (data) {
-          console.log(data)
-          reCaptchaStatus = data.success
+          console.log(data);
+          reCaptchaStatus = data.success;
         },
-      })
-      console.clear()
+      });
       console.log("First step verify");
       console.log(`
       Email: ${emailStatus}
@@ -812,26 +827,26 @@ jQuery(document).ready(function () {
 //Validate second step fields
 {
   function validateSecondStep() {
-    const accountType = jQuery('.radio-container input[name="conta"]:checked')[0].id
-    const user = document.querySelector('input#user')
-    const firstName = document.querySelector('input#first-name')
-    const lastName = document.querySelector('input#last-name')
-    const documentType = document.querySelector('input#document')
-    const phone = document.querySelector('input#phone')
+    const accountType = jQuery(
+      '.radio-container input[name="conta"]:checked'
+    )[0].id;
+    const user = document.querySelector("input#user");
+    const firstName = document.querySelector("input#first-name");
+    const lastName = document.querySelector("input#last-name");
+    const documentType = document.querySelector("input#document");
+    const phone = document.querySelector("input#phone");
 
-    const userStatus = validateUser(user)
-    const firstNameStatus = validateName(firstName)
-    const lastNameStatus = validateName(lastName)
-    const documentStatus = validateDocument(documentType)
-    const phoneStatus = validatePhone(phone)
-
-    console.clear()
+    const userStatus = validateUser(user);
+    const firstNameStatus = validateName(firstName);
+    const lastNameStatus = validateName(lastName);
+    const documentStatus = validateDocument(documentType);
+    const phoneStatus = validatePhone(phone);
     console.log("Second step verify");
 
-    if(accountType === 'fisica') {
-      const birth = document.querySelector('input#birth')
+    if (accountType === "fisica") {
+      const birth = document.querySelector("input#birth");
 
-      const birthStatus = validateBirth(birth)
+      const birthStatus = validateBirth(birth);
 
       console.log(`
       userStatus: ${userStatus}
@@ -840,12 +855,19 @@ jQuery(document).ready(function () {
       documentStatus: ${documentStatus}
       phoneStatus: ${phoneStatus}
       birthStatus: ${birthStatus}
-      `)
+      `);
 
-      if ((userStatus) && (firstNameStatus) && (lastNameStatus) && (documentStatus) && (phoneStatus) && (birthStatus)) {
-        return true
+      if (
+        userStatus &&
+        firstNameStatus &&
+        lastNameStatus &&
+        documentStatus &&
+        phoneStatus &&
+        birthStatus
+      ) {
+        return true;
       } else {
-        return false
+        return false;
       }
     } else {
       console.log(`
@@ -854,12 +876,18 @@ jQuery(document).ready(function () {
       lastNameStatus: ${lastNameStatus}
       documentStatus: ${documentStatus}
       phoneStatus: ${phoneStatus}
-      `)
+      `);
 
-      if ((userStatus) && (firstNameStatus) && (lastNameStatus) && (documentStatus) && (phoneStatus)) {
-        return true
+      if (
+        userStatus &&
+        firstNameStatus &&
+        lastNameStatus &&
+        documentStatus &&
+        phoneStatus
+      ) {
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   }
@@ -868,21 +896,19 @@ jQuery(document).ready(function () {
 //Validate third step fields
 {
   function validateThirdStep() {
-    const state = document.querySelector('#state')
-    const city = document.querySelector('#city')
-    const neighborhood = document.querySelector('#neighborhood')
-    const street = document.querySelector('#street')
-    const number = document.querySelector('#number')
+    const state = document.querySelector("#state");
+    const city = document.querySelector("#city");
+    const neighborhood = document.querySelector("#neighborhood");
+    const street = document.querySelector("#street");
+    const number = document.querySelector("#number");
 
-    const countryStatus = validNationalCEP
-    const cepStatus = validNationalCEP
-    const stateStatus = validateLocationContent(state)
-    const cityStatus = validateLocationContent(city)
-    const neighborhoodStatus = validateLocationContent(neighborhood)
-    const streetStatus = validateLocationContent(street)
-    const numberStatus = validateLocationContent(number)
-
-    console.clear()
+    const countryStatus = validNationalCEP;
+    const cepStatus = validNationalCEP;
+    const stateStatus = validateLocationContent(state);
+    const cityStatus = validateLocationContent(city);
+    const neighborhoodStatus = validateLocationContent(neighborhood);
+    const streetStatus = validateLocationContent(street);
+    const numberStatus = validateLocationContent(number);
     console.log("Third step verify");
     console.log(`
       countryStatus: ${countryStatus}
@@ -892,9 +918,30 @@ jQuery(document).ready(function () {
       neighborhoodStatus: ${neighborhoodStatus}
       streetStatus: ${streetStatus}
       numberStatus: ${numberStatus}
-    `)
+    `);
 
-    if((countryStatus) && (cepStatus) && (stateStatus) && (cityStatus) && (neighborhoodStatus) && (streetStatus) && (numberStatus)) {
+    if (
+      countryStatus &&
+      cepStatus &&
+      stateStatus &&
+      cityStatus &&
+      neighborhoodStatus &&
+      streetStatus &&
+      numberStatus
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+// Validate fourth step fields
+{
+  function validateFourthStep() {
+    const selectedPlan = document.querySelector('input[name="plan"]:checked')
+
+    if(selectedPlan !== null) {
       return true
     } else {
       return false
@@ -907,39 +954,168 @@ jQuery(document).ready(function () {
   function stepValidation(step) {
     switch (step) {
       case 1:
-        let step11 = validateFirstStep(true)
-        if(!step11) {
-          console.error('First step error')
-          return false
+        let step11 = validateFirstStep(false);
+        if (!step11) {
+          let feedback = jQuery('span.feedback[data-step="1"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+            );
+            feedback.text('Preencha todos os campos corretamente')
+
+          console.error("First step error");
+          return false;
         } else {
-          console.log(`FinalResult: ${step11}`)
-          return step11
+          console.log(`FinalResult: ${step11}`);
+          return step11;
         }
       case 2:
-        let step21 = validateFirstStep(false)
+        let step21 = validateFirstStep(false);
+        let step22 = validateSecondStep();
         if (!step21) {
-          console.error('First step error')
-          return false
+          let feedback = jQuery('span.feedback[data-step="2"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Erro nos campos da primeira etapa")
+
+          console.error("First step error");
+          return false;
+        } else if (!step22) {
+          let feedback = jQuery('span.feedback[data-step="2"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Preencha todos os campos corretamente");
+
+          console.error("Second step error");
+          return false;
         } else {
-          console.log('First step OK')
-          let step22 = validateSecondStep()
-          console.log(`FinalResult: ${step22}`)
-          return step22
+          console.log("Second step OK");
+          console.log(`FinalResult: ${step22}`);
+          return step22;
         }
       case 3:
-        let step31 = validateFirstStep(false)
-        let step32 = validateSecondStep()
-        if(!step31) {
-          console.error('First step error')
+        let step31 = validateFirstStep(false);
+        let step32 = validateSecondStep();
+        let step33 = validateThirdStep();
+        if (!step31) {
+          let feedback = jQuery('span.feedback[data-step="3"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Erro nos campos da primeira etapa");
+
+          console.error("First step error");
           return false
-        } else if(!step32) {
-          console.error('Second step error')
+        } else if (!step32) {
+          let feedback = jQuery('span.feedback[data-step="3"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Erro nos campos da segunda etapa");
+
+          console.error("Second step error");
+          return false
+        } else if (!step33) {
+          let feedback = jQuery('span.feedback[data-step="3"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Preencha todos os campos corretamente");
+
+          console.error("Third step error");
+          return false;
         } else {
-          console.log('Third step OK')
-          let step33 = validateThirdStep()
-          console.log(`FinalResult: ${step33}`)
-          return step33  
-      }
+          console.log("Third step OK");
+          console.log(`FinalResult: ${step33}`);
+          return step33;
+        }
+      case 4:
+        let step41 = validateFirstStep(false);
+        let step42 = validateSecondStep();
+        let step43 = validateThirdStep();
+        let step44 = validateFourthStep();
+        if (!step41) {
+          let feedback = jQuery('span.feedback[data-step="4"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Erro nos campos da primeira etapa");
+
+          console.error("First step error");
+          return false
+        } else if (!step42) {
+          let feedback = jQuery('span.feedback[data-step="4"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Erro nos campos da segunda etapa");
+
+          console.error("Second step error");
+          return false
+        } else if (!step43) {
+          let feedback = jQuery('span.feedback[data-step="4"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Erro nos campos da terceira etapa");
+
+          console.error("Third step error");
+          return false;
+        } else if (!step44){
+          let feedback = jQuery('span.feedback[data-step="4"]');
+          feedback.animate(
+            {
+              height: 20,
+              marginBottom: 10,
+            },
+            250
+          );
+          feedback.text("Selecione um plano para finalizar");
+
+          console.error("Third step error");
+          return false;
+        } else {
+          console.log("Fourth step OK");
+          console.log(`FinalResult: ${step44}`);
+          return step44;
+        }
     }
   }
 }
@@ -951,7 +1127,7 @@ jQuery(document).ready(function () {
 
     // Toggle map
     function toggleMap(nextStep) {
-      if (nextStep >= 2) {
+      if ((nextStep >= 2) && (nextStep < 5)) {
         setTimeout(function () {
           stepContainer.classList.add("show-map");
         }, 400);
@@ -967,6 +1143,8 @@ jQuery(document).ready(function () {
     function updateStep(currentStep, nextStep) {
       const currentCircle = jQuery(`.map-step[data-step=${currentStep}]`)[0];
       const nextCircle = jQuery(`.map-step[data-step=${nextStep}]`)[0];
+      currentCircle.classList.add("active");
+
       if (nextCircle === undefined) {
         console.log(`Can't go anywhere`);
         return false;
@@ -975,17 +1153,17 @@ jQuery(document).ready(function () {
       if (currentStep > nextStep) {
         const stroke = jQuery(`.sep[data-step=${nextStep}]`)[0];
 
-        jQuery('.sep').each(function() {
-          if(jQuery(this).data('step') < currentStep) {
-            jQuery(this).addClass('done')
+        jQuery(".sep").each(function () {
+          if (jQuery(this).data("step") < currentStep) {
+            jQuery(this).addClass("done");
           }
-        })
+        });
 
-        jQuery('.map-step').each(function() {
-          if(jQuery(this).data('step') < currentStep) {
-            jQuery(this).addClass('done')
+        jQuery(".map-step").each(function () {
+          if (jQuery(this).data("step") < currentStep) {
+            jQuery(this).addClass("done");
           }
-        })
+        });
 
         setTimeout(function () {
           currentCircle.classList.remove("active");
@@ -1002,28 +1180,28 @@ jQuery(document).ready(function () {
         setTimeout(function () {
           currentCircle.classList.remove("active");
           currentCircle.classList.add("done");
-          
+
           setTimeout(function () {
             stroke.classList.add("done");
-            setTimeout(function() {
+            setTimeout(function () {
               nextCircle.classList.add("active");
             }, 200);
           }, 200);
         }, 1500);
       } else {
-        jQuery('.sep').each(function() {
-          if(jQuery(this).data('step') < currentStep) {
-            jQuery(this).addClass('done')
-            jQuery(this).removeClass('active')
+        jQuery(".sep").each(function () {
+          if (jQuery(this).data("step") < currentStep) {
+            jQuery(this).addClass("done");
+            jQuery(this).removeClass("active");
           }
-        })
-        
-        jQuery('.map-step').each(function() {
-          if(jQuery(this).data('step') < currentStep) {
-            jQuery(this).addClass('done')
-            jQuery(this).removeClass('active')
+        });
+
+        jQuery(".map-step").each(function () {
+          if (jQuery(this).data("step") < currentStep) {
+            jQuery(this).addClass("done");
+            jQuery(this).removeClass("active");
           }
-        })
+        });
       }
     }
     updateStep(currentStep, nextStep);
@@ -1072,7 +1250,9 @@ jQuery(document).ready(function () {
           }, 200);
         }, 650);
       } else {
-        console.log("Verifique se todos os campos estão preenchidos corretamente");
+        console.log(
+          "Verifique se todos os campos estão preenchidos corretamente"
+        );
       }
     } else {
       updateMap(currentStep, targetStep);
@@ -1095,7 +1275,7 @@ jQuery(document).ready(function () {
             nextBoard.classList.add("show-step");
           }, 200);
         }, 650);
-      }, 500)
+      }, 500);
     }
   }
 

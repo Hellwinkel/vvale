@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +10,21 @@
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <script src="assets/scripts/credentials.js"></script>
 </head>
+
 <body>
   <div class="header"></div>
   <div class="content-container">
-    <div class="form-container">
+    <form action="" class="form-container">
       <h2 class="form-title">Conta Vvale</h2>
       <div class="step-container">
-        <div class="map-step done" data-step="1">
+        <div class="map-step active" data-step="1">
           <div class="circle">
             1
           </div>
           <div class="step-name">Verificação</div>
         </div>
-        <div class="sep done" data-step="1"></div>
-        <div class="map-step active" data-step="2">
+        <div class="sep" data-step="1"></div>
+        <div class="map-step" data-step="2">
           <div class="circle">
             2
           </div>
@@ -43,7 +45,7 @@
           <div class="step-name">Plano</div>
         </div>
       </div>
-      <form action="" class="form">
+      <div class="form">
 
         <div class="first-board step-board relative-step show-step" data-step="1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
@@ -82,13 +84,11 @@
             </div>
           </div>
           <div class="captcha-container">
-            <span>Verificação de segurança</span>
+            <span>Verificação de segurança<span class="required">*</span></span>
             <script>
               const captcha = `<div class="g-recaptcha" data-sitekey="${window.websiteKey}"></div>`
-
               document.write(captcha)
             </script>
-            
           </div>
           <label class="termos-container">
             <input type="checkbox" name="termos" id="termos">
@@ -96,6 +96,7 @@
             Li e concordo com os <a href="#">termos de uso</a> e <a href="#">política de privacidade</a>
           </label>
           <div class="button-container">
+            <span class="feedback" data-step="1"></span>
             <input type="button" value="Cadastrar" class="avancar" data-step="1" data-target="2">
           </div>
         </div>
@@ -168,6 +169,7 @@
             <input type="text" name="cel" id="cel" class="field">
           </div>
           <div class="button-container">
+            <span class="feedback" data-step="2"></span>
             <input type="button" value="Avançar" class="avancar" data-step="2" data-target="3">
             <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
           </div>
@@ -218,20 +220,190 @@
             </div>
           </div>
           <div class="button-container">
+            <span class="feedback" data-step="3"></span>
             <input type="button" value="Avançar" class="avancar" data-step="3" data-target="4">
             <input type="button" value="Etapa anterior" class="voltar" data-step="3" data-target="2">
           </div>
         </div>
+      </div>
 
-        <div class="fourth-board step-board" data-step="4">
-          <p class="note">Em construção...</p>
-          <div class="button-container">
-            <input type="button" value="Avançar" class="avancar" data-step="4" data-target="5">
-            <input type="button" value="Etapa anterior" class="voltar" data-step="4" data-target="3">
+      <div class="fourth-board step-board" data-step="4">
+        <p class="highlight">
+          Escolha o plano que mais se adequa a sua necessidade!
+        </p>
+        <div class="input-container">
+          <div class="plan-container current-plan hr">
+            <div class="title">
+              <input type="radio" name="plan" id="free" checked="checked">
+              <div class="checkmark"></div>
+              <label for="free">Seu plano atual</label>
+            </div>
+            <div class="description-container">
+              <div class="image-container">
+                <img src="assets/images/free-image.png" alt="">
+              </div>
+              <div class="description">
+              </div>
+              <div class="value">
+                <div class="name">
+                  Grátis
+                </div>
+                <div class="price">
+                  R$ 0,00
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plan-container plan1 hr">
+            <div class="title">
+              <input type="radio" name="plan" id="plan1">
+              <div class="checkmark"></div>
+              <label for="plan1">Plano 1</label>
+            </div>
+            <div class="description-container">
+              <div class="image-container">
+                <img src="assets/images/simple-plan.png" alt="">
+              </div>
+              <div class="description">
+                <ul>
+                  <li>Acesso total ao Portal Vvale</li>
+                  <li>Matérias do Estadão</li>
+                  <li>Exibição limitada de publicidade</li>
+                  <li>Navegação mais rápida</li>
+                </ul>
+              </div>
+              <div class="value">
+                <div class="name">
+                  Teste de <br>30 dias
+                </div>
+                <div class="price">
+                  R$ 4,90*
+                  <p class="obs">* Válido somente <br>para o primeiro mês</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plan-container plan2">
+            <div class="title">
+              <input type="radio" name="plan" id="plan2">
+              <div class="checkmark"></div>
+              <label for="plan2">Plano 2</label>
+            </div>
+            <div class="description-container">
+              <div class="image-container">
+                <img src="assets/images/simple-plan.png" alt="">
+              </div>
+              <div class="description">
+                <ul>
+                  <li>Acesso total ao Portal Vvale</li>
+                  <li>Matérias do Estadão</li>
+                  <li>Exibição limitada de publicidade</li>
+                  <li>Navegação mais rápida</li>
+                </ul>
+              </div>
+              <div class="value">
+                <div class="name">
+                  Portal Vvale
+                </div>
+                <div class="price">
+                  <div class="month">
+                    R$ 9,90<span class="lower">/mês</span>
+                  </div>
+                  <div class="year">
+                    R$ 118,80<span class="lower">/ano</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plan-container plan3 highlight">
+            <div class="title">
+              <input type="radio" name="plan" id="plan3">
+              <div class="checkmark"></div>
+              <label for="plan3">Plano 3</label>
+              <div class="badge">Plano sugerido <div class="img"></div>
+              </div>
+            </div>
+            <div class="description-container">
+              <div class="image-container">
+                <img src="assets/images/group-plan.png" alt="">
+              </div>
+              <div class="description">
+                <ul>
+                  <li>Acesso total ao Portal Vvale</li>
+                  <li>Matérias do Estadão</li>
+                  <li>Exibição limitada de publicidade</li>
+                  <li>Navegação mais rápida</li>
+                  <li>Login extra para +2 usuários</li>
+                </ul>
+              </div>
+              <div class="value">
+                <div class="name">
+                  Portal Vvale Compartilhado
+                </div>
+                <div class="price">
+                  <div class="month">
+                    R$ 19,90<span class="lower">/mês</span>
+                  </div>
+                  <div class="year">
+                    R$ 238,80<span class="lower">/ano</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="plan-container plan4">
+            <div class="title">
+              <input type="radio" name="plan" id="plan4">
+              <div class="checkmark"></div>
+              <label for="plan4">Plano 4</label>
+            </div>
+            <div class="description-container">
+              <div class="image-container">
+                <img src="assets/images/simple-plan.png" alt="">
+              </div>
+              <div class="description">
+                <ul>
+                  <li>Acesso total ao Portal Vvale</li>
+                  <li>Matérias do Estadão</li>
+                  <li>Exibição limitada de publicidade</li>
+                  <li>Navegação mais rápida</li>
+                  <li>Canal de comunicação exclusivo para assinantes</li>
+                  <li>Versão impressa do Jornal O Comércio na sua casa*</li>
+                  <li>Réplica do impresso em versão digital</li>
+                </ul>
+              </div>
+              <div class="value">
+                <div class="name">
+                  Portal Vvale<br>
+                  + <span class="joc">JOC</span> impresso
+                </div>
+                <div class="price">
+                  <div class="month">
+                    R$ 20,00<span class="lower">/mês</span>
+                  </div>
+                  <div class="year">
+                    R$ 240,00<span class="lower">/ano</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="note">
+              <p class="obs"><strong>* Local de entrega sujeito a confirmação de cobertura</strong></p>
+            </div>
           </div>
         </div>
-      </form>
-    </div>
+        <div class="button-container">
+          <span class="feedback" data-step="4"></span>
+          <input type="button" value="Finalizar" class="avancar" data-step="4" data-target="5">
+          <input type="button" value="Etapa anterior" class="voltar" data-step="4" data-target="3">
+        </div>
+      </div>
+
+      <div class="last-board step-board" data-step="5">
+        <p class="note">Obrigado</p>
+      </div>
+    </form>
   </div>
   <script src="assets/scripts/jquery.min.js"></script>
   <script src="assets/scripts/jquery.mask.min.js"></script>
@@ -239,4 +411,5 @@
   <script src="assets/scripts/tippy.min.js"></script>
   <script src="assets/scripts/script.js"></script>
 </body>
+
 </html>

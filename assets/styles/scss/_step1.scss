@@ -49,10 +49,6 @@
     margin-bottom: 7px;
     font-weight: 600;
     display: inline-block;
-
-    .required {
-      color: red;
-    }
   }
 
   .field {
@@ -192,57 +188,6 @@
 
     & input:checked ~ .checkmark {
       background-color: $green;
-    }
-  }
-
-  .button-container {
-    width: 100%;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 62px;
-
-    input[type="button"].avancar {
-      padding: 15px 50px;
-      border: none;
-      background-color: $green;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 10px;
-      text-transform: uppercase;
-      position: relative;
-      cursor: pointer;
-      outline: none;
-      box-shadow: 0px 0px 0px rgba(149, 185, 73, 0);
-      transition: 150ms;
-      
-      &:hover, &:focus {
-        transform: translateY(-2px);
-        box-shadow: 0px 3px 8px rgba(149, 185, 73, 0.75),
-                    0px 0px 15px rgba(110, 129, 67, 0.5) inset;
-        
-      }
-    }
-
-    input[type="button"].voltar {
-      padding: 0px;
-      border: none;
-      background-color: transparent;
-      color: rgb(161, 161, 161);
-      font-size: 1rem;
-      font-weight: 300;
-      text-transform: lowercase;
-      position: relative;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: 150ms;
-      outline: none;
-      
-      &:hover, &:focus {
-        color: rgb(66, 66, 66);
-      }
     }
   }
 }
