@@ -939,12 +939,12 @@ jQuery(document).ready(function () {
 // Validate fourth step fields
 {
   function validateFourthStep() {
-    const selectedPlan = document.querySelector('input[name="plan"]:checked')
+    const selectedPlan = document.querySelector('input[name="plan"]:checked');
 
-    if(selectedPlan !== null) {
-      return true
+    if (selectedPlan !== null) {
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 }
@@ -963,8 +963,8 @@ jQuery(document).ready(function () {
               marginBottom: 10,
             },
             250
-            );
-            feedback.text('Preencha todos os campos corretamente')
+          );
+          feedback.text("Preencha todos os campos corretamente");
 
           console.error("First step error");
           return false;
@@ -984,7 +984,7 @@ jQuery(document).ready(function () {
             },
             250
           );
-          feedback.text("Erro nos campos da primeira etapa")
+          feedback.text("Erro nos campos da primeira etapa");
 
           console.error("First step error");
           return false;
@@ -1022,7 +1022,7 @@ jQuery(document).ready(function () {
           feedback.text("Erro nos campos da primeira etapa");
 
           console.error("First step error");
-          return false
+          return false;
         } else if (!step32) {
           let feedback = jQuery('span.feedback[data-step="3"]');
           feedback.animate(
@@ -1035,7 +1035,7 @@ jQuery(document).ready(function () {
           feedback.text("Erro nos campos da segunda etapa");
 
           console.error("Second step error");
-          return false
+          return false;
         } else if (!step33) {
           let feedback = jQuery('span.feedback[data-step="3"]');
           feedback.animate(
@@ -1071,7 +1071,7 @@ jQuery(document).ready(function () {
           feedback.text("Erro nos campos da primeira etapa");
 
           console.error("First step error");
-          return false
+          return false;
         } else if (!step42) {
           let feedback = jQuery('span.feedback[data-step="4"]');
           feedback.animate(
@@ -1084,7 +1084,7 @@ jQuery(document).ready(function () {
           feedback.text("Erro nos campos da segunda etapa");
 
           console.error("Second step error");
-          return false
+          return false;
         } else if (!step43) {
           let feedback = jQuery('span.feedback[data-step="4"]');
           feedback.animate(
@@ -1098,7 +1098,7 @@ jQuery(document).ready(function () {
 
           console.error("Third step error");
           return false;
-        } else if (!step44){
+        } else if (!step44) {
           let feedback = jQuery('span.feedback[data-step="4"]');
           feedback.animate(
             {
@@ -1122,12 +1122,12 @@ jQuery(document).ready(function () {
 
 // Update map step by step
 {
-  function updateMap(currentStep, nextStep) {
+  function updateMap(nextStep) {
     const stepContainer = document.querySelector(".step-container");
 
     // Toggle map
     function toggleMap(nextStep) {
-      if ((nextStep >= 2) && (nextStep < 5)) {
+      if (nextStep >= 2 && nextStep < 5) {
         setTimeout(function () {
           stepContainer.classList.add("show-map");
         }, 400);
@@ -1140,71 +1140,52 @@ jQuery(document).ready(function () {
     toggleMap(nextStep);
 
     // Update steps
-    function updateStep(currentStep, nextStep) {
-      const currentCircle = jQuery(`.map-step[data-step=${currentStep}]`)[0];
-      const nextCircle = jQuery(`.map-step[data-step=${nextStep}]`)[0];
-      currentCircle.classList.add("active");
+    function updateStep(nextStep) {
+      const nextCircle = document.querySelector(
+        `.map-step[data-step="${nextStep}"]`
+      );
+      let lastItem = 0;
 
-      if (nextCircle === undefined) {
+      // Get step number
+      jQuery(".map-step").each(function () {
+        if (jQuery(this).data("step") > lastItem) {
+          lastItem = jQuery(this).data("step");
+        }
+      });
+
+      if (nextCircle === null) {
         console.log(`Can't go anywhere`);
         return false;
       }
 
-      if (currentStep > nextStep) {
-        const stroke = jQuery(`.sep[data-step=${nextStep}]`)[0];
+      for (i = 1; i <= lastItem; i++) {
+        let mapStep = document.querySelector(`.map-step[data-step="${i}"]`);
+        let mapStroke = document.querySelector(`.sep[data-step="${i - 1}"]`);
 
-        jQuery(".sep").each(function () {
-          if (jQuery(this).data("step") < currentStep) {
-            jQuery(this).addClass("done");
+        if (i > nextStep) {
+          if (mapStep !== null) {
+            mapStep.classList.remove("active");
+            mapStep.classList.remove("done");
           }
-        });
-
-        jQuery(".map-step").each(function () {
-          if (jQuery(this).data("step") < currentStep) {
-            jQuery(this).addClass("done");
+          if (mapStroke !== null) {
+            mapStroke.classList.remove("done");
           }
-        });
-
-        setTimeout(function () {
-          currentCircle.classList.remove("active");
-
-          setTimeout(function () {
-            stroke.classList.remove("done");
-            nextCircle.classList.remove("done");
-            nextCircle.classList.add("active");
-          }, 200);
-        }, 1500);
-      } else if (currentStep < nextStep) {
-        const stroke = jQuery(`.sep[data-step=${currentStep}]`)[0];
-
-        setTimeout(function () {
-          currentCircle.classList.remove("active");
-          currentCircle.classList.add("done");
-
-          setTimeout(function () {
-            stroke.classList.add("done");
-            setTimeout(function () {
-              nextCircle.classList.add("active");
-            }, 200);
-          }, 200);
-        }, 1500);
-      } else {
-        jQuery(".sep").each(function () {
-          if (jQuery(this).data("step") < currentStep) {
-            jQuery(this).addClass("done");
-            jQuery(this).removeClass("active");
+        } else {
+          if (mapStep !== null) {
+            mapStep.classList.remove("active");
+            mapStep.classList.add("done");
           }
-        });
-
-        jQuery(".map-step").each(function () {
-          if (jQuery(this).data("step") < currentStep) {
-            jQuery(this).addClass("done");
-            jQuery(this).removeClass("active");
+          if (mapStroke !== null) {
+            mapStroke.classList.add("done");
           }
-        });
+        }
       }
+      nextCircle.classList.remove("done");
+      nextCircle.classList.add("active");
+
+      return true;
     }
-    updateStep(currentStep, nextStep);
+    updateStep(nextStep);
   }
 }
 
@@ -1230,14 +1211,16 @@ jQuery(document).ready(function () {
 
     if (currentStep < targetStep) {
       if (stepValidation(currentStep) === true) {
-        updateMap(currentStep, nextStep);
-
-        const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
-        const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
-
         const body = $("html, body");
         const form = $(".content-container").offset().top;
         body.stop().animate({ scrollTop: 0 }, 500, "swing");
+
+        setTimeout(function () {
+          updateMap(nextStep);
+        }, 500);
+
+        const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
+        const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
 
         currentBoard.classList.remove("show-step");
 
@@ -1255,14 +1238,16 @@ jQuery(document).ready(function () {
         );
       }
     } else {
-      updateMap(currentStep, targetStep);
-
-      const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
-      const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
-
       const body = $("html, body");
       const form = $(".content-container").offset().top;
       body.stop().animate({ scrollTop: 0 }, 500, "swing");
+
+      setTimeout(function () {
+        updateMap(nextStep);
+      }, 500);
+
+      const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
+      const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
 
       setTimeout(function () {
         currentBoard.classList.remove("show-step");
