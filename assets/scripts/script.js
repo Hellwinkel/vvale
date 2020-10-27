@@ -4,10 +4,12 @@ let birthInitialHeight;
 let genderInitialHeight;
 let validNationalCEP = false;
 let states = [];
+let isVisiblePass = false
 
 jQuery(document).ready(function () {
   getCountry();
   getState();
+  getValue();
   updateMap(
     jQuery(".step-board.relative-step.show-step").data("step"),
     jQuery(".step-board.relative-step.show-step").data("step")
@@ -949,9 +951,327 @@ jQuery(document).ready(function () {
   }
 }
 
+// Get every value for the last step
+{
+  function getValue() {
+    let accessText = "";
+    let personalText = "";
+    let addressText = "";
+    let planText = "";
+
+    let account = {
+      email: document.querySelector("#email").value,
+      pass: document.querySelector("#first-pass").value,
+      user: document.querySelector("#user").value,
+      type: document
+        .querySelector('input[name="conta"]:checked')
+        .getAttribute("id"),
+      firstName: document.querySelector("#first-name").value,
+      lastName: document.querySelector("#last-name").value,
+      document: document.querySelector("#document").value,
+      birth: document.querySelector("#birth").value,
+      gender: document
+        .querySelector('input[name="genero"]:checked')
+        .getAttribute("id"),
+      phone: document.querySelector("#phone").value,
+      cel: document.querySelector("#cel").value,
+      country: document.querySelector("select#country").options[
+        document.querySelector("select").selectedIndex
+      ].value,
+      cep: document.querySelector("#cep").value,
+      state: document.querySelector("#state").value,
+      city: document.querySelector("#city").value,
+      neighborhood: document.querySelector("#neighborhood").value,
+      street: document.querySelector("#street").value,
+      number: document.querySelector("#number").value,
+      comp: document.querySelector("#obs").value,
+      plan: document
+        .querySelector('input[name="plan"]:checked')
+        .getAttribute("id"),
+      planName: "",
+      planTemp: "",
+      planValue: "",
+    };
+
+    if (account.type === "fisica") {
+      account.type = "Pessoa física";
+    } else {
+      account.type = "Pessoa jurídica";
+    }
+
+    if (account.gender === "masculino") {
+      account.gender = "Masculino";
+    } else if (account.gender === "feminino") {
+      account.gender = "Feminino";
+    } else {
+      account.gender = "Outro";
+    }
+
+    switch (account.plan) {
+      case "free":
+        account.planName = "Plano gratuito";
+        break;
+      case "plan1":
+        account.planName = "Plano de teste";
+        account.planTemp = "30 dias";
+        account.planValue = "Pagamento único de R$ 4,90";
+        break;
+      case "plan2":
+        account.planName = "Portal Vvale";
+        account.planTemp = "12 meses";
+        account.planValue = "12 parcelas de R$ 9,90 (Totalizando R$ 118,80)";
+        break;
+      case "plan3":
+        account.planName = "Portal Vvale Compartilhado";
+        account.planTemp = "12 meses";
+        account.planValue = "12 parcelas de R$ 19,90 (Totalizando R$ 238,80)";
+        break;
+      case "plan4":
+        account.planName = "Portal Vvale + JOC Impresso";
+        account.planTemp = "12 meses";
+        account.planValue = "12 parcelas de R$ 20,00 (Totalizando R$ 240,00)";
+        break;
+    }
+
+    account.pass = account.pass.replace(/./g, "*");
+
+    accessText += `
+      <div class="row">
+        <strong>E-mail: </strong>
+        <span>${account.email}</span>
+      </div>
+      <div class="row">
+        <strong>Senha: </strong>
+        <span class="password-container">${account.pass}</span><input type="button" onclick="togglePass(this)" class="togglePass" data-char="${account.pass}">
+      </div>
+    `;
+
+    personalText += `
+      <div class="row">
+        <strong>Tipo de conta: </strong>
+        <span>${account.type}</span>
+      </div>
+      <div class="row">
+        <strong>Usuário: </strong>
+        <span>${account.user}</span>
+      </div>`;
+
+    if (
+      document
+        .querySelector('input[name="conta"]:checked')
+        .getAttribute("id") === "fisica"
+    ) {
+      personalText += `
+        <div class="row">
+          <strong>
+            <span>
+              Nome: 
+            </span> 
+          </strong>
+          <span>${account.firstName} ${account.lastName}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              CPF: 
+            </span> 
+          </strong>
+          <span>${account.document}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              Data de nascimento: 
+            </span> 
+          </strong>
+          <span>${account.birth}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              Gênero: 
+            </span> 
+          </strong>
+          <span>${account.gender}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              Telefone: 
+            </span> 
+          </strong>
+          <span>${account.phone}</span>
+        </div>`;
+
+      if (account.cel !== "") {
+        personalText += `
+        <div class="row cel-data-container">
+          <strong>
+            <span>
+              Celular: 
+            </span> 
+          </strong>
+          <span>${account.cel}</span>
+        </div>
+        `;
+      }
+    } else {
+      personalText += `
+        <div class="row">
+          <strong>
+            <span>
+              Razão social: 
+            </span> 
+          </strong>
+          <span>${account.firstName}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              Nome fantasia: 
+            </span> 
+          </strong>
+          <span>${account.lastName}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              CNPJ: 
+            </span> 
+          </strong>
+          <span>${account.document}</span>
+        </div>
+        <div class="row">
+          <strong>
+            <span>
+              Telefone: 
+            </span> 
+          </strong>
+          <span>${account.phone}</span>
+        </div>`;
+
+      if (account.cel !== "") {
+        personalText += `
+        <div class="row cel-data-container">
+          <strong>
+            <span>
+              Celular: 
+            </span> 
+          </strong>
+          <span>${account.cel}</span>
+        </div>
+        `;
+      }
+    }
+
+    addressText += `
+      <div class="row">
+        <strong>País: </strong>
+        <span>${account.country}</span>
+      </div>
+      <div class="row">
+        <strong>CEP: </strong>
+        <span>${account.cep}</span>
+      </div>
+      <div class="row">
+        <strong>Cidade: </strong>
+        <span>
+          ${account.city}
+        </span> - 
+        <span>
+          ${account.state}
+        </span>
+      </div>
+      <div class="row">
+        <strong>Endereço: </strong>
+        <span>
+          ${account.street}
+        </span>, 
+        <span>
+          ${account.number}
+        </span> - 
+        <span class="neighborhood-container">
+          ${account.neighborhood}
+        </span>
+      </div>
+    `;
+
+    if (account.comp !== "") {
+      addressText += `
+        <div class="row">
+          <strong>Complemento: </strong>
+          <span>
+            ${account.comp}
+          </span>
+        </div>
+      `;
+    }
+
+    planText += `
+      <div class="row">
+        <strong>
+          <span>
+            Nome: 
+          </span> 
+        </strong>
+        <span>${account.planName}</span>
+      </div>
+    `;
+
+    if (account.planTemp !== "") {
+      planText += `
+      <div class="row">
+        <strong>
+          <span>
+            Duração: 
+          </span> 
+        </strong>
+        <span>${account.planTemp}</span>
+      </div>
+    `;
+    }
+
+    if (account.planValue !== "") {
+      planText += `
+      <div class="row">
+        <strong>
+          <span>
+            Valor: 
+          </span> 
+        </strong>
+        <span>${account.planValue}</span>
+      </div>
+    `;
+    }
+
+    document.querySelector(".access-container").innerHTML = accessText;
+    document.querySelector(".personal-container").innerHTML = personalText;
+    document.querySelector(".address-container").innerHTML = addressText;
+    document.querySelector(".selected-plan-container").innerHTML = planText;
+  }
+}
+
+// Toggle pass (last step)
+{
+  function togglePass(element) {
+    let currentPass = document.querySelector('#first-pass').value
+    let hiddenPass = element.getAttribute('data-char')
+    let passContainer = document.querySelector('.password-container')
+
+    if(!isVisiblePass) {
+      passContainer.innerHTML = currentPass
+      isVisiblePass = true
+    } else {
+      passContainer.innerHTML = hiddenPass
+      isVisiblePass = false
+    }
+  }
+}
+
 // List of each step validation
 {
   function stepValidation(step) {
+    console.clear();
     switch (step) {
       case 1:
         let step11 = validateFirstStep(false);
@@ -970,6 +1290,15 @@ jQuery(document).ready(function () {
           return false;
         } else {
           console.log(`FinalResult: ${step11}`);
+          let feedback = jQuery('span.feedback[data-step="1"]');
+          feedback.animate(
+            {
+              height: 0,
+              marginBottom: 0,
+            },
+            250
+          );
+          feedback.text("");
           return step11;
         }
       case 2:
@@ -1004,6 +1333,15 @@ jQuery(document).ready(function () {
         } else {
           console.log("Second step OK");
           console.log(`FinalResult: ${step22}`);
+          let feedback = jQuery('span.feedback[data-step="2"]');
+          feedback.animate(
+            {
+              height: 0,
+              marginBottom: 0,
+            },
+            250
+          );
+          feedback.text("");
           return step22;
         }
       case 3:
@@ -1052,6 +1390,15 @@ jQuery(document).ready(function () {
         } else {
           console.log("Third step OK");
           console.log(`FinalResult: ${step33}`);
+          let feedback = jQuery('span.feedback[data-step="3"]');
+          feedback.animate(
+            {
+              height: 0,
+              marginBottom: 0,
+            },
+            250
+          );
+          feedback.text("");
           return step33;
         }
       case 4:
@@ -1114,6 +1461,15 @@ jQuery(document).ready(function () {
         } else {
           console.log("Fourth step OK");
           console.log(`FinalResult: ${step44}`);
+          let feedback = jQuery('span.feedback[data-step="4"]');
+          feedback.animate(
+            {
+              height: 0,
+              marginBottom: 0,
+            },
+            250
+          );
+          feedback.text("");
           return step44;
         }
     }
@@ -1153,11 +1509,6 @@ jQuery(document).ready(function () {
         }
       });
 
-      if (nextCircle === null) {
-        console.log(`Can't go anywhere`);
-        return false;
-      }
-
       for (i = 1; i <= lastItem; i++) {
         let mapStep = document.querySelector(`.map-step[data-step="${i}"]`);
         let mapStroke = document.querySelector(`.sep[data-step="${i - 1}"]`);
@@ -1180,8 +1531,10 @@ jQuery(document).ready(function () {
           }
         }
       }
-      nextCircle.classList.remove("done");
-      nextCircle.classList.add("active");
+      if (nextCircle !== null) {
+        nextCircle.classList.remove("done");
+        nextCircle.classList.add("active");
+      }
 
       return true;
     }
@@ -1194,6 +1547,7 @@ jQuery(document).ready(function () {
   function nextStep(step = null, nextStep = null) {
     const currentStep = step;
     const targetStep = nextStep;
+    getValue();
 
     if (currentStep === null || targetStep === null) {
       console.error(
@@ -1210,7 +1564,7 @@ jQuery(document).ready(function () {
     }
 
     if (currentStep < targetStep) {
-      if (stepValidation(currentStep) === true) {
+      // if (stepValidation(currentStep) === true) {
         const body = $("html, body");
         const form = $(".content-container").offset().top;
         body.stop().animate({ scrollTop: 0 }, 500, "swing");
@@ -1232,11 +1586,11 @@ jQuery(document).ready(function () {
             nextBoard.classList.add("show-step");
           }, 200);
         }, 650);
-      } else {
-        console.log(
-          "Verifique se todos os campos estão preenchidos corretamente"
-        );
-      }
+      // } else {
+      //   console.log(
+      //     "Verifique se todos os campos estão preenchidos corretamente"
+      //   );
+      // }
     } else {
       const body = $("html, body");
       const form = $(".content-container").offset().top;

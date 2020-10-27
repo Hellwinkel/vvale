@@ -1,0 +1,93 @@
+.last-board {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  p.highlight {
+    margin-bottom: 20px;
+  }
+
+  .input-container {
+    width: 97%;
+    border-radius: 5px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 30px;
+    
+    .final-header {
+      width: 100%;
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 10px 7px;
+      box-shadow: 0px 1px 0px 0px #eee;
+      margin-bottom: 15px;
+
+      p.title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #545454;
+      }
+
+      input.edit {
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+        color: $green;
+        text-transform: capitalize;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: 150ms;
+        position: relative;
+
+        &:hover, &:focus {
+          color: darken($green, 15%);
+        }
+      }
+    }
+
+    .final-content {
+      width: 100%;
+      display: flex;
+      flex-flow: column;
+
+      .content-row {
+        width: 100%;
+        margin-bottom: 5px;
+        display: flex;
+        flex-flow: column;
+
+        .row {
+          margin-bottom: 7px;
+          padding: 0px 10px;
+
+          .togglePass {
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            background-image: url('../images/eye.svg');
+            background-position: center;
+            background-size: 80%;
+            background-repeat: no-repeat;
+            border-radius: 0px;
+            border: none;
+            transform: translateY(4px);
+            margin-left: 10px;
+            cursor: pointer;
+          }
+
+          span.italic {
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}

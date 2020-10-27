@@ -11,6 +11,18 @@
   transition: 0.6s !important;
 }
 
+
+p.highlight {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #646464;
+  display: block;
+  max-width: 375px;
+  text-align: center;
+  line-height: 1.4;
+  margin-bottom: 45px;
+}
+
 .step-board {
   transform: translateY(-30px);
   opacity: 0;
@@ -43,7 +55,7 @@
       margin-bottom: 0px;
     }
 
-    input[type="button"].avancar {
+    input[type="button"].avancar, input[type="submit"] {
       padding: 15px 50px;
       border: none;
       background-color: $green;
