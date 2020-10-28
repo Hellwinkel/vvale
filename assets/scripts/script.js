@@ -9,7 +9,7 @@ let isVisiblePass = false
 jQuery(document).ready(function () {
   getCountry();
   getState();
-  getValue();
+  changeBorder()
   updateMap(
     jQuery(".step-board.relative-step.show-step").data("step"),
     jQuery(".step-board.relative-step.show-step").data("step")
@@ -461,6 +461,10 @@ jQuery(document).ready(function () {
     });
 
     jQuery("#document").on("keyup", function () {
+      checkDocument(this);
+    });
+
+    jQuery("#document").on("blur", function () {
       checkDocument(this);
     });
 
@@ -951,6 +955,25 @@ jQuery(document).ready(function () {
   }
 }
 
+// Change border of selected plan
+{
+  function changeBorder() {
+    const target = jQuery('input[name="plan"]')
+
+    target.each(function() {
+      let container = jQuery(`label[for="${jQuery(this).attr('id')}"]`)
+      
+      if(jQuery(this).is(':checked')) {
+        container.addClass('active-plan')
+      } else {
+        container.removeClass('active-plan')
+      }
+    })
+  }
+
+  jQuery('input[name="plan"]').on('click', changeBorder)
+}
+
 // Get every value for the last step
 {
   function getValue() {
@@ -975,9 +998,7 @@ jQuery(document).ready(function () {
         .getAttribute("id"),
       phone: document.querySelector("#phone").value,
       cel: document.querySelector("#cel").value,
-      country: document.querySelector("select#country").options[
-        document.querySelector("select").selectedIndex
-      ].value,
+      country: document.querySelector("select#country").options[document.querySelector("select").selectedIndex].value,
       cep: document.querySelector("#cep").value,
       state: document.querySelector("#state").value,
       city: document.querySelector("#city").value,
@@ -1268,6 +1289,31 @@ jQuery(document).ready(function () {
   }
 }
 
+// Feedback function
+{
+  function feedback(success, content = '') {
+    let feedback = jQuery('span.feedback')
+    
+    if(!success) {
+      feedback.each(function() {
+        jQuery(this).animate({
+          height: 20,
+          marginBottom: 10
+        }, 250)
+        jQuery(this).html(content)
+      })
+    } else {
+      feedback.each(function() {
+        jQuery(this).animate({
+          height: 0,
+          marginBottom: 0
+        }, 250)
+        jQuery(this).html('')
+      })
+    }
+  } 
+}
+
 // List of each step validation
 {
   function stepValidation(step) {
@@ -1276,72 +1322,29 @@ jQuery(document).ready(function () {
       case 1:
         let step11 = validateFirstStep(false);
         if (!step11) {
-          let feedback = jQuery('span.feedback[data-step="1"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Preencha todos os campos corretamente");
-
+          feedback(false, 'Preencha todos os campos corretamente')
           console.error("First step error");
           return false;
         } else {
           console.log(`FinalResult: ${step11}`);
-          let feedback = jQuery('span.feedback[data-step="1"]');
-          feedback.animate(
-            {
-              height: 0,
-              marginBottom: 0,
-            },
-            250
-          );
-          feedback.text("");
+          feedback(true)
           return step11;
         }
       case 2:
         let step21 = validateFirstStep(false);
         let step22 = validateSecondStep();
         if (!step21) {
-          let feedback = jQuery('span.feedback[data-step="2"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Erro nos campos da primeira etapa");
-
+          feedback(false, 'Verifique os campos da etapa anterior')
           console.error("First step error");
           return false;
         } else if (!step22) {
-          let feedback = jQuery('span.feedback[data-step="2"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Preencha todos os campos corretamente");
-
+          feedback(false, 'Preencha todos os campos corretamente')
           console.error("Second step error");
           return false;
         } else {
           console.log("Second step OK");
           console.log(`FinalResult: ${step22}`);
-          let feedback = jQuery('span.feedback[data-step="2"]');
-          feedback.animate(
-            {
-              height: 0,
-              marginBottom: 0,
-            },
-            250
-          );
-          feedback.text("");
+          feedback(true)
           return step22;
         }
       case 3:
@@ -1349,56 +1352,21 @@ jQuery(document).ready(function () {
         let step32 = validateSecondStep();
         let step33 = validateThirdStep();
         if (!step31) {
-          let feedback = jQuery('span.feedback[data-step="3"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Erro nos campos da primeira etapa");
-
+          feedback(false, 'Verifique os campos da primeira etapa')
           console.error("First step error");
           return false;
         } else if (!step32) {
-          let feedback = jQuery('span.feedback[data-step="3"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Erro nos campos da segunda etapa");
-
+          feedback(false, 'Verifique os campos da etapa anterior')
           console.error("Second step error");
           return false;
         } else if (!step33) {
-          let feedback = jQuery('span.feedback[data-step="3"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Preencha todos os campos corretamente");
-
+          feedback(false, 'Preencha todos os campos corretamente')
           console.error("Third step error");
           return false;
         } else {
           console.log("Third step OK");
           console.log(`FinalResult: ${step33}`);
-          let feedback = jQuery('span.feedback[data-step="3"]');
-          feedback.animate(
-            {
-              height: 0,
-              marginBottom: 0,
-            },
-            250
-          );
-          feedback.text("");
+          feedback(true)
           return step33;
         }
       case 4:
@@ -1407,69 +1375,25 @@ jQuery(document).ready(function () {
         let step43 = validateThirdStep();
         let step44 = validateFourthStep();
         if (!step41) {
-          let feedback = jQuery('span.feedback[data-step="4"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Erro nos campos da primeira etapa");
-
+          feedback(false, 'Verifique os campos da primeira etapa')
           console.error("First step error");
           return false;
         } else if (!step42) {
-          let feedback = jQuery('span.feedback[data-step="4"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Erro nos campos da segunda etapa");
-
+          feedback(false, 'Verifique os campos da segunda etapa')
           console.error("Second step error");
           return false;
         } else if (!step43) {
-          let feedback = jQuery('span.feedback[data-step="4"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Erro nos campos da terceira etapa");
-
+          feedback(false, 'Verifique os campos da etapa anterior')
           console.error("Third step error");
           return false;
         } else if (!step44) {
-          let feedback = jQuery('span.feedback[data-step="4"]');
-          feedback.animate(
-            {
-              height: 20,
-              marginBottom: 10,
-            },
-            250
-          );
-          feedback.text("Selecione um plano para finalizar");
-
+          feedback(false, 'Preencha todos os campos corretamente')
           console.error("Third step error");
           return false;
         } else {
           console.log("Fourth step OK");
           console.log(`FinalResult: ${step44}`);
-          let feedback = jQuery('span.feedback[data-step="4"]');
-          feedback.animate(
-            {
-              height: 0,
-              marginBottom: 0,
-            },
-            250
-          );
-          feedback.text("");
+          feedback(true)
           return step44;
         }
     }
@@ -1483,11 +1407,13 @@ jQuery(document).ready(function () {
 
     // Toggle map
     function toggleMap(nextStep) {
-      if (nextStep >= 2 && nextStep < 5) {
+      if (nextStep >= 2 && nextStep < 6) {
+        jQuery('.feedback.top').css('display', 'block')
         setTimeout(function () {
           stepContainer.classList.add("show-map");
         }, 400);
       } else {
+        jQuery('.feedback.top').css('display', 'none')
         setTimeout(function () {
           stepContainer.classList.remove("show-map");
         }, 400);
@@ -1564,7 +1490,7 @@ jQuery(document).ready(function () {
     }
 
     if (currentStep < targetStep) {
-      // if (stepValidation(currentStep) === true) {
+      if (stepValidation(currentStep) === true) {
         const body = $("html, body");
         const form = $(".content-container").offset().top;
         body.stop().animate({ scrollTop: 0 }, 500, "swing");
@@ -1586,12 +1512,13 @@ jQuery(document).ready(function () {
             nextBoard.classList.add("show-step");
           }, 200);
         }, 650);
-      // } else {
-      //   console.log(
-      //     "Verifique se todos os campos estão preenchidos corretamente"
-      //   );
-      // }
+      } else {
+        console.log(
+          "Verifique se todos os campos estão preenchidos corretamente"
+        );
+      }
     } else {
+      feedback(true, '')
       const body = $("html, body");
       const form = $(".content-container").offset().top;
       body.stop().animate({ scrollTop: 0 }, 500, "swing");
@@ -1629,4 +1556,10 @@ jQuery(document).ready(function () {
     let target = jQuery(this).data("target");
     nextStep(step, target);
   });
+  
+  jQuery('.map-step').click(function() {
+    let step = jQuery('.step-board.relative-step.show-step').data('step')
+    let target = jQuery(this).data('step')
+    nextStep(step, target);
+  })
 }

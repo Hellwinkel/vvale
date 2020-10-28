@@ -12,8 +12,18 @@
 
     .plan-container {
       margin-bottom: 15px;
-      padding: 25px 10px 40px;
+      padding: 20px 10px 30px 15px;
       position: relative;
+      width: 98%;
+      left: 1%;
+      cursor: pointer;
+      box-shadow: 0px 0px 0px 1px #efefef;
+      border-radius: 8px;
+      transition: 150ms;
+      
+      &.active-plan {
+        box-shadow: 0px 0px 0px 2px #79b032;
+      }
 
       .title {
         margin-bottom: 10px;
@@ -22,11 +32,6 @@
         flex-flow: row;
         align-items: center;
         justify-content: flex-start;
-
-        input,
-        label {
-          cursor: pointer;
-        }
 
         input {
           position: absolute;
@@ -66,7 +71,7 @@
           }
         }
         
-        label {
+        p {
           padding-left: 30px;
           display: inline-block;
           width: 35%;
@@ -91,10 +96,6 @@
       }
 
       &.highlight {
-        border: 2px solid $green;
-        border-radius: 8px;
-        padding: 20px 10px;
-
         .title {
           margin-bottom: 10px;
           padding-bottom: 45px;
@@ -133,17 +134,17 @@
         }
       }
 
-      &.hr {
-        &:after {
-          position: absolute;
-          content: '';
-          height: 1px;
-          width: 96%;
-          left: 2%;
-          bottom: 0;
-          background-color: rgb(177, 177, 177);
-        }
-      }
+      // &.hr {
+      //   &:after {
+      //     position: absolute;
+      //     content: '';
+      //     height: 1px;
+      //     width: 96%;
+      //     left: 2%;
+      //     bottom: 0;
+      //     background-color: rgb(177, 177, 177);
+      //   }
+      // }
 
       .description-container {
         display: flex;

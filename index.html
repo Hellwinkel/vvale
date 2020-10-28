@@ -45,6 +45,7 @@
           <div class="step-name">Plano</div>
         </div>
       </div>
+      <span class="feedback top"></span>
       <div class="form">
 
         <div class="first-board step-board" data-step="1">
@@ -96,7 +97,7 @@
             Li e concordo com os <a href="#">termos de uso</a> e <a href="#">política de privacidade</a>
           </label>
           <div class="button-container">
-            <span class="feedback" data-step="1"></span>
+            <span class="feedback"></span>
             <input type="button" value="Cadastrar" class="avancar" data-step="1" data-target="2">
           </div>
         </div>
@@ -169,7 +170,7 @@
             <input type="text" name="cel" id="cel" class="field">
           </div>
           <div class="button-container">
-            <span class="feedback" data-step="2"></span>
+            <span class="feedback"></span>
             <input type="button" value="Avançar" class="avancar" data-step="2" data-target="3">
             <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
           </div>
@@ -182,7 +183,6 @@
               País<span class="required">*</span>
             </label>
             <select name="country" id="country" class="field">
-              <option value disabled selected>Selecione um país</option>
             </select>
             <label for="cep" class="field-name">
               CEP<span class="required">*</span>
@@ -220,7 +220,7 @@
             </div>
           </div>
           <div class="button-container">
-            <span class="feedback" data-step="3"></span>
+            <span class="feedback"></span>
             <input type="button" value="Avançar" class="avancar" data-step="3" data-target="4">
             <input type="button" value="Etapa anterior" class="voltar" data-step="3" data-target="2">
           </div>
@@ -232,11 +232,11 @@
           Escolha o plano que mais se adequa a sua necessidade!
         </p>
         <div class="input-container">
-          <div class="plan-container current-plan hr">
+          <label for="free" class="plan-container current-plan hr">
             <div class="title">
               <input type="radio" name="plan" id="free" checked="checked">
               <div class="checkmark"></div>
-              <label for="free">Seu plano atual</label>
+              <p>Seu plano atual</p>
             </div>
             <div class="description-container">
               <div class="image-container">
@@ -259,12 +259,12 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="plan-container plan1 hr">
+          </label>
+          <label for="plan1" class="plan-container plan1 hr">
             <div class="title">
               <input type="radio" name="plan" id="plan1">
               <div class="checkmark"></div>
-              <label for="plan1">Plano 1</label>
+              <p>Plano 1</p>
             </div>
             <div class="description-container">
               <div class="image-container">
@@ -288,12 +288,12 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="plan-container plan2">
+          </label>
+          <label for="plan2" class="plan-container plan2">
             <div class="title">
               <input type="radio" name="plan" id="plan2">
               <div class="checkmark"></div>
-              <label for="plan2">Plano 2</label>
+              <p>Plano 2</p>
             </div>
             <div class="description-container">
               <div class="image-container">
@@ -321,12 +321,12 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="plan-container plan3 highlight">
+          </label>
+          <label for="plan3" class="plan-container plan3 highlight">
             <div class="title">
               <input type="radio" name="plan" id="plan3">
               <div class="checkmark"></div>
-              <label for="plan3">Plano 3</label>
+              <p>Plano 3</p>
               <div class="badge">Plano sugerido <div class="img"></div>
               </div>
             </div>
@@ -357,12 +357,12 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="plan-container plan4">
+          </label>
+          <label for="plan4" class="plan-container plan4">
             <div class="title">
               <input type="radio" name="plan" id="plan4">
               <div class="checkmark"></div>
-              <label for="plan4">Plano 4</label>
+              <p>Plano 4</p>
             </div>
             <div class="description-container">
               <div class="image-container">
@@ -397,10 +397,10 @@
             <div class="note">
               <p class="obs"><strong>* Local de entrega sujeito a confirmação de cobertura</strong></p>
             </div>
-          </div>
+          </label>
         </div>
         <div class="button-container">
-          <span class="feedback" data-step="4"></span>
+          <span class="feedback"></span>
           <input type="button" value="Conferir" class="avancar" data-step="4" data-target="5">
           <input type="button" value="Etapa anterior" class="voltar" data-step="4" data-target="3">
         </div>
@@ -454,7 +454,7 @@
           </div>
         </div>
         <div class="button-container">
-          <span class="feedback" data-step="4"></span>
+          <span class="feedback"></span>
           <input type="submit" value="Finalizar" class="avancar">
           <input type="button" value="Etapa anterior" class="voltar" data-step="5" data-target="4">
         </div>

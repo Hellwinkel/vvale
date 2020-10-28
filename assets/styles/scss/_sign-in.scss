@@ -23,6 +23,19 @@ p.highlight {
   margin-bottom: 45px;
 }
 
+span.feedback {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: .85rem;
+  overflow: hidden;
+  color: rgb(248, 52, 52);
+  font-weight: 600;
+  
+  height: 0;
+  margin-bottom: 0px;
+}
+
 .step-board {
   transform: translateY(-30px);
   opacity: 0;
@@ -33,6 +46,15 @@ p.highlight {
   height: 0px;
   overflow-y: hidden;
   min-width: 295px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #333;
+
+  @media screen and (max-width: 475px) {
+    padding: 0px 2%;
+  }
 
   .button-container {
     width: 100%;
@@ -41,19 +63,6 @@ p.highlight {
     align-items: center;
     justify-content: center;
     min-height: 62px;
-
-    span.feedback {
-      width: 100%;
-      text-align: center;
-      display: inline-block;
-      font-size: .85rem;
-      overflow: hidden;
-      color: rgb(248, 52, 52);
-      font-weight: 600;
-      
-      height: 0;
-      margin-bottom: 0px;
-    }
 
     input[type="button"].avancar, input[type="submit"] {
       padding: 15px 50px;
@@ -227,6 +236,7 @@ p.highlight {
     padding-bottom: 20px;
     z-index: 10;
     position: relative;
+    cursor: pointer;
 
     .circle {
       width: 45px;

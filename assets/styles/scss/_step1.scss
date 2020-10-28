@@ -1,9 +1,4 @@
 .step-board {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: flex-start;
-  color: #333;
 
   label {
     align-self: flex-start;
@@ -130,9 +125,7 @@
   }
 
   .termos-container {
-    // width: 108%;
     width: 100%;
-    // transform: translateX(-4%);
     display: inline-block;
     text-align: center;
     padding-left: 22px;
