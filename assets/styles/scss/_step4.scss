@@ -97,6 +97,7 @@
 
         .title {
           margin-bottom: 10px;
+          padding-bottom: 45px;
 
           .badge {
             padding: 7px 20px;
@@ -112,6 +113,12 @@
             align-items: center;
             justify-content: center;
             transform: translate3d(-15px, -9px, 0);
+
+            @media screen and (max-width: 639px) {
+              position: absolute;
+              left: calc(50% - 80px);
+              top: 45px;
+            }
   
             .img {
               width: 17px;
@@ -144,20 +151,47 @@
         align-items: stretch;
         justify-content: space-between;
 
+        @media screen and (max-width: 639px) {
+          flex-flow: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0px 10%;
+        }
+
         > * {
           display: flex;
           flex-flow: column;
           align-items: flex-start;
           justify-content: center;
+
+          @media screen and (max-width: 639px) {
+            align-items: center;
+            width: 100% !important;
+          }
         }
 
         .image-container {
           width: 20%;
           align-items: center;
+
+          @media screen and (max-width: 639px) {
+            margin: 15px 0px 30px;
+          }
         }
         .description {
           width: 45%;
           margin: 0px;
+          
+          @media screen and (max-width: 639px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+
+            > ul {
+              width: 100%;
+            }
+          } 
   
           ul {
             list-style: none;
@@ -182,6 +216,18 @@
                 background-size: cover;
                 background-repeat: no-repeat;
               }
+              
+              &.no {
+                color: #7e7e7e;
+
+                &:before {
+                  background-image: url('../images/no.png');
+                  top: calc(0.5rem - 2px);
+                  height: 10px;
+                  background-size: contain;
+                }
+              }
+              
   
               &:last-child {
                 margin-bottom: 0;
@@ -196,6 +242,10 @@
           align-items: flex-start;
           justify-content: center;
           width: 30%;
+
+          @media screen and (max-width: 639px) {
+            align-items: center;
+          }
   
           .name,
           .price {
@@ -209,6 +259,17 @@
             letter-spacing: -1px;
           }
 
+          .name {
+            @media screen and (max-width: 639px) {
+              text-align: center;
+              max-width: 250px;
+
+              br {
+                display: none;
+              }
+            }
+          }
+
           .joc {
             color: #ff8400;
           }
@@ -217,6 +278,12 @@
             font-size: 1.6rem;
             color: $green;
             letter-spacing: -1px;
+
+            @media screen and (max-width: 639px) {
+              display: flex;
+              flex-flow: column;
+              align-items: center;
+            }
 
             .lower {
               display: inline-block;
@@ -237,6 +304,10 @@
               display: inline-block;
               text-transform: lowercase;
               font-weight: 600;
+
+              @media screen and (max-width: 639px) {
+                text-align: center;
+              }
             }
           }
         }
@@ -252,9 +323,18 @@
         align-items: center;
         justify-content: center;
         margin-top: 25px;
+
+        @media screen and (max-width: 639px) {
+          text-align: center;
+        }
+
         .obs {
           font-size: 0.9rem;
           display: inline-block;
+
+          @media screen and (max-width: 639px) {
+            text-align: center;
+          }
         }
       }
     }

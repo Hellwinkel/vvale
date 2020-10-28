@@ -1185,8 +1185,8 @@ jQuery(document).ready(function () {
       <div class="row">
         <strong>Endereço: </strong>
         <span>
-          ${account.street}
-        </span>, 
+          ${account.street}, 
+        </span>
         <span>
           ${account.number}
         </span> - 
