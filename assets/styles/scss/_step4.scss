@@ -134,18 +134,6 @@
         }
       }
 
-      // &.hr {
-      //   &:after {
-      //     position: absolute;
-      //     content: '';
-      //     height: 1px;
-      //     width: 96%;
-      //     left: 2%;
-      //     bottom: 0;
-      //     background-color: rgb(177, 177, 177);
-      //   }
-      // }
-
       .description-container {
         display: flex;
         flex-flow: row;
@@ -177,8 +165,21 @@
 
           @media screen and (max-width: 639px) {
             margin: 15px 0px 30px;
+            flex-flow: row;
+          }
+
+          .newspaper-plan {
+            width: 53px;
+            margin-top: 10px;
+            
+            @media screen and (max-width: 639px) {
+              width: 47px;
+              margin-top: 0px;
+              margin-left: 5px;
+            }
           }
         }
+
         .description {
           width: 45%;
           margin: 0px;

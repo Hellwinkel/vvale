@@ -12,10 +12,6 @@
     margin-bottom: 15px !important;
   }
 
-  .birth-container {
-    min-height: 85px;
-  }
-
   .gender-container {
     min-height: 90px;
     display: flex !important;
@@ -85,4 +81,8 @@
       background-repeat: no-repeat;
     }
   }
+}
+
+input[type="date"] {
+  background-color: white;
 }

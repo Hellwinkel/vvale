@@ -16,6 +16,11 @@ jQuery(document).ready(function () {
     jQuery(".step-board.relative-step.show-step").data("step")
   );
 
+  jQuery('.vvale-svg').addClass('vvale-animate')
+
+  let currentDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+  jQuery('#birth').attr('max', currentDate)
+
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
         ? "(00) 0 0000-0000"
@@ -169,28 +174,11 @@ jQuery(document).ready(function () {
   // Validate birth date
   function validateBirth(field) {
     let isValid = false;
-    let dd = field.value.split("/")[0];
-    let mm = field.value.split("/")[1];
-    let yyyy = field.value.split("/")[2];
 
-    if(((dd === '30') && (mm === '02')) || ((dd === '31') && (mm === '02'))) {
-      return isValid = false
+    if(field.value !== '') {
+      isValid = true
     }
-
-    if(yyyy < '1850') {
-      return isValid = false
-    }
-
-    let formatedBirth =
-      yyyy + "-" + ("0" + mm).slice(-2) + "-" + ("0" + dd).slice(-2);
-    let birthDate = new Date(formatedBirth);
-    let currentDate = new Date();
-
-    if (field.value.length === 10) {
-      if (birthDate < currentDate) {
-        isValid = true;
-      }
-    }
+    
     return isValid;
   }
 
@@ -373,10 +361,12 @@ jQuery(document).ready(function () {
   function feedback(target, status) {
     const elementType = $(target).prop("nodeName");
     if (elementType !== "SELECT") {
-      if (target.value === "") {
-        target.classList.remove("invalid");
-        target.classList.remove("valid");
-        return false;
+      if (target.getAttribute('type') !== 'date') {
+        if (target.value === "") {
+          target.classList.remove("invalid");
+          target.classList.remove("valid");
+          return false;
+        }
       }
     }
 
@@ -384,7 +374,7 @@ jQuery(document).ready(function () {
       target.classList.remove("invalid");
       target.classList.add("valid");
     }
-
+    
     if (status === false) {
       target.classList.remove("valid");
       target.classList.add("invalid");
@@ -516,6 +506,10 @@ jQuery(document).ready(function () {
       checkBirth(this);
     });
 
+    jQuery("#birth").on("change", function () {
+      checkBirth(this);
+    });
+
     jQuery("#phone").on("keyup", function () {
       checkPhone(this);
     });
@@ -543,18 +537,6 @@ jQuery(document).ready(function () {
       checkCep(cep, "");
       checkCountry(this, cep);
     });
-
-    // jQuery("select#country").on("blur", function () {
-    //   let cep = document.querySelector("#cep");
-    //   let country = jQuery("select#country")[0];
-    //   country = country.options[country.selectedIndex].value;
-    //   if (country !== previousCountry) {
-    //     cep.value = "";
-    //     previousCountry = country
-    //   }
-    //   checkCep(cep, "");
-    //   checkCountry(this, jQuery(cep));
-    // });
 
     jQuery("input#cep").on("keyup", function () {
       let country = jQuery("select#country")[0];
@@ -684,7 +666,9 @@ jQuery(document).ready(function () {
         type: "GET",
         crossDomain: true,
         dataType: "jsonp",
+        async: true,
         success: function (data) {
+          let finalString = ''
           data.forEach((e) => {
             let content;
 
@@ -698,8 +682,10 @@ jQuery(document).ready(function () {
             `;
             }
 
-            select.innerHTML += content;
+            finalString += content;
           });
+
+          select.innerHTML = finalString;
 
           previousCountry = jQuery("select#country")[0];
           previousCountry = previousCountry.options[previousCountry.selectedIndex].value;
@@ -740,6 +726,7 @@ jQuery(document).ready(function () {
       .ajax({
         url: "https://servicodados.ibge.gov.br/api/v1/localidades/estados",
         type: "GET",
+        async: true,
         success: function (data) {
           data.forEach((e) => {
             let item = {
@@ -794,6 +781,7 @@ jQuery(document).ready(function () {
       genderContainer.animate(
         {
           opacity: 1,
+          minHeight: 85,
           height: genderInitialHeight,
           overflow: "initial",
         },
@@ -818,6 +806,7 @@ jQuery(document).ready(function () {
         {
           opacity: 0,
           height: 0,
+          minHeight: 0,
           marginBottom: 0,
           overflow: "hidden",
           display: "none",

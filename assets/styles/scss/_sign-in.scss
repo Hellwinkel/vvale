@@ -1,3 +1,35 @@
+.svg-container {
+  width: 15%;
+  margin-bottom: 15px;
+  min-width: 75px;
+
+  .vvale-svg {
+    fill: transparent;
+    stroke: $green;
+    stroke-miterlimit: 10;
+    stroke-dasharray: 1100;
+    stroke-dashoffset: 1100;
+
+    &.vvale-animate {
+      animation: animateSvg 2s ease-in forwards;
+    }
+  }
+  
+  @keyframes animateSvg {
+    0% {
+      stroke-dashoffset: 1100;
+      stroke-width: 4px;
+      fill: transparent;
+    } 85% {
+      stroke-dashoffset: 0;
+      stroke-width: 2px;
+      fill: transparent;
+    } 100% {
+      fill: $green;
+    }
+  }
+}
+
 .header {
   width: 100%;
   height: 112px;
@@ -134,7 +166,7 @@ span.feedback {
   .form-container {
     width: 100%;
     max-width: 620px;
-    padding: 45px 20px 30px;
+    padding: 30px 20px;
     border-radius: 10px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.07);
     display: flex;
@@ -146,7 +178,7 @@ span.feedback {
 
     @media screen and (max-width: 639px) {
       box-shadow: none;
-      padding: 45px 5px 30px;
+      padding: 15px 5px 30px;
       border-radius: 0px;
     }
 
