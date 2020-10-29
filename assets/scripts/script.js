@@ -5,6 +5,7 @@ let genderInitialHeight;
 let validNationalCEP = false;
 let states = [];
 let isVisiblePass = false
+let previousCountry
 
 jQuery(document).ready(function () {
   getCountry();
@@ -172,6 +173,14 @@ jQuery(document).ready(function () {
     let mm = field.value.split("/")[1];
     let yyyy = field.value.split("/")[2];
 
+    if(((dd === '30') && (mm === '02')) || ((dd === '31') && (mm === '02'))) {
+      return isValid = false
+    }
+
+    if(yyyy < '1850') {
+      return isValid = false
+    }
+
     let formatedBirth =
       yyyy + "-" + ("0" + mm).slice(-2) + "-" + ("0" + dd).slice(-2);
     let birthDate = new Date(formatedBirth);
@@ -196,20 +205,21 @@ jQuery(document).ready(function () {
   }
 
   // Validate country
-  function validateCountry(field, cep = null) {
+  function validateCountry(field, cep) {
     let isValid = false;
     const country = field.options[field.selectedIndex];
+    let cepField = jQuery(cep)
 
     if (country.value !== "") {
-      if (cep !== null && cep !== typeof undefined) {
-        if (cep.attr("disabled") !== typeof undefined) {
-          cep.removeAttr("disabled");
+      if (cepField !== null && cepField !== typeof undefined) {
+        if (jQuery(cepField).attr("disabled") !== typeof undefined) {
+          jQuery(cepField).removeAttr("disabled");
           if (country.value === "Brasil") {
-            cep.unmask();
-            cep.mask("00000000");
+            cepField.unmask();
+            cepField.mask("00000000");
           } else {
-            cep.unmask();
-            cep.mask("0000999999");
+            cepField.unmask();
+            cepField.mask("0000999999");
           }
         }
       }
@@ -231,10 +241,12 @@ jQuery(document).ready(function () {
     const number = document.querySelector("#number");
     const obs = document.querySelector("#obs");
 
-    if (field.value > 0) {
+    if (field.value !== undefined) {
       if (countryValue === "Brasil") {
-        let cep = field.value;
-        if (cep.length === 8) {
+        jQuery(field).mask('00000-000')
+        let cep = field.value
+        if (cep.length === 9) {
+          cep = cep.replace('-', '')
           jQuery
             .ajax({
               url: `https://viacep.com.br/ws/${cep}/json/`,
@@ -300,6 +312,7 @@ jQuery(document).ready(function () {
             });
         }
       } else {
+        jQuery(field).unmask()
         let content = field.value;
         if (content.length >= 4) {
           state.removeAttribute("disabled");
@@ -436,8 +449,18 @@ jQuery(document).ready(function () {
     jQuery("#email").on("keyup", function () {
       checkEmail(this);
     });
+    
+    jQuery("#email").on("blur", function () {
+      checkEmail(this);
+    });
 
     jQuery("#first-pass").on("keyup", function () {
+      const comparisonField = document.querySelector("#second-pass");
+      checkPassword(this);
+      checkPassword(comparisonField, this);
+    });
+    
+    jQuery("#first-pass").on("blur", function () {
       const comparisonField = document.querySelector("#second-pass");
       checkPassword(this);
       checkPassword(comparisonField, this);
@@ -447,16 +470,33 @@ jQuery(document).ready(function () {
       const comparisonField = document.querySelector("#first-pass");
       checkPassword(this, comparisonField);
     });
+    
+    jQuery("#second-pass").on("blur", function () {
+      const comparisonField = document.querySelector("#first-pass");
+      checkPassword(this, comparisonField);
+    });
 
     jQuery("#user").on("keyup", function () {
+      checkUser(this);
+    });
+    
+    jQuery("#user").on("blur", function () {
       checkUser(this);
     });
 
     jQuery("#first-name").on("keyup", function () {
       checkName(this);
     });
+    
+    jQuery("#first-name").on("blur", function () {
+      checkName(this);
+    });
 
     jQuery("#last-name").on("keyup", function () {
+      checkName(this);
+    });
+
+    jQuery("#last-name").on("blur", function () {
       checkName(this);
     });
 
@@ -472,11 +512,15 @@ jQuery(document).ready(function () {
       checkBirth(this);
     });
 
-    jQuery("#birth").on("change", function () {
+    jQuery("#birth").on("blur", function () {
       checkBirth(this);
     });
 
     jQuery("#phone").on("keyup", function () {
+      checkPhone(this);
+    });
+    
+    jQuery("#phone").on("blur", function () {
       checkPhone(this);
     });
 
@@ -484,18 +528,41 @@ jQuery(document).ready(function () {
       checkPhone(this);
     });
 
+    jQuery("#cel").on("blur", function () {
+      checkPhone(this);
+    });
+
     jQuery("select#country").on("change", function () {
       let cep = document.querySelector("#cep");
-      cep.value = "";
+      let country = jQuery("select#country")[0];
+      country = country.options[country.selectedIndex].value;
+      if (country !== previousCountry) {
+        cep.value = "";
+        previousCountry = country
+      }
       checkCep(cep, "");
-      checkCountry(this, jQuery("#cep"));
+      checkCountry(this, cep);
     });
 
-    jQuery("select#country").on("blur", function () {
-      checkCountry(this, jQuery("#cep"));
-    });
+    // jQuery("select#country").on("blur", function () {
+    //   let cep = document.querySelector("#cep");
+    //   let country = jQuery("select#country")[0];
+    //   country = country.options[country.selectedIndex].value;
+    //   if (country !== previousCountry) {
+    //     cep.value = "";
+    //     previousCountry = country
+    //   }
+    //   checkCep(cep, "");
+    //   checkCountry(this, jQuery(cep));
+    // });
 
     jQuery("input#cep").on("keyup", function () {
+      let country = jQuery("select#country")[0];
+      country = country.options[country.selectedIndex].value;
+      checkCep(this, country);
+    });
+
+    jQuery("input#cep").on("blur", function () {
       let country = jQuery("select#country")[0];
       country = country.options[country.selectedIndex].value;
       checkCep(this, country);
@@ -505,7 +572,15 @@ jQuery(document).ready(function () {
       checkLocationContent(this);
     });
 
+    jQuery("#state").on("blur", function () {
+      checkLocationContent(this);
+    });
+
     jQuery("#city").on("keyup", function () {
+      checkLocationContent(this);
+    });
+
+    jQuery("#city").on("blur", function () {
       checkLocationContent(this);
     });
 
@@ -513,7 +588,15 @@ jQuery(document).ready(function () {
       checkLocationContent(this);
     });
 
+    jQuery("#neighborhood").on("blur", function () {
+      checkLocationContent(this);
+    });
+
     jQuery("#street").on("keyup", function () {
+      checkLocationContent(this);
+    });
+
+    jQuery("#street").on("blur", function () {
       checkLocationContent(this);
     });
 
@@ -521,7 +604,15 @@ jQuery(document).ready(function () {
       checkLocationContent(this);
     });
 
+    jQuery("#number").on("blur", function () {
+      checkLocationContent(this);
+    });
+
     jQuery("#obs").on("keyup", function () {
+      checkLocationContent(this);
+    });
+
+    jQuery("#obs").on("blur", function () {
       checkLocationContent(this);
     });
   }
@@ -610,6 +701,8 @@ jQuery(document).ready(function () {
             select.innerHTML += content;
           });
 
+          previousCountry = jQuery("select#country")[0];
+          previousCountry = previousCountry.options[previousCountry.selectedIndex].value;
           checkCountry(select, jQuery("#cep"));
         },
       })
@@ -1317,7 +1410,6 @@ jQuery(document).ready(function () {
 // List of each step validation
 {
   function stepValidation(step) {
-    console.clear();
     switch (step) {
       case 1:
         let step11 = validateFirstStep(false);
@@ -1407,7 +1499,7 @@ jQuery(document).ready(function () {
 
     // Toggle map
     function toggleMap(nextStep) {
-      if (nextStep >= 2 && nextStep < 6) {
+      if (nextStep >= 2 && nextStep < 5) {
         jQuery('.feedback.top').css('display', 'block')
         setTimeout(function () {
           stepContainer.classList.add("show-map");
@@ -1473,7 +1565,6 @@ jQuery(document).ready(function () {
   function nextStep(step = null, nextStep = null) {
     const currentStep = step;
     const targetStep = nextStep;
-    getValue();
 
     if (currentStep === null || targetStep === null) {
       console.error(
@@ -1561,5 +1652,9 @@ jQuery(document).ready(function () {
     let step = jQuery('.step-board.relative-step.show-step').data('step')
     let target = jQuery(this).data('step')
     nextStep(step, target);
+  })
+
+  jQuery('input.avancar[type="button"][data-step="4"').click(function() {
+    getValue()
   })
 }
