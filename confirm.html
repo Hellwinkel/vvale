@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vvale</title>
+  <link rel="stylesheet" href="assets/styles/shift-toward.css">
+  <link rel="stylesheet" href="assets/styles/style.css">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="assets/scripts/credentials.js"></script>
+  <meta name="theme-color" content="#759238">
+</head>
+
+<body>
+  <div class="header"></div>
+  <div class="content-container">
+    <form action="" class="form-container">
+      <div class="svg-container">
+        <svg viewBox="0 0 261.36 285.3">
+          <title>Vvale</title>
+          <g data-name="Layer">
+            <path class="vvale-svg"
+              d="M136.25,110.51A351.33,351.33,0,0,0,260.42,2.19C236.65,121.71,189.69,214.5,123,284.59,48.41,209.31,11.9,124.76.92,34c31.15,72.67,75,129.68,138.48,162.38C140.32,166.28,139.81,137.25,136.25,110.51Z" />
+          </g>
+        </svg>
+      </div>
+      <h2 class="form-title">Confirmação</h2>
+      <div class="form">
+
+        <div class="confirmation-board step-board relative-step show-step" data-step="1">
+          <p class="content">
+            Enviaremos um código para confirmar sua identidade<br>
+            Para isso, selecione abaixo onde deseja recebê-lo
+          </p>
+          <div class="contact-container">
+            <label for="email" class="active" tabindex="0">
+              <input type="radio" name="validate-method" id="email" value="email" checked>
+              <span>E-mail</span>
+            </label>
+            <label for="phone" tabindex="0">
+              <input type="radio" name="validate-method" id="phone" value="phone">
+              <span>Celular</span>
+            </label>
+          </div>
+          <p class="content no-margin">O código será enviado para o endereço</p>
+          <div class="editable-container">
+            <input type="text" class="selected-method" name="email" disabled>
+            <div class="stroke"></div>
+            <button type="button" class="edit" data-function="edit">
+              <div class="pen"></div>
+            </button>
+          </div>
+
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Enviar" class="avancar" data-step="1" data-target="2">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="assets/scripts/jquery.min.js"></script>
+  <script src="assets/scripts/jquery.mask.min.js"></script>
+  <script src="assets/scripts/popper.min.js"></script>
+  <script src="assets/scripts/tippy.min.js"></script>
+  <script src="assets/scripts/confirmation.js"></script>
+</body>
+
+</html>
