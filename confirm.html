@@ -12,10 +12,10 @@
   <meta name="theme-color" content="#759238">
 </head>
 
-<body>
+<body class="confirm-page">
   <div class="header"></div>
   <div class="content-container">
-    <form action="" class="form-container">
+    <div class="form-container">
       <div class="svg-container">
         <svg viewBox="0 0 261.36 285.3">
           <title>Vvale</title>
@@ -28,9 +28,9 @@
       <h2 class="form-title">Confirmação</h2>
       <div class="form">
 
-        <div class="confirmation-board step-board relative-step show-step" data-step="1">
+        <form class="confirmation-board step-board relative-step show-step" data-step="1">
           <p class="content">
-            Enviaremos um código para confirmar sua identidade<br>
+            Enviaremos um código para confirmar sua conta<br>
             Para isso, selecione abaixo onde deseja recebê-lo
           </p>
           <div class="contact-container">
@@ -56,9 +56,19 @@
             <span class="feedback"></span>
             <input type="button" value="Enviar" class="avancar" data-step="1" data-target="2">
           </div>
-        </div>
+        </form>
+
+        <form class="confirmation-board step-board" data-step="2">
+          <p class="content content-feedback"></p>
+          <div class="contact-container code-container">
+            <input type="text" data-mask="0" inputmode="numeric" data-field="1">
+            <input type="text" data-mask="0" inputmode="numeric" data-field="2">
+            <input type="text" data-mask="0" inputmode="numeric" data-field="3">
+            <input type="text" data-mask="0" inputmode="numeric" data-field="4">
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
   <script src="assets/scripts/jquery.min.js"></script>
   <script src="assets/scripts/jquery.mask.min.js"></script>

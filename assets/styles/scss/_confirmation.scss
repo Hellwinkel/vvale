@@ -1,154 +1,182 @@
-.content-container .form-container .form {
-  max-width: 100%;
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
+.confirm-page {
+  .content-container .form-container .form {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 
-  p.content {
-    line-height: 1.5;
-    font-size: 1rem;
-    color: #545454;
+    p.content {
+      line-height: 1.5;
+      font-size: 1rem;
+      color: #545454;
 
-    &.no-margin {
-      margin-bottom: 3px;
+      &.no-margin {
+        margin-bottom: 3px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: 300ms;
+
+        &.show {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+    }
+
+    .contact-container {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 45px;
+      margin-top: 15px;
+
+      label {
+        display: inline-block;
+        padding: 10px;
+        cursor: pointer;
+        margin-right: 10px;
+        background-color: rgb(252, 255, 246);
+        width: 100px;
+        text-align: center;
+        font-size: 1.25rem;
+        border-radius: 7px;
+        border: 2px solid $green;
+        color: $green;
+        box-shadow: 0px 0px 0px 0px rgba(149, 185, 73, 0.3);
+        transition: 150ms;
+
+        &:hover {
+          box-shadow: 0px 0px 0px 2px rgba(149, 185, 73, 0.5);
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &:last-child {
+          margin-right: 0px;
+        }
+
+        &.active {
+          color: white;
+          background-color: $green;
+        }
+
+        input {
+          display: none;
+        }
+      }
+    }
+
+    .editable-container {
+      position: relative;
+      margin-bottom: 25px;
       opacity: 0;
       transform: translateY(10px);
       transition: 300ms;
-      
+
       &.show {
         opacity: 1;
         transform: translateY(0px);
       }
-    }
-  }
 
-  .contact-container {
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 45px;
-    margin-top: 15px;
-
-    label {
-      display: inline-block;
-      padding: 10px;
-      cursor: pointer;
-      margin-right: 10px;
-      background-color: rgb(252, 255, 246);
-      width: 100px;
-      text-align: center;
-      font-size: 1.25rem;
-      border-radius: 7px;
-      border: 2px solid $green;
-      color: $green;
-      box-shadow: 0px 0px 0px 0px rgba(149,185,73, 0.3);
-      transition: 150ms;
-
-      &:hover {
-        box-shadow: 0px 0px 0px 2px rgba(149,185,73, 0.5);
-      }
-
-      &:focus {
+      .selected-method {
+        text-align: center;
+        padding: 0px 0px 3px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: $green;
+        background-color: white;
+        border: none;
         outline: none;
+        min-width: 150px;
+        max-width: 250px;
       }
 
-      &:last-child {
-        margin-right: 0px;
-      }
-
-      &.active {
-        color: white;
-        background-color: $green;
-      }
-
-      input {
-        display: none;
-      }
-    }
-  }
-
-  .editable-container {
-    position: relative;
-    margin-bottom: 25px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: 300ms;
-    
-    &.show {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-
-    .tippy-box[data-theme~="vvale"] {
-      padding: 7px;
-      background-color: white;
-      color: #4b4b4b;
-      border-radius: 10px;
-      border: 2px solid #b3d66d;
-      box-shadow: 0px 3px 6px rgba(179, 214, 109, 0.15);
-    }
-
-    .selected-method {
-      text-align: center;
-      padding: 0px 0px 3px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: $green;
-      background-color: white;
-      border: none;
-      outline: none;
-      min-width: 150px;
-    }
-  
-    .stroke {
-      position: absolute;
-      content: '';
-      left: 0;
-      bottom: 0;
-      width: 0%;
-      height: 1px;
-      background-color: $green;
-      transition: 300ms;
-
-      &.active {
-        width: 100%;
-      }
-    }
-
-    .edit {
-      position: relative;
-      width: 20px;
-      height: 20px;
-      position: absolute;
-      right: 0;
-      top: calc(50% - 10px);
-      transform: translateX(20px);
-      border: none;
-      outline: none;
-      overflow: hidden;
-      background-color: transparent;
-      cursor: pointer;
-
-      .pen {
+      .stroke {
         position: absolute;
-        top: 0;
+        content: "";
         left: 0;
-        width: 100%;
-        height: 100%;
-        transition: 200ms;
-        background-position: center;
-        background-size: 80%;
-        background-repeat: no-repeat;
-        background-image: url('../images/edit.svg');
-        background-size: 85%;
+        bottom: 0;
+        width: 0%;
+        height: 1px;
+        background-color: $green;
+        transition: 300ms;
+
+        &.active {
+          width: 100%;
+        }
       }
 
-      &[data-function="save"] {
+      .edit {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 0;
+        top: calc(50% - 10px);
+        transform: translateX(20px);
+        border: none;
+        outline: none;
+        overflow: hidden;
+        background-color: transparent;
+        cursor: pointer;
+
         .pen {
-          transform: scale(0);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          transition: 200ms;
+          background-position: center;
+          background-size: 80%;
+          background-repeat: no-repeat;
+          background-image: url("../images/edit.svg");
+          background-size: 85%;
+        }
+
+        &[data-function="save"] {
+          .pen {
+            transform: scale(0);
+          }
+        }
+      }
+    }
+
+    .code-container {
+      input {
+        background-color: white;
+        padding: 5px;
+        border: 2px solid $green;
+        border-radius: 7px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $green;
+        width: 1.75em;
+        text-align: center;
+        outline: none;
+        margin-right: 10px;
+        box-shadow: 0px 0px 0px 0px rgba(149, 185, 73, 0.3);
+        transition: 150ms;
+
+        &::-moz-selection {
+          background: rgba(149, 185, 73, 0.5);
+        }
+        
+        &::selection {
+          background: rgba(149, 185, 73, 0.5);
+        }
+
+        &:last-child {
+          margin-right: 0px;
+        }
+
+        &:hover, &:focus {
+          box-shadow: 0px 0px 0px 2px rgba(149, 185, 73, 0.5);
         }
       }
     }
