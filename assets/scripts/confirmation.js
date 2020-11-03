@@ -1,5 +1,6 @@
 userEmail = 'guirovedah@gmail.com'
 userPhone = '(42) 9 8805-5068'
+let firstKey
 
 jQuery(document).ready(function () {
   jQuery('.vvale-svg').addClass('vvale-animate')
@@ -146,7 +147,7 @@ function validateFirstStep() {
   return isValid
 }
 
-// Control focus of every code input
+// Set code value on each input
 function inputFocus(e) {
   e.preventDefault()
   const key = e.which || e.keyCode
@@ -155,6 +156,8 @@ function inputFocus(e) {
   const nextElement = jQuery(`.code-container input[data-field="${inputIndex + 1}"]`)
   const prevElement = jQuery(`.code-container input[data-field="${inputIndex - 1}"]`)
   let keyValue = ''
+
+  console.log(key)
 
   switch(key) {
     case 48 :
@@ -219,6 +222,36 @@ function inputFocus(e) {
     if(nextElement.length === 1) {
       nextElement.focus().select()
     }
+  }
+
+  if (key === 9) {
+    nextElement.focus()
+
+    if (firstKey === 16) {
+      prevElement.focus()
+    } else {
+      firstKey = 9
+      setTimeout(function() {
+        firstKey = null
+      }, 1000)
+    }
+  }
+
+  if (key === 16) {
+    nextElement.focus()
+
+    if (firstKey === 9) {
+      prevElement.focus()
+    } else {
+      firstKey = 16
+      setTimeout(function() {
+        firstKey = null
+      }, 1000)
+    }
+  }
+
+  if (key === 116) {
+    location.reload()
   }
 
   if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
