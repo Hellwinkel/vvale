@@ -134,18 +134,99 @@ function validateFirstStep() {
       secondStepMessage.html(`
         Informe abaixo o código que enviamos para <br><strong>${userEmail}</strong>
       `)
+      textFeedback(true)
       isValid = true
+    } else {
+      textFeedback(false, 'O e-mail informado não pode ser utilizado')
     }
   } else {
     if(field.val().length === 16) {
       secondStepMessage.html(`
       Informe abaixo o código que enviamos para <br><strong>${userPhone}</strong>
       `)
+      textFeedback(true)
       isValid = true
+    } else {
+      textFeedback(false, 'O número informado está incompleto')
     }
   }
 
   return isValid
+}
+
+// Validate Second Step
+function validateSecondStep() {
+  let isValid = false
+  let finalCode = ''
+  let feedback = jQuery('span.feedback')
+
+  jQuery('.code-container input').each(function() {
+    finalCode += jQuery(this).val()
+  })
+
+  if(finalCode.length !== 4) {
+    textFeedback(false, 'Insira um código válido')
+  } else if (finalCode === '6666') {
+    // Check if code match and return. On success, isValid = true then send
+    textFeedback(false, 'Código incorreto, tente novamente')
+  } else {
+    isValid = true
+    textFeedback(true)
+  }
+  
+  return isValid
+}
+
+// List of each step validation
+{
+  function stepValidation(step) {
+    switch (step) {
+      case 1:
+        let step11 = validateFirstStep();
+        if (!step11) {
+          console.error("First step error");
+          return false;
+        } else {
+          return true;
+        }
+      case 2:
+        let step21 = validateFirstStep();
+        let step22 = validateSecondStep();
+        if (!step21) {
+          textFeedback(false, 'Verifique os campos da etapa anterior')
+          console.error("First step error");
+          return false;
+        } else if (!step22) {
+          console.error("Second step error");
+          return false;
+        } else {
+          textFeedback(true)
+          return true;
+        }
+    }
+  }
+}
+
+// Text feedback
+function textFeedback(success, content = '') {
+  let feedback = jQuery('span.feedback')
+  if (!success) {
+    feedback.each(function () {
+      jQuery(this).animate({
+        height: 20,
+        marginBottom: 10
+      }, 250)
+      jQuery(this).html(content)
+    })
+  } else {
+    feedback.each(function () {
+      jQuery(this).animate({
+        height: 0,
+        marginBottom: 0
+      }, 250)
+      jQuery(this).html('')
+    })
+  }
 }
 
 // Set code value on each input
@@ -260,156 +341,150 @@ function inputFocus(e) {
 
 jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
 
-// Resend confirmation code
-function resendCode() {
-  if (timer()) {
-    // Envia confirmação
-  }
-}
-
-jQuery('p.content input').click(resendCode)
-
-// Timer
-function timer() {
-  let canSend = true
-  currentTime = new Date()
-
-  if(currentTime < limitTime) {
-    canSend = false
-  } else {
-    limitTime = currentTime.getTime() + 60000
-    remainingTime()
-  }
-  return canSend
-}
-
-// showRemainingTime
-function remainingTime() {
-  let sec = 10
-  jQuery('.resend').animate({
-    height: 0,
-    opacity: 0,
-    marginBottom: 0
-  }, 250)
-  jQuery('.cooldown').animate({
-    height: 50,
-    opacity: 1,
-    marginBottom: 20
-  }, 250)
-  jQuery('.clock').html(`${sec} segundos`)
-  setInterval(function() {
-    sec = sec - 1
-    if (sec >= 10 && sec <= 60) {
-      jQuery('.clock').html(`${sec} segundos`)
-    } 
-    if (sec < 10 && sec > 0) {
-      jQuery('.clock').html(`0${sec} segundos`)
-    } 
-    if (sec === 1) {
-      jQuery('.clock').html(`0${sec} segundo`)
-    } 
-    if (sec === 0) {
-      jQuery('.clock').html(`0${sec} segundo`)
-      setTimeout(function() {
-        jQuery('.cooldown').animate({
-          height: 0,
-          opacity: 0,
-          marginBottom: 0
-        }, 250)
-        jQuery('.resend').animate({
-          height: 50,
-          opacity: 1,
-          marginBottom: 20
-        }, 250)
-        jQuery('.resend input[type="button"]').blur()
-      }, 500)
+// Resend code functions
+{
+  // Resend confirmation code
+  function resendCode() {
+    if (timer()) {
+      // Envia confirmação
     }
-  }, 1000)
+  }
+  
+  // Timer
+  function timer() {
+    let canSend = true
+    currentTime = new Date()
+    
+    if(currentTime < limitTime) {
+      canSend = false
+    } else {
+      limitTime = currentTime.getTime() + 60000
+      remainingTime()
+    }
+    return canSend
+  }
+  
+  // showRemainingTime
+  function remainingTime() {
+    let sec = 60
+    jQuery('.resend').animate({
+      height: 0,
+      opacity: 0
+    }, 250)
+    jQuery('.cooldown').animate({
+      height: 50,
+      opacity: 1
+    }, 250)
+    jQuery('.clock').html(`${sec} segundos`)
+    setInterval(function() {
+      sec = sec - 1
+      if (sec >= 10 && sec <= 60) {
+        jQuery('.clock').html(`${sec} segundos`)
+      } 
+      if (sec < 10 && sec > 0) {
+        jQuery('.clock').html(`0${sec} segundos`)
+      } 
+      if (sec === 1) {
+        jQuery('.clock').html(`0${sec} segundo`)
+      } 
+      if (sec === 0) {
+        setTimeout(function() {
+          jQuery('.cooldown').animate({
+            height: 0,
+            opacity: 0
+          }, 250)
+          jQuery('.resend').animate({
+            height: 50,
+            opacity: 1
+          }, 250)
+          jQuery('.resend input[type="button"]').blur()
+        }, 200)
+      }
+    }, 1000)
+  }
+  
+  jQuery('p.content input').click(resendCode)
 }
 
 
 // Call next step
-function nextStep(step = null, nextStep = null) {
-  const currentStep = step;
-  const targetStep = nextStep;
-  let feedback = jQuery('span.feedback')
-
-  if (currentStep === null || targetStep === null) {
-    console.error(
-      "nextStep must receive current and target step. Check your call and try again"
-    );
-    return false;
-  }
-
-  if (currentStep == targetStep) {
-    console.error(
-      "nextStep must receive different values on current and target step. Check your call and try again"
-    );
-    return false;
-  }
-
-  if (currentStep < targetStep) {
-    if (validateFirstStep() === true) {
+{
+  function nextStep(step = null, nextStep = null) {
+    const currentStep = step;
+    const targetStep = nextStep;
+    let feedback = jQuery('span.feedback')
+  
+    if (currentStep === null || targetStep === null) {
+      console.error(
+        "nextStep must receive current and target step. Check your call and try again"
+      );
+      return false;
+    }
+  
+    if (currentStep == targetStep) {
+      console.error(
+        "nextStep must receive different values on current and target step. Check your call and try again"
+      );
+      return false;
+    }
+  
+    if (currentStep < targetStep) {
+      if (stepValidation(currentStep) === true) {
+        feedback.html('')
+  
+        const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
+        const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
+  
+        currentBoard.classList.remove("show-step");
+  
+        setTimeout(function () {
+          currentBoard.classList.remove("relative-step");
+          nextBoard.classList.add("relative-step");
+  
+          setTimeout(function () {
+            nextBoard.classList.add("show-step");
+            setTimeout(function() {
+              jQuery('.code-container input').get(0).focus()
+            }, 500)
+          }, 200);
+        }, 650);
+      }
+    } else {
       feedback.html('')
-
+  
       const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
       const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
-
-      currentBoard.classList.remove("show-step");
-
+  
       setTimeout(function () {
-        currentBoard.classList.remove("relative-step");
-        nextBoard.classList.add("relative-step");
-
+        currentBoard.classList.remove("show-step");
+  
         setTimeout(function () {
-          nextBoard.classList.add("show-step");
-          setTimeout(function() {
-            jQuery('.code-container input').get(0).focus()
-          }, 500)
-        }, 200);
-      }, 650);
-    } else {
-      feedback.each(function() {
-        jQuery(this).animate({
-          height: 20,
-          marginBottom: 10
-        }, 250)
-        if(jQuery('.selected-method').attr('name') === 'email') {
-          feedback.html('O e-mail informado não pode ser utilizado')
-        } else {
-          feedback.html('O número informado está incompleto')
-        }
-      })
+          currentBoard.classList.remove("relative-step");
+          nextBoard.classList.add("relative-step");
+  
+          setTimeout(function () {
+            nextBoard.classList.add("show-step");
+          }, 200);
+        }, 650);
+      }, 500);
     }
-  } else {
-    feedback.html('')
-
-    const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
-    const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
-
-    setTimeout(function () {
-      currentBoard.classList.remove("show-step");
-
-      setTimeout(function () {
-        currentBoard.classList.remove("relative-step");
-        nextBoard.classList.add("relative-step");
-
-        setTimeout(function () {
-          nextBoard.classList.add("show-step");
-        }, 200);
-      }, 650);
-    }, 500);
   }
+  
+  jQuery('.selected-method').blur(updateLocalVar)
+  
+  jQuery('button.edit').click(toggleInputEditing)
+  
+  jQuery('.contact-container label').on('change', getActiveMethod)
+  
+  jQuery(".avancar").click(function () {
+    let step = jQuery(this).data("step");
+    let target = jQuery(this).data("target");
+    nextStep(step, target);
+  });
+  
+  jQuery(".voltar").click(function () {
+    let step = jQuery(this).data("step");
+    let target = jQuery(this).data("target");
+    nextStep(step, target);
+  });
 }
-
-jQuery('.selected-method').blur(updateLocalVar)
-
-jQuery('button.edit').click(toggleInputEditing)
-
-jQuery('.contact-container label').on('change', getActiveMethod)
-
-jQuery(".avancar").click(function () {
-  let step = jQuery(this).data("step");
-  let target = jQuery(this).data("target");
-  nextStep(step, target);
-});

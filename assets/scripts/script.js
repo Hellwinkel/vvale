@@ -1573,7 +1573,7 @@ jQuery(document).ready(function () {
       if (stepValidation(currentStep) === true) {
         const body = $("html, body");
         const form = $(".content-container").offset().top;
-        body.stop().animate({ scrollTop: 0 }, 500, "swing");
+        body.stop().animate({ scrollTop: form }, 500, "swing");
 
         setTimeout(function () {
           updateMap(nextStep);
