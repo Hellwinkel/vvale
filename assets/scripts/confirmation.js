@@ -1,6 +1,7 @@
-userEmail = 'guirovedah@gmail.com'
-userPhone = '(42) 9 8805-5068'
-isShiftGlobal = false
+let userEmail = 'guirovedah@gmail.com'
+let userPhone = '(42) 9 8805-5068'
+let limitTime = 0
+let sec = 60
 
 jQuery(document).ready(function () {
   jQuery('.vvale-svg').addClass('vvale-animate')
@@ -257,20 +258,75 @@ function inputFocus(e) {
   }
 }
 
-jQuery('.code-container input').keypress(function(e) {inputFocus(e)})
+jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
 
-// Shift function 
-// function getShift(e) {
-//   let isShift = false
+// Resend confirmation code
+function resendCode() {
+  if (timer()) {
+    // Envia confirmação
+  }
+}
 
-//   if (e.keyCode === 16) {
-//     isShift = true
-//   }
+jQuery('p.content input').click(resendCode)
 
-//   isShiftGlobal = isShift
-// }
+// Timer
+function timer() {
+  let canSend = true
+  currentTime = new Date()
 
-// jQuery('.code-container input').keypress(function(e) {getShift(e)})
+  if(currentTime < limitTime) {
+    canSend = false
+  } else {
+    limitTime = currentTime.getTime() + 60000
+    remainingTime()
+  }
+  return canSend
+}
+
+// showRemainingTime
+function remainingTime() {
+  let sec = 10
+  jQuery('.resend').animate({
+    height: 0,
+    opacity: 0,
+    marginBottom: 0
+  }, 250)
+  jQuery('.cooldown').animate({
+    height: 50,
+    opacity: 1,
+    marginBottom: 20
+  }, 250)
+  jQuery('.clock').html(`${sec} segundos`)
+  setInterval(function() {
+    sec = sec - 1
+    if (sec >= 10 && sec <= 60) {
+      jQuery('.clock').html(`${sec} segundos`)
+    } 
+    if (sec < 10 && sec > 0) {
+      jQuery('.clock').html(`0${sec} segundos`)
+    } 
+    if (sec === 1) {
+      jQuery('.clock').html(`0${sec} segundo`)
+    } 
+    if (sec === 0) {
+      jQuery('.clock').html(`0${sec} segundo`)
+      setTimeout(function() {
+        jQuery('.cooldown').animate({
+          height: 0,
+          opacity: 0,
+          marginBottom: 0
+        }, 250)
+        jQuery('.resend').animate({
+          height: 50,
+          opacity: 1,
+          marginBottom: 20
+        }, 250)
+        jQuery('.resend input[type="button"]').blur()
+      }, 500)
+    }
+  }, 1000)
+}
+
 
 // Call next step
 function nextStep(step = null, nextStep = null) {

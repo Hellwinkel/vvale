@@ -28,7 +28,7 @@
       <h2 class="form-title">Confirmação</h2>
       <div class="form">
 
-        <form class="confirmation-board step-board relative-step show-step" data-step="1">
+        <form class="confirmation-board step-board" data-step="1">
           <p class="content">
             Enviaremos um código para confirmar sua conta<br>
             Para isso, selecione abaixo onde deseja recebê-lo
@@ -58,7 +58,7 @@
           </div>
         </form>
 
-        <form class="confirmation-board step-board" data-step="2">
+        <form class="confirmation-board step-board relative-step show-step" data-step="2">
           <p class="content content-feedback"></p>
           <div class="contact-container code-container">
             <input type="text" data-mask="0" inputmode="numeric" data-field="1">
@@ -66,9 +66,12 @@
             <input type="text" data-mask="0" inputmode="numeric" data-field="3">
             <input type="text" data-mask="0" inputmode="numeric" data-field="4">
           </div>
-          <p class="content">
+          <p class="content resend">
             Caso não tenha recebido o código <br>
-            clique <strong>aqui</strong> para reenviá-lo
+            clique <input type="button" value="aqui"> para reenviá-lo
+          </p>
+          <p class="content cooldown">
+            Um novo código poderá ser <br>solicitado em <span class="clock"></span>
           </p>
         </form>
       </div>

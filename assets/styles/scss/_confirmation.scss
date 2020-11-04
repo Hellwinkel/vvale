@@ -11,6 +11,24 @@
       font-size: 1rem;
       color: #545454;
 
+      input[type="button"] {
+        border: none;
+        border-radius: 0px;
+        padding: 0px;
+        margin: 0px;
+        background-color: transparent;
+        font-weight: 600;
+        color: $green;
+        font-size: 1rem;
+        cursor: pointer;
+        outline: none;
+        transition: 150ms;
+
+        &:hover, &:focus {
+          color: darken($green, 15%)
+        }
+      }
+
       &.no-margin {
         margin-bottom: 3px;
         opacity: 0;
@@ -21,6 +39,22 @@
           opacity: 1;
           transform: translateY(0px);
         }
+      }
+
+      &.cooldown {
+        color: rgb(165, 165, 165);
+        overflow: hidden;
+        height: 0px;
+        opacity: 0;
+        margin-bottom: 0;
+      }
+      
+      &.resend {
+        margin-bottom: 15px;
+        overflow: hidden;
+        height: 50px;
+        opacity: 1;
+        margin-bottom: 20px;
       }
     }
 
