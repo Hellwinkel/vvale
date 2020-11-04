@@ -1,6 +1,6 @@
 userEmail = 'guirovedah@gmail.com'
 userPhone = '(42) 9 8805-5068'
-let firstKey
+isShiftGlobal = false
 
 jQuery(document).ready(function () {
   jQuery('.vvale-svg').addClass('vvale-animate')
@@ -224,30 +224,12 @@ function inputFocus(e) {
     }
   }
 
-  if (key === 9) {
+  if (e.key === 'Tab') {
     nextElement.focus()
-
-    if (firstKey === 16) {
-      prevElement.focus()
-    } else {
-      firstKey = 9
-      setTimeout(function() {
-        firstKey = null
-      }, 1000)
-    }
   }
 
-  if (key === 16) {
-    nextElement.focus()
-
-    if (firstKey === 9) {
-      prevElement.focus()
-    } else {
-      firstKey = 16
-      setTimeout(function() {
-        firstKey = null
-      }, 1000)
-    }
+  if (e.shiftKey && e.key === 'Tab') {
+    prevElement.focus()
   }
 
   if (key === 116) {
@@ -275,7 +257,20 @@ function inputFocus(e) {
   }
 }
 
-jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
+jQuery('.code-container input').keypress(function(e) {inputFocus(e)})
+
+// Shift function 
+// function getShift(e) {
+//   let isShift = false
+
+//   if (e.keyCode === 16) {
+//     isShift = true
+//   }
+
+//   isShiftGlobal = isShift
+// }
+
+// jQuery('.code-container input').keypress(function(e) {getShift(e)})
 
 // Call next step
 function nextStep(step = null, nextStep = null) {
