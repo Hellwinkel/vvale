@@ -173,12 +173,36 @@ jQuery(document).ready(function () {
 
   // Validate birth date
   function validateBirth(field) {
-    let isValid = false;
+    let isValid = true;
+    let sentYear = parseInt(field.value.split('-')[0])
+    let currentYear = new Date().getFullYear()
+    let currentMonth = new Date().getMonth()
+    let currentDay = new Date().getDay()
+    let maxYear = new Date(`${currentYear - 10}-${currentMonth + 1}-${currentDay + 1}`)
 
-    if(field.value !== '') {
-      isValid = true
+    if(field.value === '') {
+      isValid = false
     }
-    
+
+    if(sentYear < 1900) {
+      isValid = false
+    }
+
+    if(new Date(`${field.value} 00:00:00`) > maxYear) {
+      isValid = false
+      jQuery('.birth-feedback').html('É necessário ter ao menos 10 anos')
+      jQuery('.birth-feedback').animate({
+        height: 20
+      })
+    }
+
+    if (isValid === true) {
+      jQuery('.birth-feedback').html('')
+      jQuery('.birth-feedback').animate({
+        height: 0
+      })
+    }
+
     return isValid;
   }
 
@@ -609,7 +633,7 @@ jQuery(document).ready(function () {
     content: template.innerHTML,
     allowHTML: true,
     duration: [150, 150],
-    trigger: "focus",
+    trigger: "focus click",
     placement: "bottom-start",
     animation: "shift-toward",
     onShow(pass) {
@@ -627,7 +651,7 @@ jQuery(document).ready(function () {
     content: template2.innerHTML,
     allowHTML: true,
     duration: [150, 150],
-    trigger: "focus",
+    trigger: "focus click",
     placement: "bottom-start",
     animation: "shift-toward",
     onShow(pass) {
@@ -648,7 +672,7 @@ jQuery(document).ready(function () {
       "O nome de usuário <strong>não pode</strong> conter <br>espaços ou caracteres especiais",
     allowHTML: true,
     duration: [150, 150],
-    trigger: "focus",
+    trigger: "focus click",
     placement: "bottom-start",
     animation: "shift-toward",
   });
@@ -781,7 +805,6 @@ jQuery(document).ready(function () {
       genderContainer.animate(
         {
           opacity: 1,
-          minHeight: 85,
           height: genderInitialHeight,
           overflow: "initial",
         },

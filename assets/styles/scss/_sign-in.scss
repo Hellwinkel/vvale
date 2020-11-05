@@ -55,7 +55,8 @@ p.highlight {
   margin-bottom: 45px;
 }
 
-span.feedback {
+span.feedback,
+span.birth-feedback {
   width: 100%;
   text-align: center;
   display: inline-block;
@@ -66,6 +67,14 @@ span.feedback {
   
   height: 0;
   margin-bottom: 0px;
+}
+
+span.birth-feedback {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-20px);
 }
 
 .step-board {
