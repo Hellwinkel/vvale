@@ -168,6 +168,15 @@
             flex-flow: row;
           }
 
+          img {
+            max-height: 75px;
+            width: 98px;
+
+            &.free {
+              width: 60px;
+            }
+          }
+
           .newspaper-plan {
             width: 53px;
             margin-top: 10px;

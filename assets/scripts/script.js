@@ -216,6 +216,16 @@ jQuery(document).ready(function () {
     return isValid;
   }
 
+  // Validate cel number
+  function validateCel(field) {
+    let isValid = false;
+
+    if (field.value.length >= 16) {
+      isValid = true;
+    }
+    return isValid;
+  }
+
   // Validate country
   function validateCountry(field, cep) {
     let isValid = false;
@@ -442,6 +452,11 @@ jQuery(document).ready(function () {
       feedback(field, valid);
     }
 
+    function checkCel(field) {
+      let valid = validateCel(field);
+      feedback(field, valid);
+    }
+
     function checkCountry(field, cep) {
       let valid = validateCountry(field, cep);
       feedback(field, valid);
@@ -543,11 +558,11 @@ jQuery(document).ready(function () {
     });
 
     jQuery("#cel").on("keyup", function () {
-      checkPhone(this);
+      checkCel(this);
     });
 
     jQuery("#cel").on("blur", function () {
-      checkPhone(this);
+      checkCel(this);
     });
 
     jQuery("select#country").on("change", function () {
@@ -945,13 +960,13 @@ jQuery(document).ready(function () {
     const firstName = document.querySelector("input#first-name");
     const lastName = document.querySelector("input#last-name");
     const documentType = document.querySelector("input#document");
-    const phone = document.querySelector("input#phone");
+    const cel = document.querySelector("input#cel");
 
     const userStatus = validateUser(user);
     const firstNameStatus = validateName(firstName);
     const lastNameStatus = validateName(lastName);
     const documentStatus = validateDocument(documentType);
-    const phoneStatus = validatePhone(phone);
+    const celStatus = validateCel(cel);
     console.log("Second step verify");
 
     if (accountType === "fisica") {
@@ -964,7 +979,7 @@ jQuery(document).ready(function () {
       firstNameStatus: ${firstNameStatus}
       lastNameStatus: ${lastNameStatus}
       documentStatus: ${documentStatus}
-      phoneStatus: ${phoneStatus}
+      phoneStatus: ${celStatus}
       birthStatus: ${birthStatus}
       `);
 
@@ -973,7 +988,7 @@ jQuery(document).ready(function () {
         firstNameStatus &&
         lastNameStatus &&
         documentStatus &&
-        phoneStatus &&
+        celStatus &&
         birthStatus
       ) {
         return true;
@@ -994,7 +1009,7 @@ jQuery(document).ready(function () {
         firstNameStatus &&
         lastNameStatus &&
         documentStatus &&
-        phoneStatus
+        celStatus
       ) {
         return true;
       } else {
