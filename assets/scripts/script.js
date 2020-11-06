@@ -1086,6 +1086,7 @@ jQuery(document).ready(function () {
     let personalText = "";
     let addressText = "";
     let planText = "";
+    let birthValue = document.querySelector("#birth").value.split('-')
 
     let account = {
       email: document.querySelector("#email").value,
@@ -1097,7 +1098,7 @@ jQuery(document).ready(function () {
       firstName: document.querySelector("#first-name").value,
       lastName: document.querySelector("#last-name").value,
       document: document.querySelector("#document").value,
-      birth: document.querySelector("#birth").value,
+      birth: `${birthValue[2]}/${birthValue[1]}/${birthValue[0]}`,
       gender: document
         .querySelector('input[name="genero"]:checked')
         .getAttribute("id"),
