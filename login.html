@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vvale</title>
+  <link rel="stylesheet" href="assets/styles/style.css">
+  <script src="https://www.google.com/recaptcha/api.js?onload=pageLoad&render=explicit"></script>
+  <script src="assets/scripts/credentials.js"></script>
+  <meta name="theme-color" content="#759238">
+</head>
+
+<body>
+  <div class="header"></div>
+  <div class="content-container">
+    <form action="" class="form-container">
+      <div class="svg-container">
+        <svg viewBox="0 0 261.36 285.3">
+          <title>Vvale</title>
+          <g data-name="Layer">
+            <path class="vvale-svg"
+              d="M136.25,110.51A351.33,351.33,0,0,0,260.42,2.19C236.65,121.71,189.69,214.5,123,284.59,48.41,209.31,11.9,124.76.92,34c31.15,72.67,75,129.68,138.48,162.38C140.32,166.28,139.81,137.25,136.25,110.51Z" />
+          </g>
+        </svg>
+      </div>
+      <h2 class="form-title">Login Vvale</h2>
+      <div class="form" id="login-form">
+
+        <div class="login-board step-board relative-step" data-step="1">
+          <p class="content">Acesse seus produtos Vvale</p>
+          <div class="icon-container">
+            <div class="icon notebook"></div>
+            <div class="icon newspaper"></div>
+            <div class="icon mobile"></div>
+          </div>
+          <p class="content">Não possui uma conta? <a href="cadastro.html">Cadastrar</a></p>
+          <p class="note login-note">Campos com asterisco (*) são obrigatórios.</p>
+          <div class="field-container">
+            <label for="user" class="field-name login-field show" id="username-label">
+              Login<span class="required">*</span>
+            </label>
+            <input type="user" name="user" class="field" id="user"placeholder="E-mail ou nome de usuário">
+          </div>
+          <div class="field-container">
+            <label for="password" class="field-name">Senha<span class="required">*</span></label>
+            <input type="password" name="password" class="field" id="password">
+          </div>
+          <div class="captcha-container captcha-login">
+            <span>Verificação de segurança<span class="required">*</span></span>
+            <div id="captcha-login-container">
+            </div>
+          </div>
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Entrar" class="avancar login-button">
+            <p class="content reset"><a href="reset.html">Não consegue acessar?</a></p>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <script src="assets/scripts/jquery.min.js"></script>
+  <script src="assets/scripts/login.js"></script>
+</body>
+
+</html>

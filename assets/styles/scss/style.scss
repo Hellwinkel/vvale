@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 
-$green:#95b949;
+$green: #8aae40;
 
 html {
   font-size: 16px;
@@ -26,4 +26,7 @@ body {
 @import 'step3';
 @import 'step4';
 @import 'step5';
-@import '_confirmation';
+@import 'confirmation';
+@import 'login';
+@import 'article';
+@import 'reset';

@@ -4,6 +4,7 @@ let limitTime = 0
 let sec = 60
 
 jQuery(document).ready(function () {
+  jQuery('.relative-step').addClass('show-step')
   jQuery('.vvale-svg').addClass('vvale-animate')
   jQuery('.selected-method').val(userEmail)
 

@@ -8,6 +8,7 @@ let isVisiblePass = false
 let previousCountry
 
 jQuery(document).ready(function () {
+  jQuery('.relative-step').addClass('show-step')
   getCountry();
   getState();
   changeBorder()
