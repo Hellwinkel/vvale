@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/styles/shift-toward.css">
   <link rel="stylesheet" href="assets/styles/style.css">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="assets/scripts/js.cookie.min.js"></script>
   <script src="assets/scripts/credentials.js"></script>
   <meta name="theme-color" content="#759238">
 </head>
@@ -58,7 +59,7 @@
       <span class="feedback top"></span>
       <div class="form">
 
-        <div class="first-board step-board relative-step" data-step="1">
+        <div class="first-board step-board" data-step="1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
           <div class="icon-container">
             <div class="icon notebook"></div>
@@ -418,7 +419,7 @@
         </div>
       </div>
 
-      <div class="last-board step-board" data-step="5">
+      <div class="last-board step-board relative-step" data-step="5">
         <p class="highlight">Quase lá!</p>
         <p class="note">Confirme seus dados e conclua o cadastro</p>
         <div class="input-container">
@@ -463,7 +464,7 @@
         </div>
         <div class="button-container">
           <span class="feedback"></span>
-          <input type="button" value="Finalizar" class="avancar" onclick="window.location.replace('/confirm.html')">
+          <input type="button" value="Finalizar" class="avancar" data-step="5" data-target="5">
           <input type="button" value="Etapa anterior" class="voltar" data-step="5" data-target="4">
         </div>
       </div>

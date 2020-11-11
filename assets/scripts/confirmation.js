@@ -185,7 +185,6 @@ function validateSecondStep() {
       case 1:
         let step11 = validateFirstStep();
         if (!step11) {
-          console.error("First step error");
           return false;
         } else {
           return true;
@@ -195,10 +194,8 @@ function validateSecondStep() {
         let step22 = validateSecondStep();
         if (!step21) {
           textFeedback(false, 'Verifique os campos da etapa anterior')
-          console.error("First step error");
           return false;
         } else if (!step22) {
-          console.error("Second step error");
           return false;
         } else {
           textFeedback(true)
@@ -239,8 +236,6 @@ function inputFocus(e) {
   const nextElement = jQuery(`.code-container input[data-field="${inputIndex + 1}"]`)
   const prevElement = jQuery(`.code-container input[data-field="${inputIndex - 1}"]`)
   let keyValue = ''
-
-  console.log(key)
 
   switch(key) {
     case 48 :
@@ -416,16 +411,12 @@ jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
     let feedback = jQuery('span.feedback')
   
     if (currentStep === null || targetStep === null) {
-      console.error(
-        "nextStep must receive current and target step. Check your call and try again"
-      );
+      // nextStep must receive current and target step. Check your call and try again
       return false;
     }
   
     if (currentStep == targetStep) {
-      console.error(
-        "nextStep must receive different values on current and target step. Check your call and try again"
-      );
+      //nextStep must receive different values on current and target step. Check your call and try again
       return false;
     }
   

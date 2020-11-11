@@ -6,8 +6,17 @@ let validNationalCEP = false;
 let states = [];
 let isVisiblePass = false
 let previousCountry
+let obj = {}
 
 jQuery(document).ready(function () {
+   // let cookie = JSON.parse(Cookies.get('fields'))
+
+  // if (cookie) {
+  //   for(let element of Object.keys(cookie)) {
+  //     jQuery(`#${element}`).val(`${cookie[element]}`)
+  //   }
+  // }
+
   jQuery('.relative-step').addClass('show-step')
   getCountry();
   getState();
@@ -40,6 +49,31 @@ jQuery(document).ready(function () {
   genderInitialHeight = jQuery(".gender-container").outerHeight(true) + 25;
   changeFields();
 });
+
+// Save progress on cookie
+{
+  function setCookie(fieldList, lastStep) {
+    obj.lastStep = lastStep.toString()
+    jQuery(fieldList).each(function(index, value) {
+      let fieldId = jQuery(value).attr('id')
+      // let fieldType = jQuery(value).type()
+      let fieldValue = jQuery(value).val()
+
+      console.log(typeof(value))
+      let inputType = jQuery(value).attr('type')
+      console.log(inputType)
+
+      // if(fieldType === 'INPUT') {
+      // }
+
+      if(fieldValue !== undefined || fieldValue!== null || fieldValue !== '') {
+        obj[fieldId] = fieldValue
+      }
+    })
+
+    Cookies.set('fields', JSON.stringify(obj), { expires: 7 })
+  }
+}
 
 // Toggle password visibility
 {
@@ -877,6 +911,12 @@ jQuery(document).ready(function () {
     let confirmPassword = document.querySelector("#second-pass");
     let termsCheckbox = document.querySelector("#termos");
 
+    let fieldsArray = [];
+    fieldsArray.push(emailField)
+    fieldsArray.push(passwordField)
+    fieldsArray.push(confirmPassword)
+    fieldsArray.push(termsCheckbox)
+
     let emailStatus = validateEmail(emailField);
     let passwordStatus = validatePassword(passwordField);
     let confirmPasswordStatus = validatePassword(
@@ -890,20 +930,13 @@ jQuery(document).ready(function () {
     }
 
     if (needCaptcha === false) {
-      console.log("First step verify");
-      console.log(`
-      Email: ${emailStatus}
-      FirstPass: ${passwordStatus}
-      SecondPass: ${confirmPasswordStatus}
-      TermsStatus: ${termsStatus}
-      `);
-
       if (
         emailStatus &&
         passwordStatus &&
         confirmPasswordStatus &&
         termsStatus
       ) {
+        setCookie(fieldsArray, 1)
         return true;
       } else {
         return false;
@@ -922,19 +955,10 @@ jQuery(document).ready(function () {
           response: reCaptcha,
         },
         success: function (data) {
-          console.log(data);
           reCaptchaStatus = data.success;
         },
       });
-      console.log("First step verify");
-      console.log(`
-      Email: ${emailStatus}
-      FirstPass: ${passwordStatus}
-      SecondPass: ${confirmPasswordStatus}
-      reCaptcha: ${reCaptchaStatus}
-      TermsStatus: ${termsStatus}
-      `);
-
+      
       if (
         emailStatus &&
         passwordStatus &&
@@ -942,6 +966,7 @@ jQuery(document).ready(function () {
         reCaptchaStatus &&
         termsStatus
       ) {
+        setCookie(fieldsArray, 1)
         return true;
       } else {
         grecaptcha.reset();
@@ -968,21 +993,10 @@ jQuery(document).ready(function () {
     const lastNameStatus = validateName(lastName);
     const documentStatus = validateDocument(documentType);
     const celStatus = validateCel(cel);
-    console.log("Second step verify");
 
     if (accountType === "fisica") {
       const birth = document.querySelector("input#birth");
-
       const birthStatus = validateBirth(birth);
-
-      console.log(`
-      userStatus: ${userStatus}
-      firstNameStatus: ${firstNameStatus}
-      lastNameStatus: ${lastNameStatus}
-      documentStatus: ${documentStatus}
-      phoneStatus: ${celStatus}
-      birthStatus: ${birthStatus}
-      `);
 
       if (
         userStatus &&
@@ -997,14 +1011,6 @@ jQuery(document).ready(function () {
         return false;
       }
     } else {
-      console.log(`
-      userStatus: ${userStatus}
-      firstNameStatus: ${firstNameStatus}
-      lastNameStatus: ${lastNameStatus}
-      documentStatus: ${documentStatus}
-      phoneStatus: ${phoneStatus}
-      `);
-
       if (
         userStatus &&
         firstNameStatus &&
@@ -1036,17 +1042,7 @@ jQuery(document).ready(function () {
     const neighborhoodStatus = validateLocationContent(neighborhood);
     const streetStatus = validateLocationContent(street);
     const numberStatus = validateLocationContent(number);
-    console.log("Third step verify");
-    console.log(`
-      countryStatus: ${countryStatus}
-      cepStatus: ${cepStatus}
-      stateStatus: ${stateStatus}
-      cityStatus: ${cityStatus}
-      neighborhoodStatus: ${neighborhoodStatus}
-      streetStatus: ${streetStatus}
-      numberStatus: ${numberStatus}
-    `);
-
+    
     if (
       countryStatus &&
       cepStatus &&
@@ -1413,7 +1409,7 @@ jQuery(document).ready(function () {
 
 // Feedback function
 {
-  function feedback(success, content = '') {
+  function textFeedback(success, content = '') {
     let feedback = jQuery('span.feedback')
     
     if(!success) {
@@ -1443,29 +1439,23 @@ jQuery(document).ready(function () {
       case 1:
         let step11 = validateFirstStep(false);
         if (!step11) {
-          feedback(false, 'Preencha todos os campos corretamente')
-          console.error("First step error");
+          textFeedback(false, 'Preencha todos os campos corretamente')
           return false;
         } else {
-          console.log(`FinalResult: ${step11}`);
-          feedback(true)
+          textFeedback(true)
           return step11;
         }
       case 2:
         let step21 = validateFirstStep(false);
         let step22 = validateSecondStep();
         if (!step21) {
-          feedback(false, 'Verifique os campos da etapa anterior')
-          console.error("First step error");
+          textFeedback(false, 'Verifique os campos da etapa anterior')
           return false;
         } else if (!step22) {
-          feedback(false, 'Preencha todos os campos corretamente')
-          console.error("Second step error");
+          textFeedback(false, 'Preencha todos os campos corretamente')
           return false;
         } else {
-          console.log("Second step OK");
-          console.log(`FinalResult: ${step22}`);
-          feedback(true)
+          textFeedback(true)
           return step22;
         }
       case 3:
@@ -1473,21 +1463,16 @@ jQuery(document).ready(function () {
         let step32 = validateSecondStep();
         let step33 = validateThirdStep();
         if (!step31) {
-          feedback(false, 'Verifique os campos da primeira etapa')
-          console.error("First step error");
+          textFeedback(false, 'Verifique os campos da primeira etapa')
           return false;
         } else if (!step32) {
-          feedback(false, 'Verifique os campos da etapa anterior')
-          console.error("Second step error");
+          textFeedback(false, 'Verifique os campos da etapa anterior')
           return false;
         } else if (!step33) {
-          feedback(false, 'Preencha todos os campos corretamente')
-          console.error("Third step error");
+          textFeedback(false, 'Preencha todos os campos corretamente')
           return false;
         } else {
-          console.log("Third step OK");
-          console.log(`FinalResult: ${step33}`);
-          feedback(true)
+          textFeedback(true)
           return step33;
         }
       case 4:
@@ -1496,26 +1481,41 @@ jQuery(document).ready(function () {
         let step43 = validateThirdStep();
         let step44 = validateFourthStep();
         if (!step41) {
-          feedback(false, 'Verifique os campos da primeira etapa')
-          console.error("First step error");
+          textFeedback(false, 'Verifique os campos da primeira etapa')
           return false;
         } else if (!step42) {
-          feedback(false, 'Verifique os campos da segunda etapa')
-          console.error("Second step error");
+          textFeedback(false, 'Verifique os campos da segunda etapa')
           return false;
         } else if (!step43) {
-          feedback(false, 'Verifique os campos da etapa anterior')
-          console.error("Third step error");
+          textFeedback(false, 'Verifique os campos da etapa anterior')
           return false;
         } else if (!step44) {
-          feedback(false, 'Preencha todos os campos corretamente')
-          console.error("Third step error");
+          textFeedback(false, 'Preencha todos os campos corretamente')
           return false;
         } else {
-          console.log("Fourth step OK");
-          console.log(`FinalResult: ${step44}`);
-          feedback(true)
+          textFeedback(true)
           return step44;
+        }
+      case 5:
+        let step51 = validateFirstStep(false);
+        let step52 = validateSecondStep();
+        let step53 = validateThirdStep();
+        let step54 = validateFourthStep();
+        if (!step51) {
+          textFeedback(false, 'Verifique os campos da primeira etapa')
+          return false;
+        } else if (!step52) {
+          textFeedback(false, 'Verifique os campos da segunda etapa')
+          return false;
+        } else if (!step53) {
+          textFeedback(false, 'Verifique os campos da etapa anterior')
+          return false;
+        } else if (!step54) {
+          textFeedback(false, 'Preencha todos os campos corretamente')
+          return false;
+        } else {
+          textFeedback(true)
+          return step54;
         }
     }
   }
@@ -1594,23 +1594,14 @@ jQuery(document).ready(function () {
   function nextStep(step = null, nextStep = null) {
     const currentStep = step;
     const targetStep = nextStep;
-
-    if (currentStep === null || targetStep === null) {
-      console.error(
-        "nextStep must receive current and target step. Check your call and try again"
-      );
-      return false;
-    }
-
+    
     if (currentStep == targetStep) {
-      console.error(
-        "nextStep must receive different values on current and target step. Check your call and try again"
-      );
+      stepValidation(currentStep)
       return false;
     }
 
     if (currentStep < targetStep) {
-      // if (stepValidation(currentStep) === true) {
+      if (stepValidation(currentStep) === true) {
         const body = $("html, body");
         const form = $(".content-container").offset().top;
         body.stop().animate({ scrollTop: form }, 500, "swing");
@@ -1632,13 +1623,9 @@ jQuery(document).ready(function () {
             nextBoard.classList.add("show-step");
           }, 200);
         }, 650);
-      // } else {
-      //   console.log(
-      //     "Verifique se todos os campos estão preenchidos corretamente"
-      //   );
-      // }
+      }
     } else {
-      feedback(true, '')
+      textFeedback(true, '')
       const body = $("html, body");
       const form = $(".content-container").offset().top;
       body.stop().animate({ scrollTop: 0 }, 500, "swing");
@@ -1683,7 +1670,7 @@ jQuery(document).ready(function () {
     nextStep(step, target);
   })
 
-  jQuery('input.avancar[type="button"][data-step="4"').click(function() {
+  jQuery('input.avancar[type="button"][data-step="4"]').click(function() {
     getValue()
   })
 }
