@@ -18,33 +18,6 @@ function validateUser() {
   return isValid
 }
 
-
-/*
-function changeText(isHover) {
-  let label = jQuery('#username-label')
-
-  if(isHover === true) {
-    label.removeClass('show')
-    setTimeout(function() {
-      label.html('<span class="light">E-mail ou nome de usuário</span><span class="required">*</span>')
-      label.addClass('show')
-    }, 120)
-  } else {
-    label.removeClass('show')
-    setTimeout(function() {
-      label.html('Login<span class="required">*</span>')
-      label.addClass('show')
-    }, 120)
-  }
-}
-
-jQuery('#user').focus(function() {
-  changeText(true)
-})
-jQuery('#user').blur(function() {
-  changeText(false)
-}) */
-
 function validatePassword() {
   isValid = false
   let password = jQuery('#password').val()

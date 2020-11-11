@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 
-$green: #8aae40;
-
 html {
   font-size: 16px;
 }
+
+$green: #8aae40;
 
 * {
   text-decoration: none;
@@ -20,13 +20,36 @@ body {
   overflow-y: scroll;
 }
 
-@import 'sign-in';
-@import 'step1';
-@import 'step2';
-@import 'step3';
-@import 'step4';
-@import 'step5';
-@import 'confirmation';
-@import 'login';
+.header {
+  width: 100%;
+  height: 112px;
+  background-color: $green;
+}
+
+.vvale-new-ui {
+
+  &.content-container {
+    width: 100%;
+    padding: 60px 0px 120px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    transition: 300ms;
+  
+    @media screen and (max-width: 639px) {
+      padding: 30px 0px;
+    }
+  }
+  @import 'sign-in';
+  @import 'step1';
+  @import 'step2';
+  @import 'step3';
+  @import 'step4';
+  @import 'step5';
+  @import 'confirmation';
+  @import 'login';
+  @import 'reset';
+}
+
 @import 'article';
-@import 'reset';

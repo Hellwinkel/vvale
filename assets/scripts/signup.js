@@ -1610,7 +1610,7 @@ jQuery(document).ready(function () {
     }
 
     if (currentStep < targetStep) {
-      if (stepValidation(currentStep) === true) {
+      // if (stepValidation(currentStep) === true) {
         const body = $("html, body");
         const form = $(".content-container").offset().top;
         body.stop().animate({ scrollTop: form }, 500, "swing");
@@ -1632,11 +1632,11 @@ jQuery(document).ready(function () {
             nextBoard.classList.add("show-step");
           }, 200);
         }, 650);
-      } else {
-        console.log(
-          "Verifique se todos os campos estão preenchidos corretamente"
-        );
-      }
+      // } else {
+      //   console.log(
+      //     "Verifique se todos os campos estão preenchidos corretamente"
+      //   );
+      // }
     } else {
       feedback(true, '')
       const body = $("html, body");

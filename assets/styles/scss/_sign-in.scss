@@ -30,12 +30,6 @@
   }
 }
 
-.header {
-  width: 100%;
-  height: 112px;
-  background-color: $green;
-}
-
 .show-step {
   transform: translateY(0px) !important;
   opacity: 1 !important;
@@ -154,20 +148,6 @@ span.birth-feedback {
   height: auto;
   overflow-y: auto;
 }
-
-.content-container {
-  width: 100%;
-  padding: 60px 0px 120px;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  transition: 300ms;
-
-  @media screen and (max-width: 639px) {
-    padding: 30px 0px;
-  }
-
   .required {
     color: red;
   }
@@ -240,7 +220,6 @@ span.birth-feedback {
       }
     }
   }
-}
 
 .step-container {
   width: 60%;
