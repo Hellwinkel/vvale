@@ -1,4 +1,14 @@
 .third-board {
+  input[readonly] {
+    background-color: #fafafa;
+    cursor: not-allowed;
+
+    &:focus, &:hover {
+      border-color: #222;
+      box-shadow: none !important;
+    }
+  }
+
   .small-fields {
     display: flex;
     flex-flow: row nowrap;

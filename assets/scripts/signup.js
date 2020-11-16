@@ -8,16 +8,16 @@ let isVisiblePass = false
 let previousCountry
 let obj = {}
 
+jQuery(window).on('load', function() {
+  if(Cookies.get('fields') !== undefined) {
+    obj = JSON.parse(Cookies.get('fields'))
+    getCookie()
+  } else {
+    jQuery('.relative-step').addClass('show-step')
+  }
+})
+
 jQuery(document).ready(function () {
-   // let cookie = JSON.parse(Cookies.get('fields'))
-
-  // if (cookie) {
-  //   for(let element of Object.keys(cookie)) {
-  //     jQuery(`#${element}`).val(`${cookie[element]}`)
-  //   }
-  // }
-
-  jQuery('.relative-step').addClass('show-step')
   getCountry();
   getState();
   changeBorder()
@@ -50,28 +50,142 @@ jQuery(document).ready(function () {
   changeFields();
 });
 
+// Prevent submit on enter key
+{
+  function preventSubmit(e) {
+    let button = jQuery('.step-board.relative-step.show-step .avancar')
+    let currentStep = parseInt(button.attr('data-step'))
+    let targetStep = parseInt(button.attr('data-target'))
+    if (e.key == 'Enter') {
+      e.preventDefault();
+      if(currentStep === 4) {
+        getValue()
+      }
+      nextStep(currentStep, targetStep)
+    }
+  }
+
+  jQuery('form input').keydown(function(e) {
+    preventSubmit(e)
+  })
+}
+
 // Save progress on cookie
 {
   function setCookie(fieldList, lastStep) {
-    obj.lastStep = lastStep.toString()
-    jQuery(fieldList).each(function(index, value) {
-      let fieldId = jQuery(value).attr('id')
-      // let fieldType = jQuery(value).type()
-      let fieldValue = jQuery(value).val()
+    if(Cookies.get('fields') !== undefined) {
+      let currentStep = JSON.parse(Cookies.get('fields')).lastStep
+      if(currentStep !== undefined) {
+        if(currentStep < lastStep) {
+          obj.lastStep = lastStep.toString()
+        }
+      }
+    } else {
+      obj.lastStep = lastStep
+    }
 
-      console.log(typeof(value))
-      let inputType = jQuery(value).attr('type')
-      console.log(inputType)
+    jQuery(fieldList).each(function(index, field) {
+      let fieldId = jQuery(field).attr('id')
+      let fieldType = jQuery(field).prop('tagName')
+      let fieldValue = jQuery(field).val()
 
-      // if(fieldType === 'INPUT') {
-      // }
+      if(fieldType === 'INPUT') {
+        let inputType = jQuery(field).attr('type')
+        switch(inputType) {
+          case 'text':
+          case 'email':
+          case 'password':
+          case 'date':
+            if(fieldId === 'document') {
+              let documentNumber = fieldValue.replaceAll(/\.|\/|\-/g, '')
+              obj[`#${fieldId}`] = documentNumber
+            } else {
+              obj[`#${fieldId}`] = fieldValue
+            }
+            break
+          case 'checkbox':
+            obj[`input[type="checkbox"][name="${jQuery(field).prop('name')}"]`] = true
+            break
+          case 'radio':
+            obj[`input[type="radio"][name="${jQuery(field).prop('name')}"]`] = fieldId
+            break
+        }
+      }
 
-      if(fieldValue !== undefined || fieldValue!== null || fieldValue !== '') {
-        obj[fieldId] = fieldValue
+      if(fieldType === 'SELECT') {
+        let selectedOption = jQuery(`#${fieldId} option:selected`)
+        obj[`#${fieldId}`] = selectedOption.text()
       }
     })
 
-    Cookies.set('fields', JSON.stringify(obj), { expires: 7 })
+    Cookies.set('fields', JSON.stringify(obj), { expires: 3 })
+  }
+}
+
+// Get content from cookie and update screen step
+{
+  function getCookie() {
+    if(Cookies.get('fields') !== undefined) {
+      let cookieValue = JSON.parse(Cookies.get('fields'))
+      
+      for (let element of Object.keys(cookieValue)) {
+        if(jQuery(element)[0] !== undefined) {
+          let fieldType = jQuery(element).prop('tagName')
+
+          if(fieldType === 'INPUT') {
+            let inputType = jQuery(element).attr('type')
+            switch(inputType) {
+              case 'text':
+              case 'email':
+              case 'password':
+              case 'date':
+                changeFields()
+                jQuery(element).val(cookieValue[element])
+                if(cookieValue[element] !== '') {
+                  feedback(jQuery(element)[0], true)
+                }
+                break
+              case 'checkbox':
+                jQuery(element).attr('checked', true)
+                break
+              case 'radio':
+                changeFields()
+                jQuery(`${element}[id="${cookieValue[element]}"]`).attr('checked', true)
+                changeBorder()
+                break
+            }
+          }
+
+          if(fieldType === 'SELECT') {
+            jQuery(`${element} option[value="${cookieValue[element]}"]`).attr('selected', true)
+            feedback(jQuery(element)[0], true)
+          }
+        }
+      }
+
+      if (parseInt(cookieValue.lastStep) >= 3) {
+        validNationalCEP = true
+      }
+
+      let lastStep = jQuery(`.step-board[data-step="${parseInt(cookieValue.lastStep) + 1}"]`)
+      jQuery('.step-board.relative-step').removeClass('relative-step')
+      lastStep.addClass('relative-step')
+
+      showStep(cookieValue.lastStep)
+    }
+  }
+}
+
+// Show current board 
+{
+  function showStep(targetStep) {
+    getCountry()
+    jQuery('.step-board.relative-step').removeClass('show-step')
+    if(targetStep == 4) {
+      getValue()
+    }
+    jQuery(`.step-board[data-step="${parseInt(targetStep + 1)}"]`).addClass('show-step')
+    jQuery('.relative-step').addClass('show-step')
   }
 }
 
@@ -269,34 +383,30 @@ jQuery(document).ready(function () {
 
     if (country.value !== "") {
       if (cepField !== null && cepField !== typeof undefined) {
-        if (jQuery(cepField).attr("disabled") !== typeof undefined) {
-          jQuery(cepField).removeAttr("disabled");
-          if (country.value === "Brasil") {
-            cepField.unmask();
-            cepField.mask("00000000");
-          } else {
-            cepField.unmask();
-            cepField.mask("0000999999");
-          }
+        if (country.value === "Brasil") {
+          cepField.unmask();
+          cepField.mask("00000-000");
+        } else {
+          cepField.unmask();
+          cepField.mask("0000999999");
         }
       }
       isValid = true;
     }
 
-    validateCep(cep, country.value);
+    validateCep(cep, country.value, false);
 
     return isValid;
   }
 
   // Validate CEP
-  function validateCep(field, countryValue) {
+  function validateCep(field, countryValue, clear = true) {
     let isValid = false;
     const state = document.querySelector("#state");
     const city = document.querySelector("#city");
     const neighborhood = document.querySelector("#neighborhood");
     const street = document.querySelector("#street");
     const number = document.querySelector("#number");
-    const obs = document.querySelector("#obs");
 
     if (field.value !== undefined) {
       if (countryValue === "Brasil") {
@@ -322,32 +432,33 @@ jQuery(document).ready(function () {
                       }
                     });
                   } else {
-                    state.removeAttribute("disabled");
+                    state.removeAttribute("readonly");
+                    state.tabIndex = 0;
                   }
 
                   if (data.localidade !== "") {
                     city.value = data.localidade;
                     checkLocationContent(city);
                   } else {
-                    city.removeAttribute("disabled");
+                    city.removeAttribute("readonly");
+                    city.tabIndex = 0;
                   }
 
                   if (data.bairro !== "") {
                     neighborhood.value = data.bairro;
                     checkLocationContent(neighborhood);
                   } else {
-                    neighborhood.removeAttribute("disabled");
+                    neighborhood.removeAttribute("readonly");
+                    neighborhood.tabIndex = 0;
                   }
 
                   if (data.logradouro !== "") {
                     street.value = data.logradouro;
                     checkLocationContent(street);
                   } else {
-                    street.removeAttribute("disabled");
+                    street.removeAttribute("readonly");
+                    street.tabIndex = 0;
                   }
-
-                  number.removeAttribute("disabled");
-                  obs.removeAttribute("disabled");
 
                   validNationalCEP = true;
                   isValid = true;
@@ -355,12 +466,14 @@ jQuery(document).ready(function () {
               },
             })
             .fail((err) => {
-              state.removeAttribute("disabled");
-              city.removeAttribute("disabled");
-              neighborhood.removeAttribute("disabled");
-              street.removeAttribute("disabled");
-              number.removeAttribute("disabled");
-              obs.removeAttribute("disabled");
+              state.removeAttribute("readonly");
+              state.tabIndex = 0;
+              city.removeAttribute("readonly");
+              city.tabIndex = 0;
+              neighborhood.removeAttribute("readonly");
+              neighborhood.tabIndex = 0;
+              street.removeAttribute("readonly");
+              street.tabIndex = 0;
 
               console.error(err);
 
@@ -372,12 +485,14 @@ jQuery(document).ready(function () {
         jQuery(field).unmask()
         let content = field.value;
         if (content.length >= 4) {
-          state.removeAttribute("disabled");
-          city.removeAttribute("disabled");
-          neighborhood.removeAttribute("disabled");
-          street.removeAttribute("disabled");
-          number.removeAttribute("disabled");
-          obs.removeAttribute("disabled");
+          state.removeAttribute("readonly");
+          state.tabIndex = 0;
+          city.removeAttribute("readonly");
+          city.tabIndex = 0;
+          neighborhood.removeAttribute("readonly");
+          neighborhood.tabIndex = 0;
+          street.removeAttribute("readonly");
+          street.tabIndex = 0;
 
           validNationalCEP = true;
           isValid = true;
@@ -385,30 +500,29 @@ jQuery(document).ready(function () {
       }
     }
 
-    if (isValid === false) {
+    if (isValid === false && clear === true) {
       state.value = "";
-      state.setAttribute = "disabled";
+      state.setAttribute = "readonly";
+      state.tabIndex = -1;
       checkLocationContent(state);
 
       city.value = "";
-      city.setAttribute = "disabled";
+      city.setAttribute = "readonly";
+      city.tabIndex = -1;
       checkLocationContent(city);
 
       neighborhood.value = "";
-      neighborhood.setAttribute = "disabled";
+      neighborhood.setAttribute = "readonly";
+      neighborhood.tabIndex = -1;
       checkLocationContent(neighborhood);
 
       street.value = "";
-      street.setAttribute = "disabled";
+      street.setAttribute = "readonly";
+      street.tabIndex = -1;
       checkLocationContent(street);
 
       number.value = "";
-      number.setAttribute = "disabled";
       checkLocationContent(number);
-
-      obs.value = "";
-      obs.setAttribute = "disabled";
-      checkLocationContent(obs);
     }
     return isValid;
   }
@@ -615,13 +729,13 @@ jQuery(document).ready(function () {
     jQuery("input#cep").on("keyup", function () {
       let country = jQuery("select#country")[0];
       country = country.options[country.selectedIndex].value;
-      checkCep(this, country);
+      checkCep(this, country, true);
     });
 
     jQuery("input#cep").on("blur", function () {
       let country = jQuery("select#country")[0];
       country = country.options[country.selectedIndex].value;
-      checkCep(this, country);
+      checkCep(this, country, true);
     });
 
     jQuery("#state").on("keyup", function () {
@@ -840,6 +954,7 @@ jQuery(document).ready(function () {
       documentField.attr("placeholder", "000.000.000-00");
       documentField.unmask();
       documentField.mask("000.000.000-00");
+      feedback(documentField[0], checkDocument(documentField[0]))
       firstName.html('Nome<span class="required">*</span>');
       lastName.html('Sobrenome<span class="required">*</span>');
       birthContainer.css("display", "block");
@@ -865,6 +980,7 @@ jQuery(document).ready(function () {
       documentField.attr("placeholder", "00.000.000/0000-00");
       documentField.unmask();
       documentField.mask("00.000.000/0000-00");
+      feedback(documentField[0], checkDocument(documentField[0]))
       firstName.html('Razão social<span class="required">*</span>');
       lastName.html('Nome fantasia<span class"required">*</span>');
       birthContainer.animate(
@@ -976,7 +1092,7 @@ jQuery(document).ready(function () {
   }
 }
 
-//Validate second step fields
+// Validate second step fields
 {
   function validateSecondStep() {
     const accountType = jQuery(
@@ -987,6 +1103,17 @@ jQuery(document).ready(function () {
     const lastName = document.querySelector("input#last-name");
     const documentType = document.querySelector("input#document");
     const cel = document.querySelector("input#cel");
+    
+    let fieldsArray = [];
+    fieldsArray.push(document.querySelector('input[name="conta"]:checked'))
+    fieldsArray.push(user)
+    fieldsArray.push(firstName)
+    fieldsArray.push(lastName)
+    fieldsArray.push(documentType)
+    fieldsArray.push(document.querySelector("input#birth"))
+    fieldsArray.push(document.querySelector('input[name="genero"]:checked'))
+    fieldsArray.push(cel)
+    fieldsArray.push(document.querySelector("input#phone"))
 
     const userStatus = validateUser(user);
     const firstNameStatus = validateName(firstName);
@@ -1006,6 +1133,7 @@ jQuery(document).ready(function () {
         celStatus &&
         birthStatus
       ) {
+        setCookie(fieldsArray, 2)
         return true;
       } else {
         return false;
@@ -1018,15 +1146,23 @@ jQuery(document).ready(function () {
         documentStatus &&
         celStatus
       ) {
+        setCookie(fieldsArray, 2)
         return true;
       } else {
+        console.log(`
+        1: ${userStatus}
+        2: ${firstNameStatus}
+        3: ${lastNameStatus}
+        4: ${documentStatus}
+        5: ${celStatus}
+        `)
         return false;
       }
     }
   }
 }
 
-//Validate third step fields
+// Validate third step fields
 {
   function validateThirdStep() {
     const state = document.querySelector("#state");
@@ -1034,6 +1170,16 @@ jQuery(document).ready(function () {
     const neighborhood = document.querySelector("#neighborhood");
     const street = document.querySelector("#street");
     const number = document.querySelector("#number");
+
+    let fieldsArray = [];
+    fieldsArray.push(state)
+    fieldsArray.push(city)
+    fieldsArray.push(neighborhood)
+    fieldsArray.push(street)
+    fieldsArray.push(number)
+    fieldsArray.push(document.querySelector('#country'))
+    fieldsArray.push(document.querySelector('#cep'))
+    fieldsArray.push(document.querySelector('#obs'))
 
     const countryStatus = validNationalCEP;
     const cepStatus = validNationalCEP;
@@ -1052,6 +1198,7 @@ jQuery(document).ready(function () {
       streetStatus &&
       numberStatus
     ) {
+      setCookie(fieldsArray, 3)
       return true;
     } else {
       return false;
@@ -1064,7 +1211,11 @@ jQuery(document).ready(function () {
   function validateFourthStep() {
     const selectedPlan = document.querySelector('input[name="plan"]:checked');
 
+    let fieldsArray = []
+    fieldsArray.push(selectedPlan)
+
     if (selectedPlan !== null) {
+      setCookie(fieldsArray, 4)
       return true;
     } else {
       return false;
@@ -1597,6 +1748,7 @@ jQuery(document).ready(function () {
     
     if (currentStep == targetStep) {
       stepValidation(currentStep)
+      Cookies.remove('fields')
       return false;
     }
 
@@ -1628,7 +1780,7 @@ jQuery(document).ready(function () {
       textFeedback(true, '')
       const body = $("html, body");
       const form = $(".content-container").offset().top;
-      body.stop().animate({ scrollTop: 0 }, 500, "swing");
+      body.stop().animate({ scrollTop: form }, 500, "swing");
 
       setTimeout(function () {
         updateMap(nextStep);

@@ -59,7 +59,7 @@
       <span class="feedback top"></span>
       <div class="form">
 
-        <div class="first-board step-board" data-step="1">
+        <div class="first-board step-board relative-step" data-step="1">
           <p class="content">Crie uma conta para os produtos Vvale</p>
           <div class="icon-container">
             <div class="icon notebook"></div>
@@ -203,31 +203,31 @@
             <label for="state" class="field-name">
               Estado<span class="required">*</span>
             </label>
-            <input type="text" name="state" id="state" class="field" disabled>
+            <input type="text" name="state" id="state" class="field" readonly tabindex="-1">
             <label for="city" class="field-name">
               Cidade<span class="required">*</span>
             </label>
-            <input type="text" name="city" id="city" class="field" disabled>
+            <input type="text" name="city" id="city" class="field" readonly tabindex="-1">
             <label for="neighborhood" class="field-name">
               Bairro<span class="required">*</span>
             </label>
-            <input type="text" name="neighborhood" id="neighborhood" class="field" disabled>
+            <input type="text" name="neighborhood" id="neighborhood" class="field" readonly tabindex="-1">
             <label for="street" class="field-name">
               Endereço<span class="required">*</span>
             </label>
-            <input type="text" name="street" id="street" class="field" disabled>
+            <input type="text" name="street" id="street" class="field" readonly tabindex="-1">
             <div class="small-fields">
               <div class="number-container">
                 <label for="number" class="field-name">
                   Número<span class="required">*</span>
                 </label>
-                <input type="text" name="number" id="number" class="field" disabled>
+                <input type="text" name="number" id="number" class="field">
               </div>
               <div class="obs-container">
                 <label for="obs" class="field-name">
                   Complemento
                 </label>
-                <input type="text" name="obs" id="obs" class="field" disabled>
+                <input type="text" name="obs" id="obs" class="field">
               </div>
             </div>
           </div>
@@ -419,7 +419,7 @@
         </div>
       </div>
 
-      <div class="last-board step-board relative-step" data-step="5">
+      <div class="last-board step-board" data-step="5">
         <p class="highlight">Quase lá!</p>
         <p class="note">Confirme seus dados e conclua o cadastro</p>
         <div class="input-container">
@@ -464,7 +464,7 @@
         </div>
         <div class="button-container">
           <span class="feedback"></span>
-          <input type="button" value="Finalizar" class="avancar" data-step="5" data-target="5">
+          <input type="submit" value="Finalizar" class="avancar" data-step="5" data-target="5">
           <input type="button" value="Etapa anterior" class="voltar" data-step="5" data-target="4">
         </div>
       </div>
