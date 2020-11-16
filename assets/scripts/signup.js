@@ -169,6 +169,7 @@ jQuery(document).ready(function () {
 
       let lastStep = jQuery(`.step-board[data-step="${parseInt(cookieValue.lastStep) + 1}"]`)
       jQuery('.step-board.relative-step').removeClass('relative-step')
+      updateMap(parseInt(cookieValue.lastStep) + 1)
       lastStep.addClass('relative-step')
 
       showStep(cookieValue.lastStep)
@@ -1302,24 +1303,24 @@ jQuery(document).ready(function () {
         account.planName = "Plano gratuito";
         break;
       case "plan1":
-        account.planName = "Plano de teste";
-        account.planTemp = "30 dias";
-        account.planValue = "Pagamento único de R$ 4,90";
+          account.planName = "Plano de teste";
+          account.planTemp = "30 dias";
+          account.planValue = "Pagamento único de R$ 4,90";
         break;
       case "plan2":
-        account.planName = "Portal Vvale";
-        account.planTemp = "12 meses";
-        account.planValue = "12 parcelas de R$ 9,90 (Totalizando R$ 118,80)";
+          account.planName = "Plano digital";
+          account.planTemp = "12 meses";
+          account.planValue = "R$ 118,80 (Parcelamento em até 12 vezes de R$ 9,90)";
         break;
-      case "plan3":
-        account.planName = "Portal Vvale Compartilhado";
-        account.planTemp = "12 meses";
-        account.planValue = "12 parcelas de R$ 19,90 (Totalizando R$ 238,80)";
+        case "plan3":
+          account.planName = "Plano Compartilhado";
+          account.planTemp = "12 meses";
+          account.planValue = "R$ 238,80 (Parcelamento em até 12 vezes de R$ 19,90)";
         break;
-      case "plan4":
-        account.planName = "Portal Vvale + JOC Impresso";
-        account.planTemp = "12 meses";
-        account.planValue = "12 parcelas de R$ 20,00 (Totalizando R$ 240,00)";
+        case "plan4":
+          account.planName = "Plano Premium";
+          account.planTemp = "12 meses";
+          account.planValue = "R$ 240,00 (Parcelamento em até 12 vezes de R$ 20,00)";
         break;
     }
 
@@ -1387,13 +1388,13 @@ jQuery(document).ready(function () {
         <div class="row">
           <strong>
             <span>
-              Telefone: 
+              Celular: 
             </span> 
           </strong>
-          <span>${account.phone}</span>
+          <span>${account.cel}</span>
         </div>`;
 
-      if (account.cel !== "") {
+      if (account.phone !== "") {
         personalText += `
         <div class="row cel-data-container">
           <strong>
@@ -1401,7 +1402,18 @@ jQuery(document).ready(function () {
               Celular: 
             </span> 
           </strong>
-          <span>${account.cel}</span>
+          <span>${account.phone}</span>
+        </div>
+        `;
+      } else {
+        personalText += `
+        <div class="row cel-data-container">
+          <strong>
+            <span>
+              Telefone: 
+            </span> 
+          </strong>
+          <span>Não informado</span>
         </div>
         `;
       }
