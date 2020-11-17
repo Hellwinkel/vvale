@@ -15,7 +15,7 @@
 <body>
   <div class="header"></div>
   <div class="vvale-new-ui content-container">
-    <div class="form-container confirm-page">
+    <div class="form-container confirm-page reset-page">
       <div class="svg-container">
         <svg viewBox="0 0 261.36 285.3">
           <title>Vvale</title>
@@ -42,31 +42,86 @@
               <span>Senha</span>
             </label>
           </div>
-          <p class="content no-margin reset-message">
-            Para prosseguir com a recuperação de e-mail<br>
-            será necessário informar seu CPF ou CNPJ
-          </p>
+          <div class="message-container">
+            <p class="content no-margin reset-message">
+              Siga as instruções da próxima etapa<br>
+              para recuperar o e-mail cadastrado
+            </p>
+          </div>
           <div class="button-container">
             <span class="feedback"></span>
-            <input type="button" value="Avançar" class="avancar reset-button" data-step="1" data-target="2">
+            <input type="button" value="Avançar" class="avancar reset-button" data-step="1" data-target="2" data-function="email">
           </div>
         </form>
 
         <div class="confirmation-board step-board" data-step="2">
+          <div class="main-container show">
+            <p class="content">
+              Primeiro informe seu documento<br>
+              abaixo para validar sua identidade
+            </p>
+            <div class="field-container">
+              <label for="document" class="field-name">CPF ou CNPJ<span class="required">*</span></label>
+              <input type="text" name="document" class="field" id="document">
+            </div>
+            <p class="content">
+              Não tem esta informação?<br>
+              Clique <a href="#">aqui</a> e fale conosco
+            </p>
+            <div class="button-container">
+              <span class="feedback"></span>
+              <input type="button" value="Verificar" class="avancar reset-button check-document">
+              <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
+            </div>
+          </div>
+          <div class="response-container">
+            <div class="field-container">
+              <p class="content final-content big">
+                Conta localizada
+              </p>
+              <p class="content">
+                Abaixo está o endereço de <br>e-mail vinculado à sua conta
+              </p>
+              <p class="content">
+                <strong class="email-response"></strong>
+              </p>
+
+              <p class="content">
+                Não tem mais acesso ao e-mail?<br>
+                Clique <a href="#">aqui</a> para falar conosco
+              </p>
+              <div class="button-container">
+                <input type="button" value="Concluir" class="avancar reset-button" data-step="2" data-target="2">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="confirmation-board step-board" data-step="3">
           <p class="content final-content big">
-            Obrigado!
+            Quase lá...
           </p>
           <p class="content final-content">
-            Conta confirmada com sucesso
+            Siga as instruções da mensagem <br>que enviamos para seu e-mail
           </p>
-          <p class="content final-content small">
-            Você será redirecionado para a página inicial
-          </p>
+          <div class="resend-container">
+            <p class="content resend">
+              Não recebeu o e-mail?<br>
+              Clique <input type="button" value="aqui"> para reenviá-lo
+            </p>
+            <p class="content cooldown">
+              Um novo e-mail poderá ser <br>solicitado em <span class="clock"></span>
+            </p>
+          </div>
+          <div class="button-container">
+            <input type="button" value="Finalizar" class="avancar reset-button" data-step="3" data-target="3">
+          </div>
         </div>
       </div>
     </div>
   </div>
   <script src="assets/scripts/jquery.min.js"></script>
+  <script src="assets/scripts/jquery.mask.min.js"></script>
   <script src="assets/scripts/reset.js"></script>
 </body>
 

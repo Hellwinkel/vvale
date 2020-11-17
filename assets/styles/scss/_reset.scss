@@ -1,8 +1,69 @@
-.reset-message {
-  margin-bottom: 30px !important;
-}
+.reset-page {
+  .message-container {
+    margin-bottom: 30px;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .resend-container {
+    margin-bottom: 20px !important;
+    margin-top: 10px !important;
+    height: 55px !important;
+    min-height: 55px !important;
+    
+    .resend {
+      font-size: 1rem !important;
+    }
+    
+    .cooldown {
+      color: #8a8a8a !important;
+      font-size: 1rem !important;
+    }
+  }
+  
+  .reset-button {
+    padding: 15px 0px !important;
+    width: 157px;
+  }
+  
+  p.content {
+    font-size: 1rem !important;
 
-.reset-button {
-  padding: 15px 0px !important;
-  width: 157px;
+    strong {
+      color: $green;
+    }
+  
+    &.final-content {
+      margin: 0px 0px 20px !important;
+      color: #545454;
+      font-size: 1rem !important;
+      width: 100%;
+      text-align: center;
+      
+      &.big {
+        font-size: 1.75rem !important;
+        font-weight: 600;
+        margin: 0px 0px 20px !important;
+        color: #545454;
+      }
+    }
+  }
+  
+  .main-container, .response-container {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    height: 0px;
+    opacity: 0;
+    transition: 500ms;
+  
+    &.show {
+      opacity: 1;
+      height: 350px;
+    }
+  }
 }
