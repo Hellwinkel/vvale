@@ -964,7 +964,7 @@ body {
 }
 
 .vvale-new-ui .fourth-board .input-container .plan-container .title {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1050,9 +1050,44 @@ body {
   opacity: 1;
 }
 
+.vvale-new-ui .fourth-board .input-container .plan-container.highlight {
+  padding-top: 15px;
+}
+
 .vvale-new-ui .fourth-board .input-container .plan-container.highlight .title {
-  margin-bottom: 10px;
-  padding-bottom: 45px;
+  margin-bottom: 20px;
+  padding-bottom: 0px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 30px;
+}
+
+@media screen and (max-width: 639px) {
+  .vvale-new-ui .fourth-board .input-container .plan-container.highlight .title {
+    min-height: 75px;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    padding-top: 7px;
+  }
+}
+
+.vvale-new-ui .fourth-board .input-container .plan-container.highlight .title .checkmark {
+  top: 7px;
+}
+
+.vvale-new-ui .fourth-board .input-container .plan-container.highlight .title p {
+  width: 50%;
+}
+
+@media screen and (max-width: 639px) {
+  .vvale-new-ui .fourth-board .input-container .plan-container.highlight .title p {
+    width: 100%;
+  }
 }
 
 .vvale-new-ui .fourth-board .input-container .plan-container.highlight .title .badge {
@@ -1077,15 +1112,13 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-transform: translate3d(-15px, -9px, 0);
-          transform: translate3d(-15px, -9px, 0);
 }
 
 @media screen and (max-width: 639px) {
   .vvale-new-ui .fourth-board .input-container .plan-container.highlight .title .badge {
     position: absolute;
-    left: calc(50% - 80px);
-    top: 45px;
+    left: calc(50% - 99px);
+    top: 40px;
   }
 }
 
@@ -2174,6 +2207,8 @@ body {
   max-width: 600px;
   min-width: 60px;
   margin: 30px 0px 35px;
+  height: 1px;
+  background-color: #c9c9c9;
 }
 
 .vvale-article figure {
