@@ -82,6 +82,11 @@ body {
 }
 
 .vvale-new-ui {
+  input[type="text"], input[type="data"], select {
+    min-height: 40px !important;
+    height: 40px !important;
+    max-height: 40px !important;
+  }
 
   &.content-container {
     width: 100%;
