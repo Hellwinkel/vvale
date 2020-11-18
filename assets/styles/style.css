@@ -784,10 +784,25 @@ body {
 }
 
 .vvale-new-ui .second-board .gender-container, .vvale-new-ui .second-board .birth-container {
+  width: 100%;
   height: 90px;
   overflow: hidden;
   -webkit-transition: 200ms;
   transition: 200ms;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.vvale-new-ui .second-board .gender-container > *, .vvale-new-ui .second-board .birth-container > * {
+  width: 98%;
 }
 
 .vvale-new-ui .second-board .gender-container.hidden, .vvale-new-ui .second-board .birth-container.hidden {

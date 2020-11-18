@@ -956,9 +956,9 @@ jQuery(document).ready(function () {
       firstName.html('Nome<span class="required">*</span>');
       lastName.html('Sobrenome<span class="required">*</span>');
       birthContainer.removeClass('hidden')
-      birthContainer.attr('tabindex', '0')
+      birthInput.attr('tabindex', '0')
       genderContainer.removeClass('hidden')
-      genderContainer.attr('tabindex', '0')
+      genderInput.attr('tabindex', '0')
     } else {
       document.html('CNPJ<span class="required">*</span>');
       documentField.attr("placeholder", "00.000.000/0000-00");
@@ -968,9 +968,9 @@ jQuery(document).ready(function () {
       firstName.html('Razão social<span class="required">*</span>');
       lastName.html('Nome fantasia<span class"required">*</span>');
       birthContainer.addClass('hidden')
-      birthContainer.attr('tabindex', '-1')
+      birthInput.attr('tabindex', '-1')
       genderContainer.addClass('hidden')
-      genderContainer.attr('tabindex', '-1')
+      genderInput.attr('tabindex', '-1')
     }
 
     return accountType;
