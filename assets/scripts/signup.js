@@ -7,6 +7,7 @@ let states = [];
 let isVisiblePass = false
 let previousCountry
 let obj = {}
+let maxYear = ''
 
 jQuery(window).on('load', function() {
   if(Cookies.get('fields') !== undefined) {
@@ -28,8 +29,12 @@ jQuery(document).ready(function () {
 
   jQuery('.vvale-svg').addClass('vvale-animate')
 
-  let currentDate = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
-  jQuery('#birth').attr('max', currentDate)
+  let currentYear = new Date().getFullYear()
+  let currentMonth = new Date().getMonth()
+  let currentDay = new Date().getDate()
+  maxYear = `${currentYear - 10}-${currentMonth + 1}-${currentDay}`
+
+  jQuery('#birth').attr('max', maxYear)
 
   const maskBehavior = function (val) {
       return val.replace(/\D/g, "").length === 11
@@ -325,10 +330,6 @@ jQuery(document).ready(function () {
   function validateBirth(field) {
     let isValid = true;
     let sentYear = parseInt(field.value.split('-')[0])
-    let currentYear = new Date().getFullYear()
-    let currentMonth = new Date().getMonth()
-    let currentDay = new Date().getDay()
-    let maxYear = new Date(`${currentYear - 10}-${currentMonth + 1}-${currentDay + 1}`)
 
     if(field.value === '') {
       isValid = false
@@ -338,7 +339,7 @@ jQuery(document).ready(function () {
       isValid = false
     }
 
-    if(new Date(`${field.value} 00:00:00`) > maxYear) {
+    if(new Date(`${field.value} 00:00:00`) > new Date(maxYear)) {
       isValid = false
       jQuery('.birth-feedback').html('É necessário ter ao menos 10 anos')
       jQuery('.birth-feedback').animate({

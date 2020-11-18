@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vvale</title>
+  <link rel="stylesheet" href="assets/styles/shift-toward.css">
+  <link rel="stylesheet" href="assets/styles/style.css">
+  <meta name="theme-color" content="#759238">
+</head>
+
+<body>
+  <div class="header"></div>
+  <div class="vvale-new-ui content-container">
+    <form action="" class="form-container reset-page">
+      <div class="svg-container">
+        <svg viewBox="0 0 261.36 285.3">
+          <title>Vvale</title>
+          <g data-name="Layer">
+            <path class="vvale-svg"
+              d="M136.25,110.51A351.33,351.33,0,0,0,260.42,2.19C236.65,121.71,189.69,214.5,123,284.59,48.41,209.31,11.9,124.76.92,34c31.15,72.67,75,129.68,138.48,162.38C140.32,166.28,139.81,137.25,136.25,110.51Z" />
+          </g>
+        </svg>
+      </div>
+      <h2 class="form-title">Redefinir senha</h2>
+      <div class="form" id="login-form">
+
+        <div class="reset-board step-board relative-step" data-step="1">
+          <p class="content">
+            Preencha os campos abaixo <br>para redefinir sua senha
+          </p>
+          <div class="field-container">
+            <label for="first-pass" class="field-name">Nova senha<span class="required">*</span></label>
+            <input type="password" name="first-pass" class="field" id="first-pass" data-field="tippy-first-pass">
+            <input type="button" class="password-eye" data-related="first-pass" tabindex="-1">
+            <div id="tippy-first-pass" style="display: none;">
+              <strong>Precisa conter</strong><br>
+              <span class="tooltip-hint" id="tooltip-letter">- Ao menos 1 letra</span><br>
+              <span class="tooltip-hint" id="tooltip-number">- Ao menos 1 número</span><br>
+              <span class="tooltip-hint" id="tooltip-lenght">- Ao menos 8 caracteres</span>
+            </div>
+          </div>
+          <div class="field-container">
+            <label for="second-pass" class="field-name">Confirmar senha<span class="required">*</span></label>
+            <input type="password" name="second-pass" class="field" id="second-pass" data-field="tippy-second-pass">
+            <input type="button" class="password-eye" data-related="second-pass" tabindex="-1">
+            <div id="tippy-second-pass" style="display: none;">
+              <strong>Precisa conter</strong><br>
+              <span class="tooltip-hint" id="tooltip-letter">- Ao menos 1 letra</span><br>
+              <span class="tooltip-hint" id="tooltip-number">- Ao menos 1 número</span><br>
+              <span class="tooltip-hint" id="tooltip-lenght">- Ao menos 8 caracteres</span><br>
+              <span class="tooltip-hint" id="tooltip-compare">- As senhas devem coincidir</span>
+            </div>
+          </div>
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Alterar" class="avancar" data-step="1" data-target="2">
+          </div>
+        </div>
+
+        <div class="reset-board step-board" data-step="2">
+          <p class="content success-message big">
+            Feito!
+          </p>
+          <p class="content success-message">
+            Sua senha foi alterada
+          </p>
+          <p class="content redirect-message">
+            Aguarde 5 segundos para ser<br>
+            redirecionado ou clique <a href="login.html">aqui</a>
+          </p>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <script src="assets/scripts/jquery.min.js"></script>
+  <script src="assets/scripts/popper.min.js"></script>
+  <script src="assets/scripts/tippy.min.js"></script>
+  <script src="assets/scripts/reset.js"></script>
+</body>
+
+</html>
