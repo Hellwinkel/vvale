@@ -1,7 +1,5 @@
 const reCaptchaSecret = window.secretKey;
 const websiteKey = window.websiteKey;
-let birthInitialHeight;
-let genderInitialHeight;
 let validNationalCEP = false;
 let states = [];
 let isVisiblePass = false
@@ -50,8 +48,6 @@ jQuery(document).ready(function () {
   jQuery("#phone").mask(maskBehavior, Options);
   jQuery("#cel").mask(maskBehavior, Options);
 
-  birthInitialHeight = jQuery(".birth-container").outerHeight(true);
-  genderInitialHeight = jQuery(".gender-container").outerHeight(true) + 25;
   changeFields();
 });
 
@@ -959,24 +955,10 @@ jQuery(document).ready(function () {
       feedback(documentField[0], checkDocument(documentField[0]))
       firstName.html('Nome<span class="required">*</span>');
       lastName.html('Sobrenome<span class="required">*</span>');
-      birthContainer.css("display", "block");
-      genderContainer.css("display", "block");
-      birthContainer.animate(
-        {
-          opacity: 1,
-          height: birthInitialHeight,
-          overflow: "initial",
-        },
-        200
-      );
-      genderContainer.animate(
-        {
-          opacity: 1,
-          height: genderInitialHeight,
-          overflow: "initial",
-        },
-        200
-      );
+      birthContainer.removeClass('hidden')
+      birthContainer.attr('tabindex', '0')
+      genderContainer.removeClass('hidden')
+      genderContainer.attr('tabindex', '0')
     } else {
       document.html('CNPJ<span class="required">*</span>');
       documentField.attr("placeholder", "00.000.000/0000-00");
@@ -985,29 +967,10 @@ jQuery(document).ready(function () {
       feedback(documentField[0], checkDocument(documentField[0]))
       firstName.html('Razão social<span class="required">*</span>');
       lastName.html('Nome fantasia<span class"required">*</span>');
-      birthContainer.animate(
-        {
-          opacity: 0,
-          height: 0,
-          overflow: "hidden",
-        },
-        200
-      );
-      genderContainer.animate(
-        {
-          opacity: 0,
-          height: 0,
-          minHeight: 0,
-          marginBottom: 0,
-          overflow: "hidden",
-          display: "none",
-        },
-        200
-      );
-      setTimeout(function () {
-        birthContainer.css("display", "none");
-        genderContainer.css("display", "none");
-      }, 200);
+      birthContainer.addClass('hidden')
+      birthContainer.attr('tabindex', '-1')
+      genderContainer.addClass('hidden')
+      genderContainer.attr('tabindex', '-1')
     }
 
     return accountType;

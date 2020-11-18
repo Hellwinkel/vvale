@@ -783,11 +783,22 @@ body {
   margin-bottom: 15px !important;
 }
 
+.vvale-new-ui .second-board .gender-container, .vvale-new-ui .second-board .birth-container {
+  height: 90px;
+  overflow: hidden;
+  -webkit-transition: 200ms;
+  transition: 200ms;
+}
+
+.vvale-new-ui .second-board .gender-container.hidden, .vvale-new-ui .second-board .birth-container.hidden {
+  height: 0px;
+}
+
 .vvale-new-ui .second-board .gender-container {
-  min-height: 90px;
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
+  height: 100px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-flow: column;
@@ -798,7 +809,7 @@ body {
 }
 
 .vvale-new-ui .second-board .gender-container .radio-container {
-  margin-bottom: 0 !important;
+  margin-bottom: 30px;
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;

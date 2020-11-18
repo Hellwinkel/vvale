@@ -13,14 +13,24 @@
     margin-bottom: 15px !important;
   }
 
+  .gender-container, .birth-container {
+    height: 90px;
+    overflow: hidden;
+    transition: 200ms;
+
+    &.hidden {
+      height: 0px;
+    }
+  }
+
   .gender-container {
-    min-height: 90px;
-    display: flex !important;
+    height: 100px;
+    display: flex;
     flex-flow: column;
     align-items: flex-start;
     
     .radio-container {
-      margin-bottom: 0 !important;
+      margin-bottom: 30px;
       align-self: center;
     }
   }
