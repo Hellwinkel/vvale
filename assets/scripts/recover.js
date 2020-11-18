@@ -29,8 +29,8 @@ jQuery(window).on("load", function () {
 // Get selected method (e-mail or password)
 {
   function getActiveMethod() {
-    const buttons = jQuery(".reset-container label");
-    let activeMethod = jQuery(".reset-container input:checked").attr("id");
+    const buttons = jQuery(".recover-container label");
+    let activeMethod = jQuery(".recover-container input:checked").attr("id");
     let text = jQuery(".no-margin");
   
     function changeFields(fieldText) {
@@ -41,18 +41,18 @@ jQuery(window).on("load", function () {
       }, 250);
     }
   
-    if (activeMethod === "reset-email") {
+    if (activeMethod === "recover-email") {
       changeFields(
         "Siga as instruções da próxima etapa<br> para recuperar o e-mail cadastrado"
       );
-      jQuery(".reset-button").attr("data-function", "email");
-      jQuery(".reset-button").attr("data-target", "2");
+      jQuery(".recover-button").attr("data-function", "email");
+      jQuery(".recover-button").attr("data-target", "2");
     } else {
       changeFields(
         "Enviaremos um link para o endereço<br> de e-mail cadastrado na sua conta"
         );
-        jQuery(".reset-button").attr("data-function", "password");
-        jQuery(".reset-button").attr("data-target", "3");
+        jQuery(".recover-button").attr("data-function", "password");
+        jQuery(".recover-button").attr("data-target", "3");
     }
   
     buttons.each(function () {
@@ -64,7 +64,7 @@ jQuery(window).on("load", function () {
     });
   }
 
-  jQuery(".reset-container label").on("change", getActiveMethod);
+  jQuery(".recover-container label").on("change", getActiveMethod);
 }
 
 // Validate document
@@ -281,7 +281,7 @@ jQuery(window).on("load", function () {
     }
   }
   
-  jQuery(".reset-button").click(function () {
+  jQuery(".recover-button").click(function () {
     let step = jQuery(this).data("step");
     let target = jQuery(this).data("target");
     nextStep(step, target);

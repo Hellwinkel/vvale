@@ -1650,7 +1650,7 @@ body {
   color: #9a9a9a;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container, .vvale-new-ui .confirm-page .form .reset-container {
+.vvale-new-ui .confirm-page .form .contact-container, .vvale-new-ui .confirm-page .form .recover-container {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1669,7 +1669,7 @@ body {
   margin-top: 10px;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label, .vvale-new-ui .confirm-page .form .reset-container label {
+.vvale-new-ui .confirm-page .form .contact-container label, .vvale-new-ui .confirm-page .form .recover-container label {
   display: inline-block;
   padding: 10px;
   cursor: pointer;
@@ -1687,32 +1687,32 @@ body {
   transition: 150ms;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label span, .vvale-new-ui .confirm-page .form .reset-container label span {
+.vvale-new-ui .confirm-page .form .contact-container label span, .vvale-new-ui .confirm-page .form .recover-container label span {
   color: #8aae40;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label:hover, .vvale-new-ui .confirm-page .form .reset-container label:hover {
+.vvale-new-ui .confirm-page .form .contact-container label:hover, .vvale-new-ui .confirm-page .form .recover-container label:hover {
   -webkit-box-shadow: 0px 0px 0px 2px rgba(149, 185, 73, 0.5);
           box-shadow: 0px 0px 0px 2px rgba(149, 185, 73, 0.5);
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label:focus, .vvale-new-ui .confirm-page .form .reset-container label:focus {
+.vvale-new-ui .confirm-page .form .contact-container label:focus, .vvale-new-ui .confirm-page .form .recover-container label:focus {
   outline: none;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label:last-child, .vvale-new-ui .confirm-page .form .reset-container label:last-child {
+.vvale-new-ui .confirm-page .form .contact-container label:last-child, .vvale-new-ui .confirm-page .form .recover-container label:last-child {
   margin-right: 0px;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label.active, .vvale-new-ui .confirm-page .form .reset-container label.active {
+.vvale-new-ui .confirm-page .form .contact-container label.active, .vvale-new-ui .confirm-page .form .recover-container label.active {
   background-color: #8aae40;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label.active span, .vvale-new-ui .confirm-page .form .reset-container label.active span {
+.vvale-new-ui .confirm-page .form .contact-container label.active span, .vvale-new-ui .confirm-page .form .recover-container label.active span {
   color: white;
 }
 
-.vvale-new-ui .confirm-page .form .contact-container label input, .vvale-new-ui .confirm-page .form .reset-container label input {
+.vvale-new-ui .confirm-page .form .contact-container label input, .vvale-new-ui .confirm-page .form .recover-container label input {
   display: none;
 }
 
@@ -1907,43 +1907,43 @@ body {
   color: #545454;
 }
 
-.vvale-new-ui .reset-page .message-container {
+.vvale-new-ui .recover-page .message-container {
   margin-bottom: 30px;
   height: 50px;
   overflow: hidden;
   position: relative;
 }
 
-.vvale-new-ui .reset-page .resend-container {
+.vvale-new-ui .recover-page .resend-container {
   margin-bottom: 20px !important;
   margin-top: 10px !important;
   height: 55px !important;
   min-height: 55px !important;
 }
 
-.vvale-new-ui .reset-page .resend-container .resend {
+.vvale-new-ui .recover-page .resend-container .resend {
   font-size: 1rem !important;
 }
 
-.vvale-new-ui .reset-page .resend-container .cooldown {
+.vvale-new-ui .recover-page .resend-container .cooldown {
   color: #8a8a8a !important;
   font-size: 1rem !important;
 }
 
-.vvale-new-ui .reset-page .reset-button {
+.vvale-new-ui .recover-page .recover-button {
   padding: 15px 0px !important;
   width: 157px;
 }
 
-.vvale-new-ui .reset-page p.content {
+.vvale-new-ui .recover-page p.content {
   font-size: 1rem !important;
 }
 
-.vvale-new-ui .reset-page p.content strong {
+.vvale-new-ui .recover-page p.content strong {
   color: #8aae40;
 }
 
-.vvale-new-ui .reset-page p.content.final-content {
+.vvale-new-ui .recover-page p.content.final-content {
   margin: 0px 0px 20px !important;
   color: #545454;
   font-size: 1rem !important;
@@ -1951,14 +1951,14 @@ body {
   text-align: center;
 }
 
-.vvale-new-ui .reset-page p.content.final-content.big {
+.vvale-new-ui .recover-page p.content.final-content.big {
   font-size: 1.75rem !important;
   font-weight: 600;
   margin: 0px 0px 20px !important;
   color: #545454;
 }
 
-.vvale-new-ui .reset-page .main-container, .vvale-new-ui .reset-page .response-container {
+.vvale-new-ui .recover-page .main-container, .vvale-new-ui .recover-page .response-container {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1980,7 +1980,7 @@ body {
   transition: 500ms;
 }
 
-.vvale-new-ui .reset-page .main-container.show, .vvale-new-ui .reset-page .response-container.show {
+.vvale-new-ui .recover-page .main-container.show, .vvale-new-ui .recover-page .response-container.show {
   opacity: 1;
   height: 350px;
 }
