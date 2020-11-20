@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Vvale</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+</head>
+<style>
+  html {
+    font-size: 18px;
+  }
+
+  * {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  body {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px;
+    border: 0px;
+    padding: 60px 15px;
+    background-color: #FAFBFA;
+    overflow-x: hidden;
+  }
+
+  .main-content {
+    width: 100%;
+    max-width: 600px;
+    padding: 25px 45px 45px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0px 10px 25px -5px rgba(157, 170, 158, 0.15);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .header {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 45px;
+  }
+
+  svg {
+    width: 100%;
+    max-width: 75px;
+    min-width: 50px;
+    margin-bottom: 10px;
+  }
+
+  .vvale-svg {
+    fill: #8aae40;
+    stroke: transparent;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #8aae40;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1rem;
+    color: #666666;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: 0.89rem;
+    line-height: 1.625em;
+    color: #747474;
+    margin-bottom: 25px;
+  }
+
+  p span.plan-name {
+    color: #8aae40;
+  }
+
+  p.first-paragraph {
+    font-size: 1rem;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  p:last-child {
+    margin-bottom: 0px;
+  }
+
+  p a {
+    font-weight: 700;
+    color: #8aae40;
+    text-decoration: underline;
+  }
+
+  .text-content {
+    position: relative;
+    padding-bottom: 41px;
+    margin-bottom: 35px;
+  }
+
+  .text-content:after {
+    position: absolute;
+    content: '';
+    width: 60px;
+    height: 1px;
+    background-color: #E5E5E5;
+    bottom: 0;
+    left: calc(50% - 30px);
+  }
+
+  .footer {
+    width: 100%;
+    max-width: 260px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .footer h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: #8aae40;
+    text-align: center;
+  }
+
+  .footer p {
+    text-align: center;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.45em;
+  }
+
+  .footer p a {
+    text-decoration: none;
+  }
+
+  .icon-container {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 85%;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  .icon-container a {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    background-position: center;
+    background-size: 90%;
+    background-repeat: no-repeat;
+  }
+
+  .icon-container a svg {
+    min-width: 100%;
+  }
+
+  @media screen and (max-width: 475px) {
+    .main-content {
+      padding: 30px 20px;
+    }
+
+    .footer {
+      max-width: 100%;
+    }
+
+    .icon-container {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+</style>
+
+<body>
+  <div class="main-content">
+    <section class="header">
+      <a href="https://www.vvale.com.br/" title="Verde Vale">
+        <svg viewBox="0 0 261.36 285.3">
+          <title>Vvale</title>
+          <g data-name="Layer">
+            <path class="vvale-svg"
+              d="M136.25,110.51A351.33,351.33,0,0,0,260.42,2.19C236.65,121.71,189.69,214.5,123,284.59,48.41,209.31,11.9,124.76.92,34c31.15,72.67,75,129.68,138.48,162.38C140.32,166.28,139.81,137.25,136.25,110.51Z">
+            </path>
+          </g>
+        </svg>
+      </a>
+      <a href="https://www.vvale.com.br/" title="Verde Vale">
+        <h1>
+          Portal Vvale
+        </h1>
+      </a>
+      <h2>
+        Renovação de plano
+      </h2>
+    </section>
+    <div class="text-content">
+      <p class="first-paragraph">
+        Olá <strong>Khauê</strong>,
+      </p>
+      <p>
+        Informamos que o seu <span class="plan-name"><strong>Plano Compartilhado</strong></span> de assinatura do Portal
+        Vvale está prestes a vencer. As vantagens do plano que você assinou estarão disponíveis até
+        <strong>26/12/2020</strong>. Após esta data, a sua conta retornará para o Plano Grátis e você não terá mais
+        acesso aos conteúdos exclusivos do Portal Vvale.
+      </p>
+      <p>
+        Para renovar ou alterar seu plano, clique <a href="https://www.vvale.com.br/planos/" target="_blank">aqui</a>.
+      </p>
+      <p>
+        Reforçamos que ser financiado pelo leitor faz uma grande diferença para garantir e ampliar a
+        <strong>qualidade</strong> da nossa produção jornalística. Sua assinatura contribui para a manutenção de uma
+        grande equipe que trabalha diariamente para levar <strong>conteúdo exclusivo</strong> e <strong>informação em
+          primeira mão</strong> para os assinantes.
+      </p>
+    </div>
+    <section class="footer">
+      <h2>
+        Dúvidas? Sugestões?
+      </h2>
+      <p>
+        Fale conosco pelos canais oficiais ou ligue para <a href="tel:+554235212050" target="_blank">(42) 3521-2050</a>
+      </p>
+      <div class="icon-container">
+        <a href="#" class="facebook" title="Facebook - Verde Vale">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path
+              d="M36 18C36 8.05781 27.9422 0 18 0C8.05781 0 0 8.05781 0 18C0 27.9422 8.05781 36 18 36C18.1055 36 18.2109 36 18.3164 35.993V21.9867H14.4492V17.4797H18.3164V14.1609C18.3164 10.3148 20.6648 8.21953 24.0961 8.21953C25.7414 8.21953 27.1547 8.33906 27.5625 8.39531V12.4172H25.2C23.3367 12.4172 22.9711 13.3031 22.9711 14.6039V17.4727H27.4359L26.8523 21.9797H22.9711V35.3039C30.4945 33.1453 36 26.2195 36 18V18Z"
+              fill="#3B61B0" />
+          </svg>
+        </a>
+        <a href="#" class="instagram" title="Instagram - Verde Vale">
+          <svg viewBox="0 0 34 35" fill="none">
+            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="34" height="35">
+              <path
+                d="M17.0004 0.0164004C10.0372 0.0164004 3.42502 -0.603017 0.899405 5.87881C-0.143824 8.55592 0.00767449 12.0327 0.00767449 17.0111C0.00767449 21.3796 -0.132318 25.4854 0.899405 28.1414C3.41926 34.6271 10.0852 34.0057 16.9966 34.0057C23.6644 34.0057 30.5394 34.6999 33.0957 28.1414C34.1408 25.4374 33.9874 22.0124 33.9874 17.0111C33.9874 10.372 34.3537 6.08592 31.1339 2.86802C27.8738 -0.39207 23.465 0.0164004 16.9928 0.0164004H17.0004ZM15.4778 3.07897C30.0024 3.05596 31.8511 1.44125 30.8309 23.8726C30.4684 31.8061 24.4277 30.9355 17.0023 30.9355C3.46337 30.9355 3.07408 30.5481 3.07408 17.0034C3.07408 3.30142 4.14799 3.08664 15.4778 3.07513V3.07897ZM26.0711 5.89991C24.9455 5.89991 24.0326 6.81273 24.0326 7.93842C24.0326 9.06411 24.9455 9.97694 26.0711 9.97694C27.1968 9.97694 28.1097 9.06411 28.1097 7.93842C28.1097 6.81273 27.1968 5.89991 26.0711 5.89991V5.89991ZM17.0004 8.28361C12.1812 8.28361 8.27488 12.1919 8.27488 17.0111C8.27488 21.8302 12.1812 25.7366 17.0004 25.7366C21.8196 25.7366 25.724 21.8302 25.724 17.0111C25.724 12.1919 21.8196 8.28361 17.0004 8.28361V8.28361ZM17.0004 11.3462C24.489 11.3462 24.4986 22.676 17.0004 22.676C9.51372 22.676 9.50221 11.3462 17.0004 11.3462Z"
+                fill="white" />
+            </mask>
+            <g mask="url(#mask0)">
+              <path
+                d="M2.12502 2.3134C-0.546816 5.08865 1.77822e-05 8.03674 1.77822e-05 16.9929C1.77822e-05 24.4304 -1.29765 31.8863 5.49385 33.6416C7.6146 34.187 26.4053 34.187 28.5232 33.6387C31.3509 32.9092 33.6515 30.6156 33.966 26.6163C34.0099 26.0582 34.0099 7.93757 33.9646 7.36807C33.6303 3.10815 31.008 0.653068 27.5528 0.155818C26.7608 0.0410677 26.6022 0.00706769 22.5392 -1.56405e-05C8.12743 0.00706769 4.96827 -0.634683 2.12502 2.3134Z"
+                fill="url(#paint0_linear)" />
+            </g>
+            <defs>
+              <linearGradient id="paint0_linear" x1="2.19021" y1="31.8284" x2="33.7896" y2="4.47945"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFDD55" />
+                <stop offset="0.5" stop-color="#FF543E" />
+                <stop offset="1" stop-color="#C837AB" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </a>
+        <a href="#" class="twitter" title="Twitter - Verde Vale">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path
+              d="M36 6.46275C34.6612 7.05 33.2347 7.43925 31.7475 7.62825C33.2775 6.71475 34.4453 5.27925 34.9943 3.549C33.5678 4.3995 31.9927 5.00025 30.3142 5.3355C28.9597 3.89325 27.0292 3 24.9232 3C20.8372 3 17.5477 6.3165 17.5477 10.3823C17.5477 10.9673 17.5972 11.5298 17.7188 12.0653C11.583 11.766 6.15375 8.82525 2.5065 4.3455C1.86975 5.45025 1.49625 6.71475 1.49625 8.076C1.49625 10.632 2.8125 12.8978 4.7745 14.2095C3.58875 14.187 2.4255 13.8428 1.44 13.3005C1.44 13.323 1.44 13.3523 1.44 13.3815C1.44 16.968 3.99825 19.947 7.353 20.6333C6.75225 20.7975 6.0975 20.8763 5.418 20.8763C4.9455 20.8763 4.4685 20.8493 4.02075 20.7503C4.977 23.673 7.6905 25.8218 10.917 25.8915C8.406 27.8558 5.21775 29.0393 1.76625 29.0393C1.161 29.0393 0.5805 29.0123 0 28.938C3.26925 31.0463 7.14375 32.25 11.322 32.25C24.903 32.25 32.328 21 32.328 11.2485C32.328 10.9223 32.3167 10.6073 32.301 10.2945C33.7657 9.255 34.9965 7.95675 36 6.46275Z"
+              fill="#03A9F4" />
+          </svg>
+        </a>
+        <a href="#" class="email" title="E-mail - Verde Vale">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path
+              d="M18 36C27.9411 36 36 27.9411 36 18C36 8.05887 27.9411 0 18 0C8.05887 0 0 8.05887 0 18C0 27.9411 8.05887 36 18 36Z"
+              fill="#89B52E" />
+            <path d="M6.20276 11.0028V24.9825L13.0201 17.9644L6.20276 11.0028Z" fill="white" />
+            <path d="M29.7972 11.0028V24.9825L23.0137 17.9926L29.7972 11.0028Z" fill="white" />
+            <path
+              d="M6.71893 10.3687H29.2369L20.387 19.5837C19.7571 20.2395 18.8871 20.6102 17.9779 20.6102C17.0687 20.6102 16.1987 20.2395 15.5689 19.5837L6.71893 10.3687Z"
+              fill="white" />
+            <path
+              d="M20.8975 20.074C20.1382 20.8646 19.0741 21.3181 17.9779 21.3181C16.8818 21.3181 15.8177 20.8647 15.0584 20.074L13.5573 18.511L6.71893 25.6313H29.2369L22.3986 18.511L20.8975 20.074Z"
+              fill="white" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>

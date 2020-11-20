@@ -359,7 +359,7 @@ body {
 }
 
 .vvale-new-ui .form-container p.content {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #222222;
   text-align: center;
   margin-bottom: 30px;
@@ -1653,6 +1653,7 @@ body {
   height: 0px;
   opacity: 0;
   margin-bottom: 0px;
+  font-size: 1rem;
 }
 
 .vvale-new-ui .confirm-page .form p.content.resend {
@@ -1775,6 +1776,11 @@ body {
   outline: none;
   min-width: 150px;
   max-width: 250px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  margin: 0;
+  min-height: 30px !important;
+  height: 30px !important;
 }
 
 .vvale-new-ui .confirm-page .form .editable-container .stroke {

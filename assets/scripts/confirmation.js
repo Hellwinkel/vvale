@@ -1,7 +1,7 @@
 let userEmail = 'guirovedah@gmail.com'
 let userPhone = '(42) 9 8805-5068'
 let limitTime = 0
-let sec = 60
+let sec = 0
 
 jQuery(document).ready(function () {
   jQuery('.relative-step').addClass('show-step')
@@ -342,7 +342,7 @@ jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
   // Resend confirmation code
   function resendCode() {
     if (timer()) {
-      // Envia confirmação
+      console.log('Enviou')
     }
   }
   
@@ -362,7 +362,7 @@ jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
   
   // showRemainingTime
   function remainingTime() {
-    let sec = 60
+    sec = 60
     jQuery('.resend').animate({
       height: 0,
       opacity: 0
@@ -422,6 +422,7 @@ jQuery('.code-container input').keydown(function(e) {inputFocus(e)})
   
     if (currentStep < targetStep) {
       if (stepValidation(currentStep) === true) {
+        resendCode()
         feedback.html('')
   
         const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];

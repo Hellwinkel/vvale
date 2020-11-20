@@ -1,0 +1,94 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Open Sans" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" />
+    <mj-title>Portal Vvale</mj-title>
+    <mj-style>
+      .main-container {
+        padding: 60px 15px;
+      }
+
+      .main-content {
+        padding: 0px 45px 25px;
+        box-shadow: 0px 10px 25px -5px rgba(157, 170, 158, 0.15);
+        border-radius: 5px;
+      }
+
+      .h1 {
+        font-size: 27px;
+        font-weight: 800;
+      }
+
+      @media screen and (max-width: 475px) {
+        .main-content {
+          padding: 0px;
+        }
+
+        .no-padding {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#FAFBFA" css-class="main-container">
+    <mj-wrapper css-class="main-content" background-color="white" border-radius="5px">
+      <mj-section>
+        <mj-column padding-bottom="20px">
+          <mj-image src="https://www.vvale.com.br/wp-content/uploads/2020/11/vvale-logo.png" alt="Verde Vale" align="center" height="82px" width="75px" padding-bottom="15px" />
+          <mj-text font-family="Open Sans" align="center" css-class="h1" color="#8aae40" font-size="27px" line-height="0px" padding-bottom="18px">
+            Portal Vvale
+          </mj-text>
+          <mj-text font-family="Open Sans" align="center" css-class="h2" color="#666666" font-size="18px" line-height="0px">
+            Renovação de plano
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column width="100%">
+          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="18px" line-height="0px" padding-bottom="33px" font-weight="400" color="#747474">
+            Olá <strong>Khauê</strong>,
+          </mj-text>
+          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
+            Informamos que o seu <strong>Plano Compartilhado</strong> de assinatura do Portal Vvale está prestes a vencer. As vantagens do plano que você assinou estarão disponíveis até <strong>26/12/2020</strong>. Após esta data, a sua conta retornará para o Plano Grátis e você não terá mais acesso aos conteúdos exclusivos do Portal Vvale.
+          </mj-text>
+          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
+            Para renovar ou alterar seu plano, clique <a href="https://www.vvale.com.br/planos/" target="_blank" style="text-decoration: none"><strong style="color: #8aae40">aqui</strong></a>.
+          </mj-text>
+          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
+            Reforçamos que ser financiado pelo leitor faz uma grande diferença para garantir e ampliar a <strong>qualidade</strong> da nossa produção jornalística. Sua assinatura contribui para a manutenção de uma grande equipe que trabalha diariamente para levar <strong>conteúdo exclusivo</strong> e <strong>informação em primeira mão</strong> para os assinantes.
+          </mj-text>
+          <mj-divider border-width="1px" padding-top="25px" padding-bottom="0px" border-color="#E5E5E5" width="60px">
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column width="315px">
+          <mj-text font-family="Open Sans" font-weight="800" font-size="22.5px" align="center" color="#8aae40" padding-bottom="15px" line-height="0px">
+            Dúvidas? Sugestões?
+          </mj-text>
+          <mj-text font-family="Open Sans" font-size="16px" align="center" line-height="23px" color="#747474" padding-bottom="30px" css-class="no-padding">
+            Fale conosco pelos canais oficiais ou ligue para <a href="tel:+554235212050" target="_blank" style="text-decoration: none"><strong style="color: #8aae40">(42) 3521-2050</strong></a>
+          </mj-text>
+        </mj-column>
+        <mj-column width="100%">
+          <mj-text align="center" css-class="no-padding">
+            <a href="https://www.facebook.com/portalvvale/" style="padding: 0px 7px; text-decoration: none" title="Facebook - Verde Vale" target="_blank">
+              <img src="https://www.vvale.com.br/wp-content/uploads/2020/11/facebook.png" style="width: 32px" />
+            </a>
+            <a href="https://www.instagram.com/portalvvale/" style="padding: 0px 7px; text-decoration: none" title="Instagram - Verde Vale" target="_blank">
+              <img src="https://www.vvale.com.br/wp-content/uploads/2020/11/instagram.png" style="width: 32px" />
+            </a>
+            <a href="https://wa.me/+5542999645900" style="padding: 0px 7px; text-decoration: none" title="WhatsApp - Verde Vale" target="_blank">
+              <img src="https://www.vvale.com.br/wp-content/uploads/2020/11/whatsapp.png" style="width: 32px" />
+            </a>
+            <a href="https://twitter.com/PortalVvale" style="padding: 0px 7px; text-decoration: none" title="Twitter - Verde Vale" target="_blank">
+              <img src="https://www.vvale.com.br/wp-content/uploads/2020/11/twitter.png" style="width: 32px" />
+            </a>
+            <a href="mailto:contato@vvale.com.br" style="padding: 0px 7px; text-decoration: none" title="E-mail - Verde Vale" target="_blank">
+              <img src="https://www.vvale.com.br/wp-content/uploads/2020/11/email.png" style="width: 32px" />
+            </a>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>
