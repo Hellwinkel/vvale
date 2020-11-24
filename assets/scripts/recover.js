@@ -1,8 +1,8 @@
-let userEmail = 'gui_hellwinkel@hotmail.com'
+let userEmail = "gui_hellwinkel@hotmail.com";
 let limitTime = 0;
 let sec = 60;
 
-jQuery(window).on("load", function () { 
+jQuery(window).on("load", function () {
   // Animate page load
   {
     jQuery(".relative-step").addClass("show-step");
@@ -32,7 +32,7 @@ jQuery(window).on("load", function () {
     const buttons = jQuery(".recover-container label");
     let activeMethod = jQuery(".recover-container input:checked").attr("id");
     let text = jQuery(".no-margin");
-  
+
     function changeFields(fieldText) {
       text.removeClass("show");
       setTimeout(function () {
@@ -40,7 +40,7 @@ jQuery(window).on("load", function () {
         text.addClass("show");
       }, 250);
     }
-  
+
     if (activeMethod === "recover-email") {
       changeFields(
         "Siga as instruções da próxima etapa<br> para recuperar o e-mail cadastrado"
@@ -50,11 +50,11 @@ jQuery(window).on("load", function () {
     } else {
       changeFields(
         "Enviaremos um link para o endereço<br> de e-mail cadastrado na sua conta"
-        );
-        jQuery(".recover-button").attr("data-function", "password");
-        jQuery(".recover-button").attr("data-target", "3");
+      );
+      jQuery(".recover-button").attr("data-function", "password");
+      jQuery(".recover-button").attr("data-target", "4");
     }
-  
+
     buttons.each(function () {
       if (jQuery(this).attr("for") === activeMethod) {
         jQuery(this).addClass("active");
@@ -69,166 +69,241 @@ jQuery(window).on("load", function () {
 
 // Validate document
 {
-  function validateDocument() {
+  function validateDocument(field) {
+    let isValid = false;
+
+    if (field.val().length === 14 || field.val().length === 18) {
+      isValid = true;
+    }
+    return isValid;
+  } 
+
+  function checkDocument(field) {
+    let isValid = validateDocument(field);
+    feedback(field, isValid)
+  }
+
+  jQuery("#document").on("keyup", function () {
+    checkDocument(jQuery('#document'));
+  });
+
+  jQuery("#document").on("blur", function () {
+    checkDocument(jQuery('#document'));
+  });
+
+  // Validate document step to show e-mail
+  function validateRegister() {
+    let isValid = false;
+    
+    if (validateDocument(jQuery('#document'))) {
+      jQuery('.email-response').html(formatedEmail())
+      isValid = true;
+    }
+
+    return isValid;
+  }
+
+// Hide part of e-mail address -> CHANGE TO PHP FUNCTION <-
+  function formatedEmail() {
+    let value = userEmail.split("@")[0];
+    let valueLength = value.length;
+    let finalValue = "";
+    for (let i = 0; i < valueLength; i++) {
+      if (i < parseInt(valueLength / 3) || i >= valueLength - 2) {
+        finalValue += value[i];
+      } else {
+        finalValue += "*";
+      }
+    }
+    finalValue += "@" + userEmail.split("@")[1];
+    return finalValue
+  }
+}
+
+// Validate email
+{
+  function validateEmail(field) {
+    let isValid = false;
+    let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (pattern.test(field.val())) {
+      isValid = true;
+    }
+    return isValid;
+  } 
+
+  function checkEmail(field) {
+    let isValid = validateEmail(field);
+    feedback(field, isValid)
+  }
+
+  jQuery("#email").on("keyup", function () {
+    checkEmail(jQuery('#email'));
+  });
+
+  jQuery("#email").on("blur", function () {
+    checkEmail(jQuery('#email'));
+  });
+
+  // Validate e-mail to reset password
+  function validateEmailStep() {
     let isValid = false
-    let field = jQuery('#document')
-  
-    if(field.val().length === 14 || field.val().length === 18) {
+    
+    if(validateEmail(jQuery('#email'))) {
       isValid = true
     }
-  
+
     return isValid
   }
-  
-  function checkDocument() {
-    let isValid = false
-    let status = validateDocument()
-    let field = jQuery('#document')
-  
-    if(field.val().length > 0) {
-      if (!status) {
-        field.removeClass('valid')
-        field.addClass('invalid')
-      } else {
-        field.removeClass('invalid')
-        field.addClass('valid')
-        isValid = true
-      }
-    } else {
-      field.removeClass('valid')
-      field.removeClass('invalid')
-    }
-    return isValid
-  }
-  
-  jQuery('#document').on('keyup', function() {
-    checkDocument()
-  })
-  
-  jQuery('#document').on('blur', function() {
-    checkDocument()
-  })
 }
 
-// Validate document step to show e-mail
+// Visual feedback 
 {
-  function validateRegister() {
-    let mainContainer = jQuery('.main-container')
-    let responseContainer = jQuery('.response-container')
-    let emailResponse = jQuery('.email-response')
-  
-    if(checkDocument()) {
-      textFeedback(true)
-      mainContainer.removeClass('show')
-      responseContainer.addClass('show')
-  
-      // Fix @ PHP
-      let value = userEmail.split('@')[0]
-      let valueLength = value.length
-      let finalValue = ''
-      for(let i = 0; i < valueLength; i++) {
-        if(i < (parseInt(valueLength / 3)) || i >= valueLength - 2) {
-          finalValue += value[i]
-        } else {
-          finalValue += '*'
-        }
+  function feedback(field, status) {
+    if (field.val().length > 0) {
+      if (!status) {
+        field.removeClass("valid");
+        field.addClass("invalid");
+      } else {
+        field.removeClass("invalid");
+        field.addClass("valid");
+        isValid = true;
       }
-      finalValue += '@' + userEmail.split('@')[1]
-      emailResponse.html(finalValue)
     } else {
-      textFeedback(false, 'Insira um documento válido')
+      field.removeClass("valid");
+      field.removeClass("invalid");
     }
   }
-  
-  jQuery('.check-document').on('click', function() {
-    validateRegister()
-  })
 }
 
-// Resend e-mail
+// Resend e-mail with timer
 {
   function resendEmail() {
     if (timer()) {
       // Send message
     }
   }
-  
+
   // Timer
   function timer() {
-    let canSend = true
-    currentTime = new Date()
-    
-    if(currentTime < limitTime) {
-      canSend = false
+    let canSend = true;
+    currentTime = new Date();
+
+    if (currentTime < limitTime) {
+      canSend = false;
     } else {
-      limitTime = currentTime.getTime() + 60000
-      remainingTime()
+      limitTime = currentTime.getTime() + 60000;
+      remainingTime();
     }
-    return canSend
+    return canSend;
   }
-  
+
   // showRemainingTime
   function remainingTime() {
-    let sec = 60
-    jQuery('.resend').animate({
-      height: 0,
-      opacity: 0
-    }, 250)
-    jQuery('.cooldown').animate({
-      height: 55,
-      opacity: 1
-    }, 250)
-    jQuery('.clock').html(`${sec} segundos`)
-    setInterval(function() {
-      sec = sec - 1
+    let sec = 60;
+    jQuery(".resend").animate(
+      {
+        height: 0,
+        opacity: 0,
+      },
+      250
+    );
+    jQuery(".cooldown").animate(
+      {
+        height: 55,
+        opacity: 1,
+      },
+      250
+    );
+    jQuery(".clock").html(`${sec} segundos`);
+    setInterval(function () {
+      sec = sec - 1;
       if (sec >= 10 && sec <= 60) {
-        jQuery('.clock').html(`${sec} segundos`)
-      } 
-      if (sec < 10 && sec > 0) {
-        jQuery('.clock').html(`0${sec} segundos`)
-      } 
-      if (sec === 1) {
-        jQuery('.clock').html(`0${sec} segundo`)
-      } 
-      if (sec === 0) {
-        setTimeout(function() {
-          jQuery('.cooldown').animate({
-            height: 0,
-            opacity: 0
-          }, 250)
-          jQuery('.resend').animate({
-            height: 55,
-            opacity: 1
-          }, 250)
-          jQuery('.resend input[type="button"]').blur()
-        }, 200)
+        jQuery(".clock").html(`${sec} segundos`);
       }
-    }, 1000)
+      if (sec < 10 && sec > 0) {
+        jQuery(".clock").html(`0${sec} segundos`);
+      }
+      if (sec === 1) {
+        jQuery(".clock").html(`0${sec} segundo`);
+      }
+      if (sec === 0) {
+        setTimeout(function () {
+          jQuery(".cooldown").animate(
+            {
+              height: 0,
+              opacity: 0,
+            },
+            250
+          );
+          jQuery(".resend").animate(
+            {
+              height: 55,
+              opacity: 1,
+            },
+            250
+          );
+          jQuery('.resend input[type="button"]').blur();
+        }, 200);
+      }
+    }, 1000);
   }
-  
-  jQuery('p.content input').click(resendEmail)
+
+  jQuery("p.content input").click(resendEmail);
 }
 
-// Error visual feedback (red messages)
+// Visual text feedback (red messages)
 {
-  function textFeedback(success, content = '') {
-    let feedback = jQuery('span.feedback')
+  function textFeedback(success, content = "") {
+    let feedback = jQuery("span.feedback");
     if (!success) {
       feedback.each(function () {
-        jQuery(this).animate({
-          height: 40,
-          marginBottom: 10
-        }, 250)
-        jQuery(this).html(content)
-      })
+        jQuery(this).animate(
+          {
+            height: 20,
+            marginBottom: 10,
+          },
+          250
+        );
+        jQuery(this).html(content);
+      });
     } else {
       feedback.each(function () {
-        jQuery(this).animate({
-          height: 0,
-          marginBottom: 0
-        }, 250)
-        jQuery(this).html('')
-      })
+        jQuery(this).animate(
+          {
+            height: 0,
+            marginBottom: 0,
+          },
+          250
+        );
+        jQuery(this).html("");
+      });
+    }
+  }
+}
+
+// List of each step validation
+{
+  function stepValidation(step) {
+    switch (parseInt(step)) {
+      case 1:
+        return true;
+      case 2:
+        if (validateRegister()) {
+          return true;
+        } else {
+          textFeedback(false, "Insira um documento válido");
+          return false;
+        }
+      case 3:
+        return true;
+      case 4:
+        if (validateEmailStep()) {
+          return true;
+        } else {
+          textFeedback(false, "Insira um e-mail válido");
+          return false;
+        }
     }
   }
 }
@@ -238,41 +313,41 @@ jQuery(window).on("load", function () {
   function nextStep(step = null, nextStep = null) {
     const currentStep = step;
     const targetStep = nextStep;
-    let feedback = jQuery("span.feedback");
-  
+
     if (currentStep == targetStep) {
       //nextStep must receive different values on current and target step. Check your call and try again
       return false;
     }
-  
+
     if (currentStep < targetStep) {
-      feedback.html("");
-      const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
-      const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
-  
-      currentBoard.classList.remove("show-step");
-  
-      setTimeout(function () {
-        currentBoard.classList.remove("relative-step");
-        nextBoard.classList.add("relative-step");
-  
-        setTimeout(function () {
-          nextBoard.classList.add("show-step");
-        }, 200);
-      }, 650);
-    } else {
-      feedback.html("");
-  
-      const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
-      const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
-  
-      setTimeout(function () {
+      if (stepValidation(currentStep) === true) {
+        textFeedback(true);
+        const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
+        const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
+
         currentBoard.classList.remove("show-step");
-  
+
         setTimeout(function () {
           currentBoard.classList.remove("relative-step");
           nextBoard.classList.add("relative-step");
-  
+
+          setTimeout(function () {
+            nextBoard.classList.add("show-step");
+          }, 200);
+        }, 650);
+      }
+    } else {
+      textFeedback(true);
+      const currentBoard = jQuery(`.step-board[data-step=${currentStep}]`)[0];
+      const nextBoard = jQuery(`.step-board[data-step=${targetStep}]`)[0];
+
+      setTimeout(function () {
+        currentBoard.classList.remove("show-step");
+
+        setTimeout(function () {
+          currentBoard.classList.remove("relative-step");
+          nextBoard.classList.add("relative-step");
+
           setTimeout(function () {
             nextBoard.classList.add("show-step");
           }, 200);
@@ -280,16 +355,16 @@ jQuery(window).on("load", function () {
       }, 500);
     }
   }
-  
-  jQuery(".recover-button").click(function () {
-    let step = jQuery(this).data("step");
-    let target = jQuery(this).data("target");
+
+  jQuery(".avancar").click(function () {
+    let step = jQuery(this).attr("data-step");
+    let target = jQuery(this).attr("data-target");
     nextStep(step, target);
   });
-  
+
   jQuery(".voltar").click(function () {
-    let step = jQuery(this).data("step");
-    let target = jQuery(this).data("target");
+    let step = jQuery(this).attr("data-step");
+    let target = jQuery(this).attr("data-target");
     nextStep(step, target);
   });
 }

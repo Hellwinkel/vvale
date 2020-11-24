@@ -55,66 +55,90 @@
         </form>
 
         <div class="confirmation-board step-board" data-step="2">
-          <div class="main-container show">
-            <p class="content">
-              Primeiro informe seu documento<br>
-              abaixo para validar sua identidade
+          <p class="content">
+            Primeiro informe seu documento<br>
+            abaixo para validar sua identidade
+          </p>
+          <div class="field-container small-field-container">
+            <label for="document" class="field-name">CPF ou CNPJ<span class="required">*</span></label>
+            <input type="text" name="document" class="field" id="document">
+          </div>
+          <p class="content">
+            Não tem esta informação?<br>
+            Clique <a href="#">aqui</a> e fale conosco
+          </p>
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Verificar" class="avancar recover-button check-document" data-step="2" data-target="3">
+            <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
+          </div>
+        </div>
+        
+        <div class="confirmation-board step-board" data-step="3">
+          <div class="field-container">
+            <p class="content final-content big">
+              Conta localizada
             </p>
-            <div class="field-container">
-              <label for="document" class="field-name">CPF ou CNPJ<span class="required">*</span></label>
-              <input type="text" name="document" class="field" id="document">
-            </div>
             <p class="content">
-              Não tem esta informação?<br>
-              Clique <a href="#">aqui</a> e fale conosco
+              Abaixo está o endereço de <br>e-mail vinculado à sua conta
+            </p>
+            <p class="content">
+              <strong class="email-response"></strong>
+            </p>
+
+            <p class="content">
+              Não tem mais acesso ao e-mail?<br>
+              Clique <a href="#">aqui</a> para falar conosco
             </p>
             <div class="button-container">
-              <span class="feedback"></span>
-              <input type="button" value="Verificar" class="avancar recover-button check-document">
-              <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
-            </div>
-          </div>
-          <div class="response-container">
-            <div class="field-container">
-              <p class="content final-content big">
-                Conta localizada
-              </p>
-              <p class="content">
-                Abaixo está o endereço de <br>e-mail vinculado à sua conta
-              </p>
-              <p class="content">
-                <strong class="email-response"></strong>
-              </p>
-
-              <p class="content">
-                Não tem mais acesso ao e-mail?<br>
-                Clique <a href="#">aqui</a> para falar conosco
-              </p>
-              <div class="button-container">
-                <input type="button" value="Concluir" class="avancar recover-button" data-step="2" data-target="2">
-              </div>
+              <input type="button" value="Concluir" class="avancar recover-button" data-step="2" data-target="2">
             </div>
           </div>
         </div>
 
-        <div class="confirmation-board step-board" data-step="3">
-          <p class="content final-content big">
-            Quase lá...
+        <div class="confirmation-board step-board" data-step="4">
+          <p class="content">
+            Primeiro informe o endereço<br>
+            de e-mail cadastrado em sua conta
           </p>
-          <p class="content final-content">
-            Siga as instruções da mensagem <br>que enviamos para seu e-mail
-          </p>
-          <div class="resend-container">
-            <p class="content resend">
-              Não recebeu o e-mail?<br>
-              Clique <input type="button" value="aqui"> para reenviá-lo
-            </p>
-            <p class="content cooldown">
-              Um novo e-mail poderá ser <br>solicitado em <span class="clock"></span>
-            </p>
+          <div class="field-container small-field-container">
+            <label for="email" class="field-name">E-mail<span class="required">*</span></label>
+            <input type="text" name="email" class="field" id="email" inputmode="email">
           </div>
+          <p class="content">
+            Não tem mais acesso ao e-mail?<br>
+            Clique <a href="#">aqui</a> e fale conosco
+          </p>
           <div class="button-container">
-            <input type="button" value="Finalizar" class="avancar recover-button" data-step="3" data-target="3">
+            <span class="feedback"></span>
+            <input type="button" value="Verificar" class="avancar" data-step="4" data-target="5">
+            <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
+          </div>
+        </div>
+
+        <div class="confirmation-board step-board" data-step="5">
+          <div class="field-container">
+            <p class="content final-content big">
+              Quase lá...
+            </p>
+            <p class="content">
+              Enviamos uma mensagem para <br><strong>guirovedah@gmail.com</strong>
+            </p>
+            <p class="content">
+              Siga as instruções descritas no <br>e-mail para recuperar seu acesso.
+            </p>
+            <div class="resend-container">
+              <p class="content resend">
+                Não recebeu o e-mail?<br>
+                Clique <input type="button" value="aqui"> para reenviá-lo
+              </p>
+              <p class="content cooldown">
+                Um novo e-mail poderá ser <br>solicitado em <span class="clock"></span>
+              </p>
+            </div>
+            <div class="button-container">
+              <input type="button" value="Concluir" class="avancar recover-button" data-step="2" data-target="2">
+            </div>
           </div>
         </div>
       </div>
