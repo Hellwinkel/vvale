@@ -43,25 +43,21 @@
             Portal Vvale
           </mj-text>
           <mj-text font-family="Open Sans" align="center" css-class="h2" color="#666666" font-size="18px" line-height="18px">
-            Renovação de plano
+            Pagamento confirmado
           </mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column width="100%">
           <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="18px" line-height="18px" padding-bottom="20px" font-weight="400" color="#747474">
-            Seja bem-vindo, <strong>Khauê</strong>
+            <strong>Plano ativado com sucesso!</strong>
           </mj-text>
           <mj-text font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Agradecemos por ter criado uma conta no Portal Vvale.
+            <strong>Khauê</strong>, recebemos o seu pagamento. A partir de agora você terá acesso a todos os benefícios que o seu plano oferece.
           </mj-text>
           <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Para fazer login, clique <a href="https://www.vvale.com.br/login/" style="text-decoration: none" target="_blank"><strong style="color: #8aae40">aqui</strong></a> e acesse utilizando seu nome de usuário ou endereço de e-mail, junto da senha definida.
+            Clique <a href="https://www.vvale.com.br/login/" style="text-decoration: none" target="_blank"><strong style="color: #8aae40">aqui</strong></a> para fazer login no nosso Portal.
           </mj-text>
-          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Saiba mais sobre nossos planos de assinatura acessando <a href="https://www.vvale.com.br/planos/" target="_blank" style="text-decoration: none"><strong style="color: #8aae40">este link</strong></a>.
-          </mj-text>
-          
           <mj-divider border-width="1px" padding-top="25px" padding-bottom="0px" border-color="#E5E5E5" width="60px">
         </mj-column>
       </mj-section>

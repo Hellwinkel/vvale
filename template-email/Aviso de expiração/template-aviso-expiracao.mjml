@@ -43,23 +43,20 @@
             Portal Vvale
           </mj-text>
           <mj-text font-family="Open Sans" align="center" css-class="h2" color="#666666" font-size="18px" line-height="18px">
-            Renovação de plano
+            Aviso de expiração
           </mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column width="100%">
           <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="18px" line-height="18px" padding-bottom="20px" font-weight="400" color="#747474">
-            Seja bem-vindo, <strong>Khauê</strong>
+            <strong>Khauê</strong>,
           </mj-text>
           <mj-text font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Agradecemos por ter criado uma conta no Portal Vvale.
+            Informamos que a sua assinatura irá expirar em <strong>26/11/2020</strong>. Após esta data a sua conta retornará para o plano gratuito e você não terá mais acesso aos conteúdos exclusivos do Portal Vvale.
           </mj-text>
           <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Para fazer login, clique <a href="https://www.vvale.com.br/login/" style="text-decoration: none" target="_blank"><strong style="color: #8aae40">aqui</strong></a> e acesse utilizando seu nome de usuário ou endereço de e-mail, junto da senha definida.
-          </mj-text>
-          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Saiba mais sobre nossos planos de assinatura acessando <a href="https://www.vvale.com.br/planos/" target="_blank" style="text-decoration: none"><strong style="color: #8aae40">este link</strong></a>.
+            Para adquirir um novo pacote de assinatura, clique <a href="https://www.vvale.com.br/planos/" target="_blank" style="text-decoration: none"><strong style="color: #8aae40">aqui</strong></a>.
           </mj-text>
           
           <mj-divider border-width="1px" padding-top="25px" padding-bottom="0px" border-color="#E5E5E5" width="60px">

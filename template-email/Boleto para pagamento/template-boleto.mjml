@@ -43,25 +43,21 @@
             Portal Vvale
           </mj-text>
           <mj-text font-family="Open Sans" align="center" css-class="h2" color="#666666" font-size="18px" line-height="18px">
-            Renovação de plano
+            Emissão de boleto
           </mj-text>
         </mj-column>
       </mj-section>
       <mj-section>
         <mj-column width="100%">
           <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="18px" line-height="18px" padding-bottom="20px" font-weight="400" color="#747474">
-            Seja bem-vindo, <strong>Khauê</strong>
+            Quase lá, <strong>Khauê</strong>
           </mj-text>
           <mj-text font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Agradecemos por ter criado uma conta no Portal Vvale.
+            Geramos o boleto para pagamento do seu plano de assinatura. Acesse o documento que está em anexo neste e-mail e faça o pagamento através da instituição de sua preferência.
           </mj-text>
           <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Para fazer login, clique <a href="https://www.vvale.com.br/login/" style="text-decoration: none" target="_blank"><strong style="color: #8aae40">aqui</strong></a> e acesse utilizando seu nome de usuário ou endereço de e-mail, junto da senha definida.
-          </mj-text>
-          <mj-text css-class="first-paragraph" font-family="Open Sans" font-size="16px" line-height="26px" padding-bottom="25px" font-weight="400" color="#747474">
-            Saiba mais sobre nossos planos de assinatura acessando <a href="https://www.vvale.com.br/planos/" target="_blank" style="text-decoration: none"><strong style="color: #8aae40">este link</strong></a>.
-          </mj-text>
-          
+            Vale lembrar que os boletos tem <strong>até 3 dias úteis</strong> para serem processados a partir da data de pagamento.
+          </mj-text>          
           <mj-divider border-width="1px" padding-top="25px" padding-bottom="0px" border-color="#E5E5E5" width="60px">
         </mj-column>
       </mj-section>
