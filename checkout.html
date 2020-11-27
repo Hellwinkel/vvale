@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vvale</title>
+  <link rel="stylesheet" href="assets/styles/style.css">
+  <meta name="theme-color" content="#759238">
+</head>
+
+<body>
+  <div class="header"></div>
+  <div class="vvale-new-ui content-container">
+    <form action="" class="form-container checkout-page" method="post" id="paymentForm">
+      <div class="svg-container">
+        <svg viewBox="0 0 261.36 285.3">
+          <title>Vvale</title>
+          <g data-name="Layer">
+            <path class="vvale-svg"
+              d="M136.25,110.51A351.33,351.33,0,0,0,260.42,2.19C236.65,121.71,189.69,214.5,123,284.59,48.41,209.31,11.9,124.76.92,34c31.15,72.67,75,129.68,138.48,162.38C140.32,166.28,139.81,137.25,136.25,110.51Z" />
+          </g>
+        </svg>
+      </div>
+      <h2 class="form-title">Pagamento</h2>
+      <div class="form" id="checkout-form">
+
+        <div class="checkout-board step-board relative-stepp" data-step="1">
+          <p class="content">
+            Confira abaixo se o plano escolhido está correto e siga para o pagamento
+          </p>
+          <div class="plan-details">
+            <p class="plan-name">
+              Portal Vvale Compartilhado
+            </p>
+            <img src="assets/images/group-plan.svg" alt="Portal Vvale - Plano Compartilhado">
+            <ul>
+              <li>Acesso ao Portal Vvale</li>
+              <li>Acesso ao Jornal O Comércio digital</li>
+              <li>Cobertura completa em textos, gráficos, vídeos e podcasts</li>
+              <li>Conteúdo exclusivo do Estadão</li>
+              <li>Exibição limitada de publicidade</li>
+              <li>Navegação mais rápida</li>
+              <li>Duas contas adicionais</li>
+            </ul>
+            <div class="price">
+              <p class="subtotal">Subtotal</p>
+              <p class="value">R$ 238,80</p>
+            </div>
+          </div>
+          <p class="content greenish">
+            O valor acima poderá ser parcelado em até <strong>12 vezes sem juros</strong>
+          </p>
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Avançar" class="avancar" data-step="1" data-target="2">
+            <a href="#" class="secondary-link">
+              Alterar plano
+            </a>
+          </div>
+        </div>
+
+        <div class="checkout-board step-board relative-stepp" data-step="2">
+          <div class="simple-plan">
+            <p class="plan-name">
+              Portal Vvale Compartilhado
+            </p>
+            <p class="plan-time">
+              Assinatura de 1 ano
+            </p>
+            <p class="plan-value">
+              R$ 238,80
+            </p>
+            <p class="monthly-value">
+              12x de R$ 19,90
+            </p>
+          </div>
+          <p class="content">
+            Confirme se os campos abaixo referentes ao comprador estão corretos
+          </p>
+          <div class="field-container">
+            <label for="email" class="field-name">E-mail<span class="required">*</span></label>
+            <input type="email" name="email" class="field" id="email" inputmode="email">
+          </div>
+          <div class="field-container">
+            <label for="document" class="field-name">Documento<span class="required">*</span></label>
+            <input type="text" name="document" class="field" id="document">
+          </div>
+          <div class="payment-method">
+            <p class="content">
+              Selecione o método de pagamento e preencha os campos necessários
+            </p>
+            <div class="button-container">
+              <label for="cartao" class="active" tabindex="0">
+                <input type="radio" name="validate-method" id="cartao" value="cartao" checked>
+                <span>Cartão</span>
+              </label>
+              <label for="boleto" tabindex="0">
+                <input type="radio" name="validate-method" id="boleto" value="boleto">
+                <span>Boleto</span>
+              </label>
+            </div>
+          </div>
+          <div class="card-fields">
+            <div class="field-container">
+              <label for="cardholderName" class="field-name">Nome impresso no cartão<span class="required">*</span></label>
+              <input id="cardholderName" data-checkout="cardholderName" type="text" class="field">
+            </div>
+            <div class="field-container">
+              <label for="cardNumber" class="field-name">Número do cartão<span class="required">*</span></label>
+              <input type="text" id="cardNumber" class="field" data-checkout="cardNumber"
+                onselectstart="return false" onpaste="return false"
+                oncopy="return false" oncut="return false"
+                ondrag="return false" ondrop="return false" autocomplete=off>
+            </div>
+            <div class="small-fields">
+              <div class="field-container">
+                <label for="cardNumber" class="field-name">Validade<span class="required">*</span></label>
+                <input type="text" class="field" inputmode="numeric">
+              </div>
+              <div class="field-container">
+                <label for="cardNumber" class="field-name">CVV<span class="required">*</span></label>
+                <input type="text" class="field" inputmode="numeric">
+              </div>
+            </div>
+            <div class="field-container">
+              <label for="country" class="field-name">Parcelas<span class="required">*</span></label>
+              <select type="text" id="installments" name="installments" class="field"></select>''
+            </div>
+          </div>
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Avançar" class="avancar" data-step="2" data-target="3">
+            <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
+          </div>
+        </div>
+        
+        <div class="checkout-board step-board relative-stepp" data-step="3">
+          <p class="content">
+            Clique no botão abaixo para imprimir o seu boleto
+          </p>
+          <a href="#" class="download-button">
+            Baixar boleto
+          </a>
+          <p class="content greenish">
+            O pagamento pode demorar <strong>até 3 dias</strong> para ser processado
+          </p>
+          <div class="button-container">
+            <span class="feedback"></span>
+            <input type="button" value="Avançar" class="avancar" data-step="3" data-target="4">
+          </div>
+        </div>
+        
+        <div class="checkout-board step-board relative-stepp" data-step="4">
+          <p class="content final-content big">
+            Obrigado!
+          </p>
+          <p class="content">
+            Te enviaremos um e-mail assim que o pagamento for confirmado.
+          </p>
+          <a href="#" class="close-checkout">Ir para o início</a>
+        </div>
+
+        <div class="checkout-board step-board relative-step" data-step="5">
+          <p class="content final-content big">
+            Obrigado!
+          </p>
+          <p class="content">
+            Agradecemos o reconhecimento.<br>
+            Você já pode aproveitar seus benefícios.
+          </p>
+          <a href="#" class="close-checkout">Ir para o início</a>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <script src="assets/scripts/jquery.min.js"></script>
+  <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+  <script src="assets/scripts/login.js"></script>
+</body>
+
+</html>
