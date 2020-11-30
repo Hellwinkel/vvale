@@ -25,7 +25,7 @@
       <h2 class="form-title">Pagamento</h2>
       <div class="form" id="checkout-form">
 
-        <div class="checkout-board step-board relative-stepp" data-step="1">
+        <div class="checkout-board step-board relative-step" data-step="1">
           <p class="content">
             Confira abaixo se o plano escolhido está correto e siga para o pagamento
           </p>
@@ -104,33 +104,67 @@
           <div class="card-fields">
             <div class="field-container">
               <label for="cardholderName" class="field-name">Nome impresso no cartão<span class="required">*</span></label>
-              <input id="cardholderName" data-checkout="cardholderName" type="text" class="field">
+              <input id="cardholderName" data-checkout="cardholderName" type="text" class="field visible" maxlength="26">
             </div>
             <div class="field-container">
               <label for="cardNumber" class="field-name">Número do cartão<span class="required">*</span></label>
-              <input type="text" id="cardNumber" class="field" data-checkout="cardNumber"
+              <input type="text" id="cardNumber" class="field visible" data-checkout="cardNumber"
                 onselectstart="return false" onpaste="return false"
                 oncopy="return false" oncut="return false"
                 ondrag="return false" ondrop="return false" autocomplete=off>
             </div>
             <div class="small-fields">
               <div class="field-container">
-                <label for="cardNumber" class="field-name">Validade<span class="required">*</span></label>
-                <input type="text" class="field" inputmode="numeric">
+                <label for="cvv" class="field-name">CVV<span class="required">*</span></label>
+                <input type="text" class="field visible" inputmode="numeric" id="cvv" data-mask="0009">
               </div>
               <div class="field-container">
-                <label for="cardNumber" class="field-name">CVV<span class="required">*</span></label>
-                <input type="text" class="field" inputmode="numeric">
+                <label for="expiringDate" class="field-name">Validade<span class="required">*</span></label>
+                <input type="text" class="field visible" inputmode="numeric" id="expiringDate" data-mask="00/00">
               </div>
+              
             </div>
             <div class="field-container">
-              <label for="country" class="field-name">Parcelas<span class="required">*</span></label>
-              <select type="text" id="installments" name="installments" class="field"></select>''
+              <label for="tempInstallments" class="field-name">Parcelas<span class="required">*</span></label>
+              <select type="text" id="tempInstallments" name="tempInstallments" class="field visible"></select>
+            </div>
+            <div class="field-container hidden">
+              <label for="docType" class="field-name">Tipo de documento<span class="required">*</span></label>
+              <select id="docType" name="docType" data-checkout="docType" type="text" class="field" tabindex="-1"></select>
+            </div>
+            <div class="field-container hidden" id="issuerInput">
+              <label for="issuer" class="field-name">Banco emissor<span class="required">*</span></label>
+              <select id="issuer" name="issuer" data-checkout="issuer" class="field" tabindex="-1"></select>
+            </div>
+            <div class="small-fields hidden">
+              <div class="field-container">
+                <label class="field-name">Mês<span class="required">*</span></label>
+                <input type="text" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth"
+                    onselectstart="return false" onpaste="return false"
+                    oncopy="return false" oncut="return false"
+                    ondrag="return false" ondrop="return false" autocomplete=off class="field" tabindex="-1">
+              </div>
+              <div class="field-container hidden">
+                <label class="field-name">Ano<span class="required">*</span></label>
+                <input type="text" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear"
+                  onselectstart="return false" onpaste="return false"
+                  oncopy="return false" oncut="return false"
+                  ondrag="return false" ondrop="return false" autocomplete=off class="field" tabindex="-1">
+              </div>
+            </div>
+            <div class="field-container hidden">
+              <label for="installments" class="field-name">Parcelas (oculto)<span class="required">*</span></label>
+              <select type="text" id="installments" name="installments" class="field"></select>
+            </div>
+            <div class="field-container">
+              <input type="hidden" name="transactionAmount" id="transactionAmount" />
+              <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
+              <input type="hidden" name="description" id="description" />
             </div>
           </div>
           <div class="button-container">
             <span class="feedback"></span>
-            <input type="button" value="Avançar" class="avancar" data-step="2" data-target="3">
+            <input type="button" value="Avançar" class="avancar" data-step="2" data-target="5">
             <input type="button" value="Etapa anterior" class="voltar" data-step="2" data-target="1">
           </div>
         </div>
@@ -161,7 +195,7 @@
           <a href="#" class="close-checkout">Ir para o início</a>
         </div>
 
-        <div class="checkout-board step-board relative-step" data-step="5">
+        <div class="checkout-board step-board relative-stepp" data-step="5">
           <p class="content final-content big">
             Obrigado!
           </p>
@@ -176,8 +210,9 @@
     </form>
   </div>
   <script src="assets/scripts/jquery.min.js"></script>
+  <script src="assets/scripts/jquery.mask.min.js"></script>
   <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-  <script src="assets/scripts/login.js"></script>
+  <script src="assets/scripts/checkout.js"></script>
 </body>
 
 </html>
