@@ -343,7 +343,7 @@ function validateSecondStep() {
         textFeedback(false, 'Ocorreu um erro interno')
       }
     } else {
-      textFeedback(false, 'Verifique se todos os campos foram preenchidos')
+      textFeedback(false, 'Preencha todos os campos')
     }
     
     validateInstallments(jQuery('#tempInstallments'))
@@ -484,6 +484,7 @@ function validateSecondStep() {
 
     if (method === "boleto") {
       toggleTabIndex(false);
+      textFeedback(true)
       jQuery('label[for="cartao"]').removeClass("active");
       jQuery('label[for="boleto"]').addClass("active");
       jQuery(".card-fields").addClass("hidden");
@@ -495,6 +496,7 @@ function validateSecondStep() {
 
     if (method === "cartao") {
       toggleTabIndex(true);
+      textFeedback(true)
       jQuery('label[for="boleto"]').removeClass("active");
       jQuery('label[for="cartao"]').addClass("active");
       jQuery(".card-fields").removeClass("hidden");
