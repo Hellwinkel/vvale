@@ -1,0 +1,52 @@
+.plans-board {
+  p.highlight {
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  p.advice {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #858585;
+    line-height: 1.4;
+  }
+
+  label.disabled {
+    opacity: 0.35 !important;
+    cursor: initial !important;
+
+    &.hidden-data {
+      padding: 25px 10px 25px 15px !important;
+      
+      .title {
+        margin-bottom: 0px !important;
+      }
+  
+      .description-container {
+        display: none !important;
+      }
+    }
+  }
+
+  .confirm-button {
+    background-color: $green;
+    color: white;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 15px 35px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 8px rgba(149,185,73,0), 0px 0px 15px rgba(110,129,67,0) inset;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+
+    &:hover, &:focus {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0px 3px 8px rgba(149,185,73,0.75), 0px 0px 15px rgba(110,129,67,0.5) inset;
+    }
+  }
+}

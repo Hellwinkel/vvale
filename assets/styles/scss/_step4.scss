@@ -1,8 +1,12 @@
-.fourth-board {
+.fourth-board, .plans-board {
   display: flex;
   flex-flow: column;
   align-items: center;
   width: 100%;
+
+  * {
+    user-select: none;
+  }
 
   .input-container {
     width: 100%;
