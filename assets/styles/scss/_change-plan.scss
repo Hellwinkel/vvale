@@ -20,6 +20,16 @@
       
       .title {
         margin-bottom: 0px !important;
+
+        .checkmark {
+          border-radius: 0px;
+          box-shadow: none;
+          background-image: url('../images/lock.svg');
+          background-size: 90%;
+          background-position: center;
+          background-repeat: no-repeat;
+          opacity: 0.25;
+        }
       }
   
       .description-container {
