@@ -1,7 +1,7 @@
 // TEMPORÁRIO
 let userEmail = "guirovedah@gmail.com";
 let userDocument = "103.645.789-39";
-let amount = "238.80"
+let amount = "238.80";
 window.Mercadopago.setPublishableKey(
   "TEST-a6069a3b-c708-455b-8905-2ab8e1581b19"
 );
@@ -46,33 +46,51 @@ jQuery(window).on("load", function () {
     jQuery("input#cardNumber").mask(cardMaskBehavior, cardOptions);
   }
 
+  // Mask to characters only (cardHolderName)
+  {
+    jQuery("#cardholderName").mask("Z", {
+      translation: { Z: { pattern: /[a-zA-Z ]/, recursive: true } },
+    });
+  }
+
   // Fill tempInstallments with a simulated value
   {
     function installments() {
-      let options = ''
-  
-      for(let i = 1; i <= 12; i++) {
+      let options = "";
+
+      for (let i = 1; i <= 12; i++) {
         if (i === 1) {
-          options += `<option value="${i}">${i} parcela de R$${amount.replace('.', ',')} (R$${amount.replace('.', ',')})</option>`
+          options += `<option value="${i}">${i} parcela de R$${amount.replace(
+            ".",
+            ","
+          )} (R$${amount.replace(".", ",")})</option>`;
         } else {
-          if(i === 12) {
-            options += `<option value="${i}" selected>${i} parcelas de R$${(parseFloat(amount)/i).toFixed(2).replace('.', ',')} (R$${amount.replace('.', ',')})</option>`
+          if (i === 12) {
+            options += `<option value="${i}" selected>${i} parcelas de R$${(
+              parseFloat(amount) / i
+            )
+              .toFixed(2)
+              .replace(".", ",")} (R$${amount.replace(".", ",")})</option>`;
           } else {
-            options += `<option value="${i}">${i} parcelas de R$${(parseFloat(amount)/i).toFixed(2).replace('.', ',')} (R$${amount.replace('.', ',')})</option>`
+            options += `<option value="${i}">${i} parcelas de R$${(
+              parseFloat(amount) / i
+            )
+              .toFixed(2)
+              .replace(".", ",")} (R$${amount.replace(".", ",")})</option>`;
           }
         }
       }
 
-      jQuery('#tempInstallments').html(options)
+      jQuery("#tempInstallments").html(options);
     }
-  
-    installments()
+
+    installments();
   }
 
   // TEMPORÁRIO
   jQuery("#email").val(userEmail);
   jQuery("#document").val(userDocument);
-  jQuery('#transactionAmount').attr('value', amount)
+  jQuery("#transactionAmount").attr("value", amount);
 
   window.Mercadopago.getIdentificationTypes();
 });
@@ -125,17 +143,17 @@ jQuery(window).on("load", function () {
 // CPF/CNPJ
 {
   function validateDocument(field) {
-    let isValid = false
+    let isValid = false;
 
     switch (field.val().length) {
       case 14:
         // CPF
-        jQuery('#docType').val('CPF').attr('selected', true)
+        jQuery("#docType").val("CPF").attr("selected", true);
         isValid = true;
         break;
       case 18:
         // CNPJ
-        jQuery('#docType').val('CNPJ').attr('selected', true)
+        jQuery("#docType").val("CNPJ").attr("selected", true);
         isValid = true;
         break;
       default:
@@ -305,55 +323,66 @@ jQuery(window).on("load", function () {
 // Validate installments and duplicate to the real select
 {
   function validateInstallments(field) {
-    let selectedValue = jQuery(`#${field.attr('id')} option:selected`).val()
-    jQuery('#installments').val(selectedValue)
-    feedback(jQuery('#tempInstallments'), true)
+    let selectedValue = jQuery(`#${field.attr("id")} option:selected`).val();
+    jQuery("#installments").val(selectedValue);
+    feedback(jQuery("#tempInstallments"), true);
   }
 
-  jQuery('#tempInstallments').on('blur', function() {
-    validateInstallments(jQuery(this))
-  })
+  jQuery("#tempInstallments").on("blur", function () {
+    validateInstallments(jQuery(this));
+  });
 }
 
 // Validate second step
 function validateSecondStep() {
-  let isValid = false
-  let paymentMethod = jQuery('input[type="radio"][name="validate-method"]:checked').val()
-  let emailStatus = validateEmail(jQuery('#email'))
-  let documentStatus = validateDocument(jQuery('#document'))
-  
-  if(paymentMethod === 'cartao') {
-    let cardHolderName = validateHolderName(jQuery('#cardholderName'))
-    let cardNumber = validateCardNumber(jQuery('#cardNumber'))
-    let CVV = cardValidationCode(jQuery('#cvv'))
-    let expiringDate = cardDate(jQuery('#expiringDate'))
-    
-    let docType = jQuery('#docType').val() !== null ? true : false
-    let bank = jQuery('#issuer').val() !== null ? true : false
-    let expiringMonth = jQuery('#cardExpirationMonth').val() !== '' ? true : false
-    let expiringYear = jQuery('#cardExpirationYear').val() !== '' ? true : false
-    let installments = jQuery('#installments').val() !== null ? true : false
-    
-    if(emailStatus && documentStatus && cardHolderName && cardNumber && CVV && expiringDate) {
-      if(docType && bank && expiringMonth && expiringYear && installments) {
+  let isValid = false;
+  let paymentMethod = jQuery(
+    'input[type="radio"][name="validate-method"]:checked'
+  ).val();
+  let emailStatus = validateEmail(jQuery("#email"));
+  let documentStatus = validateDocument(jQuery("#document"));
+
+  if (paymentMethod === "cartao") {
+    let cardHolderName = validateHolderName(jQuery("#cardholderName"));
+    let cardNumber = validateCardNumber(jQuery("#cardNumber"));
+    let CVV = cardValidationCode(jQuery("#cvv"));
+    let expiringDate = cardDate(jQuery("#expiringDate"));
+
+    let docType = jQuery("#docType").val() !== null ? true : false;
+    let bank = jQuery("#issuer").val() !== null ? true : false;
+    let expiringMonth =
+      jQuery("#cardExpirationMonth").val() !== "" ? true : false;
+    let expiringYear =
+      jQuery("#cardExpirationYear").val() !== "" ? true : false;
+    let installments = jQuery("#installments").val() !== null ? true : false;
+
+    if (
+      emailStatus &&
+      documentStatus &&
+      cardHolderName &&
+      cardNumber &&
+      CVV &&
+      expiringDate
+    ) {
+      if (docType && bank && expiringMonth && expiringYear && installments) {
         // PROCESSA COMPRA NO BACK
-        textFeedback(true)
-        isValid = true
+        textFeedback(true);
+        isValid = true;
       } else {
-        textFeedback(false, 'Ocorreu um erro interno')
+        textFeedback(false, "Ocorreu um erro interno");
       }
     } else {
-      textFeedback(false, 'Preencha todos os campos')
+      textFeedback(false, "Preencha todos os campos");
     }
-    
-    validateInstallments(jQuery('#tempInstallments'))
+
+    validateInstallments(jQuery("#tempInstallments"));
   } else {
-    if(emailStatus && documentStatus) {
-      isValid = true
+    if (emailStatus && documentStatus) {
+      isValid = true;
     }
   }
 
-  return isValid
+  return isValid;
 }
 
 // Mercado Pago
@@ -484,7 +513,7 @@ function validateSecondStep() {
 
     if (method === "boleto") {
       toggleTabIndex(false);
-      textFeedback(true)
+      textFeedback(true);
       jQuery('label[for="cartao"]').removeClass("active");
       jQuery('label[for="boleto"]').addClass("active");
       jQuery(".card-fields").addClass("hidden");
@@ -496,7 +525,7 @@ function validateSecondStep() {
 
     if (method === "cartao") {
       toggleTabIndex(true);
-      textFeedback(true)
+      textFeedback(true);
       jQuery('label[for="boleto"]').removeClass("active");
       jQuery('label[for="cartao"]').addClass("active");
       jQuery(".card-fields").removeClass("hidden");
@@ -594,8 +623,8 @@ function validateSecondStep() {
         checkEmail(jQuery("#email"));
         checkDocument(jQuery("#document"));
         return true;
-      case 2: 
-        return validateSecondStep()
+      case 2:
+        return validateSecondStep();
     }
   }
 }

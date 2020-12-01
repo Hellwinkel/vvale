@@ -101,6 +101,11 @@ body {
       padding: 30px 0px;
     }
   }
+
+  select {
+    background-color: transparent !important;
+  }
+
   @import 'signup';
   @import 'step1';
   @import 'step2';

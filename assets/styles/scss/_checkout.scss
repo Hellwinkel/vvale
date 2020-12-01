@@ -18,6 +18,7 @@
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 20px;
+    max-width: 350px;
 
     p.plan-name {
       font-size: 1.25rem;
@@ -89,6 +90,9 @@
   }
 
   p.content.greenish {
+    display: inline-block;
+    max-width: 304px;
+
     strong {
       color: $green;
     }
@@ -119,6 +123,7 @@
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 20px;
+    max-width: 350px;
 
     .plan-name {
       font-size: 1rem;
@@ -230,6 +235,10 @@
     transition: 500ms;
     height: 355px;
     opacity: 1;
+
+    #cardholderName {
+      text-transform: uppercase;
+    }
   
     .small-fields {
       width: 98%;
