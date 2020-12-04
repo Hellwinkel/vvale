@@ -1,6 +1,6 @@
 // TEMPORÁRIO
-let userEmail = "guirovedah@gmail.com";
-let userDocument = "103.645.789-39";
+let userEmail = "seuemail@dominio.com";
+let userDocument = "111.111.111-11";
 let amount = "238.80";
 window.Mercadopago.setPublishableKey(
   "TEST-a6069a3b-c708-455b-8905-2ab8e1581b19"
