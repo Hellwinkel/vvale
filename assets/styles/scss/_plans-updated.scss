@@ -1,0 +1,284 @@
+.new-plans-page-container {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  * {
+    letter-spacing: -0.05em;
+  }
+
+  .main-content {
+    width: 100%;
+    max-width: 75rem;
+    padding: 4rem 0.5rem 3rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    .page-title {
+      color: $green;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+
+      @media screen and (max-width: 574px) {
+        font-size: 1.5rem;
+      }
+    }
+
+    .main-text {
+      font-size: 4.5rem;
+      color: #151515;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+
+      @media screen and (max-width: 574px) {
+        font-size: 3.5rem;
+        line-height: 1.1;
+      }
+    }
+
+    .page-description {
+      font-size: 1.5rem;
+      line-height: 1.4;
+      text-align: center;
+      display: inline-block;
+      max-width: 50rem;
+      color: #555555;
+      margin-bottom: 3.75rem;
+
+      @media screen and (max-width: 574px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    .benefits-container {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-bottom: 4.5rem;
+      width: 100%;
+      max-width: 55rem;
+
+      @media screen and (max-width: 939px) {
+        flex-flow: column;
+
+        img {
+          width: 80%;
+          min-width: 280px;
+          max-width: 480px;
+        }
+      }
+
+      > * {
+        margin: 0 1rem;
+      }
+
+      .list-container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: flex-start;
+        position: relative;
+
+        @media screen and (max-width: 939px) {
+          margin-top: 3rem;
+          width: 100%;
+        }
+
+        .list-title {
+          font-size: 1.125rem;
+          text-transform: uppercase;
+          color: #151515;
+          padding: 0.625rem 1.5rem;
+          line-height: 1;
+          font-weight: 700;
+          background-color: #dfdfdf;
+          border-radius: 2rem;
+          position: absolute;
+          top: calc(-2.375rem / 2);
+        }
+
+        .list {
+          padding: 3rem 1.25rem 2.5rem;
+          background-color: #efefef;
+          border-radius: 0.625rem;
+          margin: 0;
+          list-style: none;
+
+          .list-item {
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1rem;
+            color: #000000;
+            margin-bottom: 1rem;
+
+            &:last-child {
+              margin-bottom: 0px;
+            }
+
+            &:before {
+              position: absolute;
+              content: '';
+              width: 0.875rem;
+              height: 0.575rem;
+              left: 0;
+              top: 0.25rem;
+              background-image: url('../images/plans-check.svg');
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;
+            }
+          }
+        }
+      }
+    }
+    .price-container {
+      width: 100%;
+      max-width: 62.5rem;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: stretch;
+      justify-content: space-evenly;
+      padding-top: 2.75rem;
+      position: relative;
+
+      @media screen and (max-width: 939px) {
+        flex-flow: column;
+      }
+
+      &:before {
+        position: absolute;
+        content: '';
+        width: 78%;
+        height: 1px;
+        margin: auto auto 0 auto;
+        top: 0;
+        background-color: $green;
+
+        @media screen and (max-width: 939px) {
+          width: 80%;
+          left: 10%;
+        }
+      }
+
+      .plan {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 33.333%;
+        position: relative;
+
+        @media screen and (max-width: 939px) {
+          width: 100%;
+        }
+
+        * {
+          display: inline-block;
+        }
+
+        &:after {
+          position: absolute;
+          content: '';
+          width: 1px;
+          height: 80%;
+          top: 15%;
+          right: 0;
+          background-color: #cdcdcd;
+
+          @media screen and (max-width: 939px) {
+            display: none;
+          }
+        }
+
+        &:last-child:after {
+          display: none;
+        }
+
+        .plan-badge-container {
+          position: relative;
+          height: 2.5rem;
+          margin-bottom: 1rem;
+          display: flex;
+          flex-flow: row nowrap;
+          align-items: center;
+          justify-content: flex-start;
+
+          img {
+            z-index: 10;
+            width: 2.125rem;
+          }
+          .plan-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #646464;
+            background-color: #ececec;
+            padding: 0.5rem 1rem 0.5rem 1.25rem;
+            border-radius: 2rem;
+            margin-left: -1rem;
+            z-index: 5;
+          }
+        }
+
+        .plan-title {
+          font-size: 1.75rem;
+          font-weight: 700;
+          color: #000000;
+          line-height: 1;
+          text-align: center;
+          text-transform: capitalize;
+        }
+
+        .plan-price {
+          font-size: 2.75rem;
+          letter-spacing: 0;
+          color: $green;
+          line-height: 1;
+          margin-bottom: 0.25rem;
+          font-weight: 800;
+          text-align: center;
+        }
+
+        .plan-condition {
+          height: 1.25rem;
+          text-align: center;
+          color: #9f9f9f;
+          text-transform: lowercase;
+          margin-bottom: 0.5rem;
+        }
+
+        .plan-link {
+          font-size: 1.25rem;
+          color: white;
+          text-transform: uppercase;
+          background-color: $green;
+          line-height: 1;
+          padding: 0.625rem 2.5rem;
+          border-radius: 2rem;
+          font-weight: 700;
+          margin-bottom: 1rem;
+          transition: 150ms;
+
+          &:hover,
+          &:focus {
+            background-color: lighten($green, 8%);
+          }
+        }
+
+        .plan-discount {
+          font-size: 0.875rem;
+          color: #646464;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
