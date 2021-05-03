@@ -1,7 +1,7 @@
 // TEMPORÁRIO
 let userEmail = "seuemail@dominio.com";
 let userDocument = "111.111.111-11";
-let amount = "238.80";
+let amount = "39.90";
 window.Mercadopago.setPublishableKey(
   "TEST-a6069a3b-c708-455b-8905-2ab8e1581b19"
 );
@@ -14,10 +14,10 @@ jQuery(window).on("load", function () {
   // Mask to CPF and CNPJ
   {
     const documentMaskBehavior = function (val) {
-        return val.replace(/\D/g, "").length <= 11
-          ? "000.000.000-009"
-          : "00.000.000/0000-00";
-      },
+      return val.replace(/\D/g, "").length <= 11
+        ? "000.000.000-009"
+        : "00.000.000/0000-00";
+    },
       documentOptions = {
         onKeyPress: function (val, e, field, options) {
           field.mask(documentMaskBehavior.apply({}, arguments), options);
@@ -29,15 +29,15 @@ jQuery(window).on("load", function () {
   // Mask to card number
   {
     const cardMaskBehavior = function (val) {
-        switch (val.replace(/\s/g, "").length) {
-          case 15:
-            return "0000 000000 000009";
-          case 16:
-            return "0000 0000 0000 0000";
-          default:
-            return "0000 000000 000099";
-        }
-      },
+      switch (val.replace(/\s/g, "").length) {
+        case 15:
+          return "0000 000000 000009";
+        case 16:
+          return "0000 0000 0000 0000";
+        default:
+          return "0000 000000 000099";
+      }
+    },
       cardOptions = {
         onKeyPress: function (val, e, field, options) {
           field.mask(cardMaskBehavior.apply({}, arguments), options);

@@ -1,6 +1,11 @@
-<svg viewBox="0 0 261.36 285.3">
+<svg viewBox="0 0 261.36 285.3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink= "http://www.w3.org/1999/xlink">
           <title>Vvale</title>
           <g data-name="Layer">
             <path class="vvale-svg vvale-animate" d="M136.25,110.51A351.33,351.33,0,0,0,260.42,2.19C236.65,121.71,189.69,214.5,123,284.59,48.41,209.31,11.9,124.76.92,34c31.15,72.67,75,129.68,138.48,162.38C140.32,166.28,139.81,137.25,136.25,110.51Z"></path>
           </g>
+          <style>
+            path {
+              fill: #8aae40;
+            }
+          </style>
         </svg>

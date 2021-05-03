@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap');
 
 .vvale-article {
   * {
@@ -7,22 +6,22 @@
     margin: 0px;
     border: none;
     padding: 0px;
-    font-family: "Open Sans", sans-serif !important;
+    font-family: 'Open Sans', sans-serif !important;
     color: #1c1c1c;
   }
-  
+
   html,
   body {
     font-size: 16px;
   }
-  
+
   .title-container {
     width: 100%;
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: flex-start;
-  
+
     .post-category {
       width: 100%;
       max-width: 900px;
@@ -31,7 +30,7 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 15px;
-  
+
       a {
         display: inline-block;
         cursor: pointer;
@@ -43,10 +42,10 @@
         position: relative;
         font-size: 1.125rem;
         transition: 200ms ease-out;
-  
+
         &:after {
           position: absolute;
-          content: "";
+          content: '';
           width: 50%;
           border-radius: 5px;
           height: 2px;
@@ -54,7 +53,7 @@
           left: calc(50% - 25%);
           transition: 200ms ease-out;
         }
-  
+
         &:hover,
         &:focus {
           &:after {
@@ -62,17 +61,17 @@
             left: calc(50% - 38%);
           }
         }
-  
+
         &.covid-19 {
           color: #0b8823;
-  
+
           &:after {
             background-color: #0b8823;
           }
           &:hover,
           &:focus {
             color: lighten(#0b8823, 5%);
-  
+
             &:after {
               width: 76%;
               left: calc(50% - 38%);
@@ -80,17 +79,17 @@
             }
           }
         }
-  
+
         &.politica {
           color: #996633;
-  
+
           &:after {
             background-color: #996633;
           }
           &:hover,
           &:focus {
             color: lighten(#996633, 5%);
-  
+
             &:after {
               width: 76%;
               left: calc(50% - 38%);
@@ -98,17 +97,17 @@
             }
           }
         }
-  
+
         &.economia {
           color: #006600;
-  
+
           &:after {
             background-color: #006600;
           }
           &:hover,
           &:focus {
             color: lighten(#006600, 5%);
-  
+
             &:after {
               width: 76%;
               left: calc(50% - 38%);
@@ -118,7 +117,7 @@
         }
       }
     }
-  
+
     .entry-title {
       width: 100%;
       max-width: 900px;
@@ -128,17 +127,17 @@
       line-height: 1.25;
       margin-bottom: 20px;
       letter-spacing: -2px;
-  
+
       @media screen and (max-width: 1023px) {
         font-size: 2.5rem;
       }
-  
+
       @media screen and (max-width: 639px) {
         font-size: 1.75rem;
         margin-bottom: 10px;
       }
     }
-  
+
     .entry-gravata {
       width: 100%;
       max-width: 900px;
@@ -148,33 +147,33 @@
       text-align: center;
       margin-bottom: 20px;
     }
-  
+
     .article-data {
       display: flex;
       flex-flow: column;
       align-items: center;
       justify-content: flex-start;
       margin: 30px 0px 0px;
-  
+
       .post-author {
         font-size: 1rem;
         font-weight: 700;
         margin-bottom: 7px;
       }
-  
+
       > div {
         font-size: 0.875rem;
         font-weight: 400;
         text-align: center;
       }
-  
+
       .mod-dot {
         display: inline-block;
       }
       .mobile-br {
         display: none;
       }
-  
+
       @media screen and (max-width: 639px) {
         .mod-dot {
           display: none;
@@ -185,7 +184,7 @@
       }
     }
   }
-  
+
   hr {
     width: 75%;
     max-width: 600px;
@@ -194,7 +193,7 @@
     height: 1px;
     background-color: rgb(201, 201, 201);
   }
-  
+
   figure {
     max-width: 100%;
     display: flex;
@@ -202,16 +201,16 @@
     align-items: center;
     margin-top: 20px;
     margin-bottom: 80px;
-    
+
     @media screen and (max-width: 639px) {
       margin-top: 0px;
       margin-bottom: 60px;
     }
-  
+
     img {
       max-width: 100%;
     }
-  
+
     figcaption {
       display: inline-block;
       align-self: flex-end;
@@ -220,22 +219,22 @@
       margin-right: 7px 3px;
     }
   }
-  
+
   .article-content {
     width: 100%;
     display: flex;
     flex-flow: column;
     align-items: center;
-  
+
     h1 {
       width: 75%;
       font-size: 2.75rem;
       margin-bottom: 40px;
       font-weight: 800;
       text-align: center;
-  
+
       @media screen and (max-width: 639px) {
-        font-size: 1.75rem
+        font-size: 1.75rem;
       }
     }
 
@@ -247,11 +246,11 @@
       align-items: center;
       justify-content: center;
 
-      &[rel="attatchment"] {
+      &[rel='attatchment'] {
         width: 100%;
       }
 
-      &~img {
+      & ~ img {
         min-width: 1200px;
       }
 
@@ -260,31 +259,38 @@
       }
     }
   }
-  p, h1, h2, h3, h4, h5, h6, blockquote {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  blockquote {
     display: inline-block;
     width: 75%;
-  
+
     @media screen and (max-width: 639px) {
       width: 100%;
     }
   }
-  
+
   ul {
     width: 75%;
     margin-left: 0px;
     list-style: none;
-  
+
     @media screen and (max-width: 639px) {
       width: 100%;
     }
-    
+
     li {
       position: relative;
       padding-left: 15px;
       font-size: 1.125rem;
       line-height: 1.4;
       margin-bottom: 15px;
-  
+
       &:after {
         position: absolute;
         content: '-';
@@ -292,23 +298,23 @@
         top: 0;
       }
     }
-    
+
     @media screen and (max-width: 639px) {
       width: 100%;
     }
   }
-  
+
   p {
     font-size: 1.25rem;
     line-height: 1.75;
     margin-bottom: 40px;
-    
+
     @media screen and (max-width: 639px) {
       line-height: 1.5;
       margin-bottom: 30px;
     }
   }
-  
+
   blockquote {
     border: 0px;
     margin-bottom: 40px;
@@ -317,17 +323,21 @@
     font-weight: 700;
     color: #333;
     line-height: 1.35;
-    
+
     @media screen and (max-width: 639px) {
       font-size: 1.25rem;
       line-height: 1.5;
     }
-    
+
     p {
       font-size: 1.75rem;
       font-weight: 700;
       color: #333;
       line-height: 1.35;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
     }
 
     > * {
@@ -338,7 +348,7 @@
       display: none;
     }
   }
-  
+
   h2 {
     width: 75%;
     font-size: 2.75rem;
@@ -346,27 +356,26 @@
     font-weight: 800;
     text-align: center;
     color: #222;
-  
+
     @media screen and (max-width: 639px) {
-      font-size: 1.75rem
+      font-size: 1.75rem;
     }
   }
-  
+
   h3 {
     font-size: 1.5rem;
     font-weight: 700;
     color: #222;
     margin-bottom: 25px;
     margin-top: 15px;
-    
+
     @media screen and (max-width: 639px) {
       font-size: 1.25rem;
       margin-bottom: 20px;
       margin-top: 0px;
     }
   }
-  
-  
+
   .last-paragraph {
     width: 100%;
     display: flex;
@@ -375,11 +384,11 @@
     justify-content: space-between;
     margin-top: 60px;
     margin-bottom: 30px;
-  
+
     a.joc {
       font-size: 0.875rem;
     }
-  
+
     a.link-correcao {
       align-self: flex-end;
       display: inline-block;
@@ -391,7 +400,7 @@
       cursor: pointer;
       font-size: 0.875rem;
       margin-left: auto;
-  
+
       &:hover,
       &:focus {
         background-color: lighten(#79b032, 5%);
@@ -401,20 +410,23 @@
       display: none;
     }
   }
-  
-  .video-wrapper, .wp-video, .pubTvBoxVideoInstream {
+
+  .video-wrapper,
+  .wp-video,
+  .pubTvBoxVideoInstream {
     width: 80% !important;
     padding-top: 45% !important;
     height: 0 !important;
     margin: 0px 0px 40px !important;
     position: relative !important;
-  
+
     @media screen and (max-width: 1023px) {
       width: 100% !important;
       padding-top: 56.25% !important;
     }
-  
-    > div, iframe {
+
+    > div,
+    iframe {
       position: absolute !important;
       top: 0 !important;
       left: 0 !important;
@@ -424,19 +436,18 @@
       > * {
         width: 100%;
         height: 100%;
-        
+
         iframe {
           width: 100%;
           height: 100%;
         }
       }
-
     }
   }
-  
+
   .mejs-container {
     width: 80% !important;
-  
+
     @media screen and (max-width: 639px) {
       width: 100% !important;
     }

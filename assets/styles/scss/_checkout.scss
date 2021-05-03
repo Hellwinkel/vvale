@@ -64,7 +64,7 @@
 
       &:before {
         position: absolute;
-        content: "";
+        content: '';
         top: 0;
         left: 0;
         width: 100%;
@@ -108,7 +108,8 @@
     margin-top: 15px;
     transition: 150ms;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: darken(#a1a1a1, 10%);
     }
   }
@@ -139,7 +140,7 @@
       font-size: 1rem;
       font-weight: 400;
       text-align: center;
-      color: #ACACAC;
+      color: #acacac;
       margin-bottom: 20px;
     }
 
@@ -151,7 +152,7 @@
       text-align: center;
       margin-bottom: 5px;
     }
-    
+
     .monthly-value {
       font-size: 0.875rem;
       letter-spacing: -0.02em;
@@ -178,7 +179,7 @@
       flex-flow: row nowrap;
       align-items: center;
       justify-content: center;
-  
+
       label {
         display: inline-block;
         padding: 10px;
@@ -193,31 +194,32 @@
         color: $green;
         box-shadow: 0px 0px 0px 0px rgba(149, 185, 73, 0.3);
         transition: 150ms;
-  
+
         span {
           color: $green;
         }
-  
-        &:hover, &:focus {
+
+        &:hover,
+        &:focus {
           box-shadow: 0px 0px 0px 2px rgba(149, 185, 73, 0.5);
         }
 
         &:focus {
           outline: none;
         }
-  
+
         &:last-child {
           margin-right: 0px;
         }
-  
+
         &.active {
           background-color: $green;
-          
+
           span {
             color: white;
           }
         }
-  
+
         input {
           display: none;
         }
@@ -239,7 +241,7 @@
     #cardholderName {
       text-transform: uppercase;
     }
-  
+
     .small-fields {
       width: 98%;
       display: flex;
@@ -285,14 +287,15 @@
     font-weight: 400;
     padding: 15px 23px;
     border-radius: 10px;
-    box-shadow: 0px 3px 8px rgba(149,185,73,0), 0px 0px 15px rgba(110,129,67,0) inset;
+    box-shadow: 0px 3px 8px rgba(149, 185, 73, 0), 0px 0px 15px rgba(110, 129, 67, 0) inset;
     margin-bottom: 10px;
     width: 158px;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: white;
       transform: translateY(-2px);
-      box-shadow: 0px 3px 8px rgba(149,185,73,0.75), 0px 0px 15px rgba(110,129,67,0.5) inset;
+      box-shadow: 0px 3px 8px rgba(149, 185, 73, 0.75), 0px 0px 15px rgba(110, 129, 67, 0.5) inset;
     }
   }
 

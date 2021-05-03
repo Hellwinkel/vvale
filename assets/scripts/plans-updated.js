@@ -2,6 +2,10 @@ $(window).on('scroll', function() {
   showBadge()
 })
 
+$(function() {
+  showBadge()
+})
+
 function showBadge() {
   const badge = $('#plan-badge')
   const badgeDistance = badge.offset().top

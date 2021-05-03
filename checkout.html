@@ -31,26 +31,24 @@
           </p>
           <div class="plan-details">
             <p class="plan-name">
-              Portal Vvale Compartilhado
+              Plano semestral
             </p>
-            <img src="assets/images/group-plan.svg" alt="Portal Vvale - Plano Compartilhado">
+            <img src="assets/images/simple-plan.svg" alt="Portal Vvale - Plano Semestral">
             <ul>
-              <li>Acesso ao Portal Vvale</li>
-              <li>Acesso ao Jornal O Comércio digital</li>
-              <li>Cobertura completa em textos, gráficos, vídeos e podcasts</li>
+              <li>Livre de propagandas</li>
+              <li>Acesso total às matérias</li>
+              <li>Textos, gráficos, vídeos e podcasts</li>
               <li>Conteúdo exclusivo do Estadão</li>
-              <li>Exibição limitada de publicidade</li>
               <li>Navegação mais rápida</li>
-              <li>Duas contas adicionais</li>
             </ul>
             <div class="price">
               <p class="subtotal">Subtotal</p>
-              <p class="value">R$ 238,80</p>
+              <p class="value">R$ 39,90</p>
             </div>
           </div>
-          <p class="content greenish">
+          <!-- <p class="content greenish">
             O valor acima poderá ser parcelado em até <strong>12 vezes sem juros</strong>
-          </p>
+          </p> -->
           <div class="button-container">
             <span class="feedback"></span>
             <input type="button" value="Avançar" class="avancar" data-step="1" data-target="2">
@@ -63,17 +61,17 @@
         <div class="checkout-board step-board relative-stepp" data-step="2">
           <div class="simple-plan">
             <p class="plan-name">
-              Portal Vvale Compartilhado
+             Plano semestral
             </p>
             <p class="plan-time">
-              Assinatura de 1 ano
+              Assinatura de 6 meses
             </p>
             <p class="plan-value">
-              R$ 238,80
+              R$ 39,90
             </p>
-            <p class="monthly-value">
+            <!-- <p class="monthly-value">
               12x de R$ 19,90
-            </p>
+            </p> -->
           </div>
           <p class="content">
             Confirme se os campos abaixo referentes ao comprador estão corretos
@@ -124,7 +122,7 @@
               </div>
               
             </div>
-            <div class="field-container">
+            <div class="field-container" id="installments">
               <label for="tempInstallments" class="field-name">Parcelas<span class="required">*</span></label>
               <select type="text" id="tempInstallments" name="tempInstallments" class="field visible"></select>
             </div>
@@ -152,7 +150,7 @@
                   ondrag="return false" ondrop="return false" autocomplete=off class="field" tabindex="-1">
               </div>
             </div>
-            <div class="field-container hidden">
+            <div class="field-container">
               <label for="installments" class="field-name">Parcelas (oculto)<span class="required">*</span></label>
               <select type="text" id="installments" name="installments" class="field"></select>
             </div>
